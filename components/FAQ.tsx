@@ -2,17 +2,17 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 import { useContent } from "@/lib/content-context";
 
-const stagger: Variants = {
+const container: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.05, delayChildren: 0.15 } }
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } }
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
+  hidden: { opacity: 0, x: -30, filter: "blur(6px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
 };
 
 export default function FAQ() {
@@ -21,112 +21,95 @@ export default function FAQ() {
   const { faq: faqs } = content;
 
   return (
-    <section className="faq-editorial">
-      <div className="container faq-editorial__inner">
+    <section className="section" style={{ background: "var(--cream)" }}>
+      <div className="container" style={{ maxWidth: 800 }}>
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="faq-editorial__head"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          style={{ textAlign: "center", marginBottom: 60 }}
         >
-          <div className="section-badge">SSS</div>
-          <h2 className="section-title">Merak ettiğiniz <span className="gold">her şey</span></h2>
-          <p className="section-sub">Sigortacılık hakkında en çok sorulan sorular ve cevapları.</p>
+          <div className="section-badge">● SSS</div>
+          <h2 className="section-title">Merak Ettiğiniz <span className="gold">Her Şey</span></h2>
+          <p className="section-sub" style={{ margin: "16px auto 0", textAlign: "center" }}>Sigortacılık hakkında en çok sorulan sorular ve cevapları.</p>
         </motion.div>
 
         <motion.div
-          variants={stagger}
+          variants={container}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px" }}
-          className="faq-editorial__list"
+          style={{ display: "flex", flexDirection: "column", gap: 12 }}
         >
           {faqs.map((faq, i) => (
-            <motion.div key={i} variants={item} className={`faq-editorial__item ${open === i ? "is-open" : ""}`}>
-              <button onClick={() => setOpen(open === i ? null : i)} className="faq-editorial__q">
-                <span className="faq-editorial__q-text">{faq.q}</span>
-                <span className="faq-editorial__q-icon" aria-hidden>
-                  {open === i ? <Minus size={18} strokeWidth={1.5} /> : <Plus size={18} strokeWidth={1.5} />}
-                </span>
-              </button>
-              <AnimatePresence>
-                {open === i && (
+            <motion.div
+              key={i}
+              variants={item}
+              layout
+            >
+              <motion.div
+                className="card"
+                style={{
+                  padding: 0, overflow: "hidden",
+                  border: open === i ? "1px solid var(--gold)" : "1px solid var(--border)",
+                }}
+                animate={{
+                  boxShadow: open === i ? "0 20px 60px rgba(212,160,23,0.12)" : "0 0 0 rgba(0,0,0,0)",
+                }}
+                transition={{ duration: 0.3 }}
+                whileHover={{ x: 6 }}
+              >
+                <motion.button
+                  onClick={() => setOpen(open === i ? null : i)}
+                  style={{ width: "100%", padding: "24px 28px", background: "transparent", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, textAlign: "left" }}
+                  whileHover={{ backgroundColor: "rgba(212,160,23,0.03)" }}
+                  whileTap={{ scale: 0.99 }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                    <motion.div
+                      animate={{ rotate: open === i ? 90 : 0, scale: open === i ? 1.1 : 1 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                      style={{ color: open === i ? "var(--gold)" : "var(--gray)", flexShrink: 0 }}
+                    >
+                      <HelpCircle size={20} />
+                    </motion.div>
+                    <span style={{ fontWeight: 700, fontSize: "1.05rem", color: open === i ? "var(--gold-dark)" : "var(--dark)" }}>{faq.q}</span>
+                  </div>
                   <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ overflow: "hidden" }}
+                    animate={{ rotate: open === i ? 180 : 0 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    style={{ flexShrink: 0 }}
                   >
-                    <p className="faq-editorial__a">{faq.a}</p>
+                    <ChevronDown size={22} color={open === i ? "var(--gold)" : "var(--gray)"} />
                   </motion.div>
-                )}
-              </AnimatePresence>
+                </motion.button>
+                <AnimatePresence>
+                  {open === i && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ overflow: "hidden" }}
+                    >
+                      <motion.p
+                        initial={{ y: -10, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -10, opacity: 0 }}
+                        transition={{ delay: 0.1, duration: 0.3 }}
+                        style={{ padding: "0 28px 28px 62px", color: "var(--gray)", lineHeight: 1.75, fontSize: "1rem", fontWeight: 500 }}
+                      >
+                        {faq.a}
+                      </motion.p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>
       </div>
-
-      <style jsx>{`
-        .faq-editorial {
-          padding: clamp(64px, 9vw, 128px) 0;
-          background: var(--white);
-        }
-        .faq-editorial__inner { max-width: 880px; }
-        .faq-editorial__head {
-          margin-bottom: clamp(40px, 5vw, 72px);
-        }
-        .faq-editorial__list {
-          border-top: 1px solid var(--hairline);
-        }
-        .faq-editorial__item {
-          border-bottom: 1px solid var(--hairline);
-        }
-        .faq-editorial__q {
-          width: 100%;
-          padding: clamp(20px, 2.5vw, 28px) 8px;
-          background: transparent;
-          border: 0;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 24px;
-          text-align: left;
-          font-family: var(--font-serif);
-          font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-          font-weight: 400;
-          color: var(--ink);
-          letter-spacing: -0.015em;
-          line-height: 1.35;
-        }
-        .faq-editorial__q-icon {
-          flex-shrink: 0;
-          width: 36px; height: 36px;
-          border-radius: 50%;
-          border: 1px solid var(--hairline);
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--ink);
-          transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-        }
-        .faq-editorial__item.is-open .faq-editorial__q-icon {
-          background: var(--ink);
-          color: var(--gold-light);
-          border-color: var(--ink);
-        }
-        .faq-editorial__a {
-          padding: 0 8px clamp(20px, 2.5vw, 28px) 8px;
-          font-family: var(--font-sans);
-          font-size: 1rem;
-          line-height: 1.7;
-          color: var(--muted);
-          margin: 0;
-          max-width: 720px;
-        }
-      `}</style>
     </section>
   );
 }

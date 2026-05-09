@@ -9,73 +9,65 @@ export default function PartnerMarquee() {
   const all = [...partners, ...partners];
 
   return (
-    <div className="pm-editorial">
-      <p className="pm-editorial__title">Türkiye&apos;nin en güçlü sigorta ağı</p>
+    <div className="partner-marquee-wrap" style={{ borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", overflow: "hidden", background: "var(--off-white)" }}>
+      <p className="partner-marquee-title" style={{ textAlign: "center", fontWeight: 900, textTransform: "uppercase", color: "var(--gold-dark)" }}>
+        TÜRKİYE&apos;NİN EN GÜÇLÜ SİGORTA AĞI
+      </p>
 
-      <div className="pm-editorial__track-wrap">
-        <div className="pm-editorial__fade pm-editorial__fade--l" />
-        <div className="pm-editorial__fade pm-editorial__fade--r" />
+      {/* Track 1 - Left to Right */}
+      <div style={{ display: "flex", overflow: "hidden", position: "relative" }}>
+        {/* Gradient fades for seamless loop effect on edges */}
+        <div className="partner-marquee-fade-l" style={{ position: "absolute", top: 0, left: 0, bottom: 0, background: "linear-gradient(to right, var(--off-white), transparent)", zIndex: 2 }} />
+        <div className="partner-marquee-fade-r" style={{ position: "absolute", top: 0, right: 0, bottom: 0, background: "linear-gradient(to left, var(--off-white), transparent)", zIndex: 2 }} />
+
         <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-          className="pm-editorial__track"
+           animate={{ x: ["0%", "-50%"] }}
+           transition={{ duration: 75, repeat: Infinity, ease: "linear" }}
+           style={{ display: "flex", gap: "24px", flexShrink: 0, width: "max-content", paddingLeft: "12px" }}
         >
           {all.map((name, i) => (
-            <span key={i} className="pm-editorial__item">{name}</span>
+            <div
+              key={i}
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "center",
+                padding: "20px 48px", background: "var(--white)",
+                border: "1px solid var(--border)", borderRadius: "20px",
+                fontWeight: 900, fontSize: "1.1rem", color: "var(--black)",
+                whiteSpace: "nowrap", letterSpacing: "-0.02em",
+                minWidth: "240px",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.03)",
+                transition: "all 0.3s", cursor: "default"
+              }}
+              className="partner-card"
+            >
+              {name}
+            </div>
           ))}
         </motion.div>
       </div>
-
-      <style jsx>{`
-        .pm-editorial {
-          padding: clamp(48px, 6vw, 80px) 0;
-          background: var(--white);
-          border-bottom: 1px solid var(--hairline);
-          overflow: hidden;
+      <style dangerouslySetInnerHTML={{__html: `
+        .partner-marquee-wrap { padding: 80px 0; }
+        .partner-marquee-title { font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 48px; padding: 0 1rem; }
+        .partner-marquee-fade-l, .partner-marquee-fade-r { width: 150px; }
+        @media (hover: hover) {
+          .partner-card:hover {
+             border-color: var(--gold);
+             transform: translateY(-5px);
+             box-shadow: 0 15px 40px rgba(212,160,23,0.15);
+             color: var(--gold-dark) !important;
+          }
         }
-        .pm-editorial__title {
-          text-align: center;
-          font-family: var(--font-sans);
-          font-size: 0.72rem;
-          font-weight: 600;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--gold-dark);
-          margin: 0 0 36px;
-        }
-        .pm-editorial__track-wrap { position: relative; display: flex; overflow: hidden; }
-        .pm-editorial__fade {
-          position: absolute;
-          top: 0; bottom: 0;
-          width: 80px;
-          z-index: 2;
-          pointer-events: none;
-        }
-        .pm-editorial__fade--l { left: 0; background: linear-gradient(to right, var(--white), transparent); }
-        .pm-editorial__fade--r { right: 0; background: linear-gradient(to left, var(--white), transparent); }
-        .pm-editorial__track {
-          display: flex;
-          gap: clamp(40px, 5vw, 72px);
-          flex-shrink: 0;
-          width: max-content;
-          padding: 0 24px;
-          align-items: center;
-        }
-        .pm-editorial__item {
-          font-family: var(--font-serif);
-          font-size: clamp(1.15rem, 1.8vw, 1.45rem);
-          font-weight: 400;
-          color: var(--muted);
-          letter-spacing: -0.01em;
-          white-space: nowrap;
-          transition: color 0.3s ease;
-        }
-        .pm-editorial__item:hover { color: var(--ink); }
-
         @media (max-width: 768px) {
-          .pm-editorial__fade { width: 40px; }
+           .partner-marquee-wrap { padding: 48px 0; }
+           .partner-marquee-title { font-size: 0.72rem; letter-spacing: 2px; margin-bottom: 28px; }
+           .partner-marquee-fade-l, .partner-marquee-fade-r { width: 60px; }
+           .partner-card {
+             padding: 14px 24px !important;
+             font-size: 0.9rem !important;
+             min-width: 160px !important;
+           }
         }
-      `}</style>
+      `}} />
     </div>
   );
 }

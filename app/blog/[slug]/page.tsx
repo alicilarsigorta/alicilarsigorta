@@ -4,7 +4,7 @@ import { useContent } from "@/lib/content-context";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Calendar, User, Tag, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, Calendar, User, Tag, ArrowRight, Share2 } from "lucide-react";
 import { use } from "react";
 
 export default function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -15,286 +15,374 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
 
   if (!blog) {
     return (
-      <div style={{ minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "160px 20px 80px", textAlign: "center" }}>
-        <h1 style={{ fontFamily: "var(--font-serif)", fontSize: "2rem", fontWeight: 400, color: "var(--ink)", marginBottom: 16, letterSpacing: "-0.025em" }}>Yazı Bulunamadı</h1>
-        <p style={{ color: "var(--muted)", marginBottom: 32, fontFamily: "var(--font-sans)" }}>Aradığınız blog yazısı mevcut değil veya kaldırılmış olabilir.</p>
+      <div style={{ minHeight: "60vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "160px 20px 80px" }}>
+        <h1 style={{ fontSize: "2rem", fontWeight: 900, color: "var(--black)", marginBottom: "16px" }}>Yazı Bulunamadı</h1>
+        <p style={{ color: "var(--gray)", marginBottom: "32px" }}>Aradığınız blog yazısı mevcut değil veya kaldırılmış olabilir.</p>
         <Link href="/blog" className="btn btn-gold">Blog&apos;a Dön</Link>
       </div>
     );
   }
 
   return (
-    <article style={{ minHeight: "100vh", background: "var(--white)" }}>
-      {/* Hero image */}
+    <article style={{ minHeight: "100vh", background: "var(--off-white)" }}>
+      {/* Hero Image */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.7 }}
-        className="bp-hero"
+        transition={{ duration: 0.8 }}
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "clamp(300px, 50vh, 520px)",
+          marginTop: "var(--header-h)",
+          overflow: "hidden",
+        }}
       >
-        <Image src={blog.image || "/logo.png"} alt={blog.title} fill style={{ objectFit: "cover" }} priority />
-        <div className="bp-hero__overlay" />
-        <div className="container bp-hero__back">
-          <Link href="/blog" className="bp-back">
-            <ArrowLeft size={14} strokeWidth={1.5} /> Tüm Yazılara Dön
-          </Link>
+        <Image
+          src={blog.image || "/logo.png"}
+          alt={blog.title}
+          fill
+          style={{ objectFit: "cover" }}
+          priority
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%)",
+          }}
+        />
+        {/* Breadcrumb on image */}
+        <div
+          className="container"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "0 1.25rem 40px",
+            width: "100%",
+            maxWidth: "1280px",
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <Link
+              href="/blog"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                color: "rgba(255,255,255,0.8)",
+                fontSize: "0.9rem",
+                fontWeight: 600,
+                textDecoration: "none",
+                marginBottom: "16px",
+                transition: "color 0.2s",
+              }}
+            >
+              <ArrowLeft size={16} /> Tüm Yazılara Dön
+            </Link>
+          </motion.div>
         </div>
       </motion.div>
 
-      {/* Header card */}
-      <div className="container" style={{ maxWidth: 880 }}>
+      {/* Content Area */}
+      <div className="container" style={{ maxWidth: "900px", padding: "0 1.25rem" }}>
+        {/* Article Header Card */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="bp-head"
+          transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            background: "var(--white)",
+            borderRadius: "var(--radius-xl)",
+            border: "1px solid var(--border)",
+            padding: "clamp(28px, 5vw, 48px)",
+            marginTop: "-60px",
+            position: "relative",
+            zIndex: 10,
+            boxShadow: "var(--shadow-soft)",
+          }}
         >
-          <div className="bp-meta">
-            <span className="bp-meta__cat"><Tag size={12} strokeWidth={1.5} /> {blog.category}</span>
-            <span className="bp-meta__sep">·</span>
-            <span><Calendar size={12} strokeWidth={1.5} /> {blog.date}</span>
-            <span className="bp-meta__sep">·</span>
-            <span><User size={12} strokeWidth={1.5} /> {blog.author}</span>
+          {/* Meta Tags */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              marginBottom: "20px",
+              flexWrap: "wrap",
+            }}
+          >
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                background: "linear-gradient(135deg, var(--gold), var(--gold-light))",
+                color: "#fff",
+                borderRadius: "100px",
+                padding: "6px 16px",
+                fontSize: "0.78rem",
+                fontWeight: 800,
+                letterSpacing: "1px",
+                textTransform: "uppercase",
+              }}
+            >
+              <Tag size={13} /> {blog.category}
+            </span>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                fontSize: "0.85rem",
+                color: "var(--light-gray)",
+                fontWeight: 500,
+              }}
+            >
+              <Calendar size={14} /> {blog.date}
+            </span>
+            <span
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+                fontSize: "0.85rem",
+                color: "var(--light-gray)",
+                fontWeight: 500,
+              }}
+            >
+              <User size={14} /> {blog.author}
+            </span>
           </div>
-          <h1 className="bp-title">{blog.title}</h1>
-          <p className="bp-summary">{blog.summary}</p>
+
+          {/* Title */}
+          <h1
+            style={{
+              fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+              fontWeight: 900,
+              color: "var(--black)",
+              lineHeight: 1.2,
+              letterSpacing: "-0.03em",
+              marginBottom: "16px",
+            }}
+          >
+            {blog.title}
+          </h1>
+
+          {/* Summary */}
+          <p
+            style={{
+              fontSize: "1.15rem",
+              color: "var(--gray)",
+              lineHeight: 1.75,
+              fontWeight: 500,
+              borderLeft: "3px solid var(--gold)",
+              paddingLeft: "20px",
+              margin: "0",
+            }}
+          >
+            {blog.summary}
+          </p>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="bp-body"
-        >
-          <div className="bp-content" dangerouslySetInnerHTML={{ __html: blog.content }} />
+        {/* Gold Divider */}
+        <div className="gold-divider" style={{ margin: "0 40px" }} />
 
-          <div className="bp-author">
-            <div className="bp-author__info">
-              <span className="bp-author__avatar"><User size={20} strokeWidth={1.5} /></span>
+        {/* Article Body */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          style={{
+            background: "var(--white)",
+            borderRadius: "0 0 var(--radius-xl) var(--radius-xl)",
+            border: "1px solid var(--border)",
+            borderTop: "none",
+            padding: "clamp(28px, 5vw, 48px)",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "1.05rem",
+              lineHeight: 1.85,
+              color: "var(--dark)",
+              fontWeight: 450,
+            }}
+            dangerouslySetInnerHTML={{ __html: blog.content }}
+          />
+
+          {/* Author Footer */}
+          <div
+            style={{
+              marginTop: "48px",
+              paddingTop: "28px",
+              borderTop: "1px solid var(--border)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "20px",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              <div
+                style={{
+                  width: "52px",
+                  height: "52px",
+                  borderRadius: "16px",
+                  background: "linear-gradient(135deg, rgba(212,160,23,0.12), rgba(240,192,64,0.06))",
+                  border: "1px solid rgba(212,160,23,0.25)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "var(--gold)",
+                }}
+              >
+                <User size={24} />
+              </div>
               <div>
-                <p className="bp-author__label">Yazar</p>
-                <p className="bp-author__name">{blog.author}</p>
+                <p style={{ fontSize: "0.8rem", color: "var(--light-gray)", fontWeight: 500, marginBottom: "2px" }}>
+                  Yazar
+                </p>
+                <p style={{ fontWeight: 800, color: "var(--black)", fontSize: "1rem" }}>
+                  {blog.author}
+                </p>
               </div>
             </div>
-            <Link href="/teklif-al" className="btn btn-gold">
-              Ücretsiz Teklif Al <ArrowUpRight size={14} strokeWidth={1.5} />
+            <Link href="/teklif-al" className="btn btn-gold" style={{ padding: "14px 28px", fontSize: "0.9rem" }}>
+              Ücretsiz Teklif Al <ArrowRight size={16} />
             </Link>
           </div>
         </motion.div>
 
+        {/* Related Articles */}
         {otherBlogs.length > 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bp-related"
+            style={{ marginTop: "80px", paddingBottom: "80px" }}
           >
-            <div className="bp-related__head">
-              <div className="section-badge">Diğer Yazılar</div>
-              <h2 className="section-title">İlginizi çekebilecek <span className="gold">yazılar</span></h2>
+            <div style={{ textAlign: "center", marginBottom: "40px" }}>
+              <div className="section-badge">DİĞER YAZILAR</div>
+              <h2
+                style={{
+                  fontSize: "clamp(1.5rem, 3vw, 2rem)",
+                  fontWeight: 900,
+                  color: "var(--black)",
+                  marginTop: "12px",
+                }}
+              >
+                İlginizi Çekebilecek <span className="gold">Yazılar</span>
+              </h2>
             </div>
-
-            <div className="bp-related__grid">
-              {otherBlogs.map((o) => (
-                <Link key={o.id} href={`/blog/${o.slug}`} className="bp-card">
-                  <div className="bp-card__img">
-                    <Image src={o.image || "/logo.png"} alt={o.title} fill style={{ objectFit: "cover" }} />
-                  </div>
-                  <div className="bp-card__body">
-                    <span className="bp-meta__cat" style={{ marginBottom: 8, display: "inline-block" }}>{o.category}</span>
-                    <h3>{o.title}</h3>
-                    <p>{o.summary}</p>
-                    <span className="bp-card__cta">Oku <ArrowUpRight size={14} strokeWidth={1.5} /></span>
-                  </div>
+            <div className="grid-3">
+              {otherBlogs.map((otherBlog) => (
+                <Link
+                  key={otherBlog.id}
+                  href={`/blog/${otherBlog.slug}`}
+                  style={{ textDecoration: "none", display: "block" }}
+                >
+                  <motion.div
+                    className="card"
+                    style={{
+                      overflow: "hidden",
+                      cursor: "pointer",
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    whileHover={{
+                      y: -8,
+                      boxShadow: "0 20px 50px rgba(212,160,23,0.15)",
+                    }}
+                  >
+                    <div style={{ position: "relative", height: "180px", overflow: "hidden" }}>
+                      <Image
+                        src={otherBlog.image || "/logo.png"}
+                        alt={otherBlog.title}
+                        fill
+                        style={{ objectFit: "cover", transition: "transform 0.5s ease" }}
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          background: "linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.25) 100%)",
+                        }}
+                      />
+                    </div>
+                    <div style={{ padding: "24px", flex: 1, display: "flex", flexDirection: "column" }}>
+                      <span
+                        style={{
+                          fontSize: "0.75rem",
+                          fontWeight: 700,
+                          color: "var(--gold-dark)",
+                          textTransform: "uppercase",
+                          letterSpacing: "1px",
+                          marginBottom: "10px",
+                        }}
+                      >
+                        {otherBlog.category}
+                      </span>
+                      <h3
+                        style={{
+                          fontSize: "1.05rem",
+                          fontWeight: 800,
+                          color: "var(--black)",
+                          lineHeight: 1.35,
+                          marginBottom: "8px",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {otherBlog.title}
+                      </h3>
+                      <p
+                        style={{
+                          fontSize: "0.85rem",
+                          color: "var(--gray)",
+                          lineHeight: 1.6,
+                          fontWeight: 500,
+                          flex: 1,
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {otherBlog.summary}
+                      </p>
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          color: "var(--gold-dark)",
+                          fontWeight: 800,
+                          fontSize: "0.85rem",
+                          marginTop: "16px",
+                        }}
+                      >
+                        Oku <ArrowRight size={14} />
+                      </span>
+                    </div>
+                  </motion.div>
                 </Link>
               ))}
             </div>
           </motion.div>
         )}
       </div>
-
-      <style jsx global>{`
-        .bp-hero {
-          position: relative;
-          width: 100%;
-          height: clamp(280px, 50vh, 540px);
-          margin-top: var(--header-h);
-          overflow: hidden;
-        }
-        .bp-hero__overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%);
-        }
-        .bp-hero__back {
-          position: absolute;
-          left: 50%;
-          bottom: 28px;
-          transform: translateX(-50%);
-          width: 100%;
-          padding: 0 1.25rem;
-          z-index: 2;
-        }
-        .bp-back {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          color: rgba(255,255,255,0.85);
-          font-family: var(--font-sans);
-          font-size: 0.85rem;
-          font-weight: 500;
-          text-decoration: none;
-          transition: color 0.2s ease;
-        }
-        .bp-back:hover { color: var(--gold-light); }
-
-        .bp-head {
-          background: var(--white);
-          border: 1px solid var(--hairline);
-          border-radius: var(--radius-xl);
-          padding: clamp(28px, 4vw, 56px);
-          margin-top: -60px;
-          position: relative;
-          z-index: 5;
-          box-shadow: var(--shadow-soft);
-        }
-        .bp-meta {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          font-family: var(--font-sans);
-          font-size: 0.8rem;
-          color: var(--muted);
-          flex-wrap: wrap;
-          margin-bottom: 18px;
-        }
-        .bp-meta > span { display: inline-flex; align-items: center; gap: 5px; }
-        .bp-meta__cat { color: var(--gold-dark); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.72rem; }
-        .bp-meta__sep { opacity: 0.4; }
-        .bp-title {
-          font-family: var(--font-serif);
-          font-size: clamp(1.85rem, 4.5vw, 3.25rem);
-          font-weight: 400;
-          line-height: 1.1;
-          letter-spacing: -0.025em;
-          color: var(--ink);
-          margin: 0 0 18px;
-        }
-        .bp-summary {
-          font-family: var(--font-sans);
-          font-size: clamp(1rem, 1.4vw, 1.15rem);
-          line-height: 1.6;
-          color: var(--muted);
-          padding-left: 18px;
-          border-left: 2px solid var(--gold-dark);
-          margin: 0;
-        }
-
-        .bp-body {
-          padding: clamp(36px, 5vw, 64px) 0 clamp(48px, 6vw, 80px);
-        }
-        .bp-content {
-          font-family: var(--font-sans);
-          font-size: 1.05rem;
-          line-height: 1.85;
-          color: var(--ink);
-        }
-        .bp-content p { margin: 0 0 1.25rem; }
-        .bp-content h2 { font-family: var(--font-serif); font-weight: 400; font-size: 1.75rem; letter-spacing: -0.02em; margin: 2rem 0 1rem; color: var(--ink); }
-        .bp-content h3 { font-family: var(--font-serif); font-weight: 400; font-size: 1.35rem; letter-spacing: -0.015em; margin: 1.5rem 0 0.75rem; color: var(--ink); }
-        .bp-content a { color: var(--gold-dark); text-decoration: underline; text-underline-offset: 3px; }
-        .bp-content blockquote { border-left: 2px solid var(--gold-dark); padding-left: 18px; margin: 1.5rem 0; color: var(--muted); font-style: italic; font-family: var(--font-serif); }
-        .bp-content ul, .bp-content ol { padding-left: 1.5rem; margin: 0 0 1.25rem; }
-        .bp-content li { margin-bottom: 8px; }
-
-        .bp-author {
-          margin-top: 48px;
-          padding-top: 28px;
-          border-top: 1px solid var(--hairline);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 20px;
-        }
-        .bp-author__info { display: flex; align-items: center; gap: 14px; }
-        .bp-author__avatar {
-          width: 44px; height: 44px;
-          border-radius: 50%;
-          background: var(--cream);
-          border: 1px solid var(--hairline);
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--gold-dark);
-        }
-        .bp-author__label { font-family: var(--font-sans); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 2px; }
-        .bp-author__name { font-family: var(--font-serif); font-size: 1.05rem; color: var(--ink); margin: 0; }
-
-        .bp-related { padding: clamp(48px, 6vw, 96px) 0; }
-        .bp-related__head { margin-bottom: clamp(32px, 4vw, 48px); }
-        .bp-related__grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 20px;
-        }
-        @media (min-width: 640px) { .bp-related__grid { grid-template-columns: 1fr 1fr; } }
-        @media (min-width: 1024px) { .bp-related__grid { grid-template-columns: 1fr 1fr 1fr; } }
-
-        .bp-card {
-          display: flex;
-          flex-direction: column;
-          background: var(--white);
-          border: 1px solid var(--hairline);
-          border-radius: var(--radius-lg);
-          overflow: hidden;
-          text-decoration: none;
-          color: inherit;
-          transition: border-color 0.3s ease, transform 0.3s ease;
-          height: 100%;
-        }
-        .bp-card:hover { border-color: var(--ink); transform: translateY(-3px); }
-        .bp-card__img { position: relative; height: 180px; }
-        .bp-card__body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
-        .bp-card__body h3 {
-          font-family: var(--font-serif);
-          font-size: 1.05rem;
-          font-weight: 400;
-          line-height: 1.3;
-          letter-spacing: -0.015em;
-          color: var(--ink);
-          margin: 0 0 8px;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-        .bp-card__body p {
-          font-family: var(--font-sans);
-          font-size: 0.88rem;
-          color: var(--muted);
-          line-height: 1.55;
-          margin: 0 0 16px;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          flex: 1;
-        }
-        .bp-card__cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          color: var(--ink);
-          font-family: var(--font-sans);
-          font-weight: 500;
-          font-size: 0.85rem;
-          padding-bottom: 2px;
-          border-bottom: 1px solid var(--ink);
-          align-self: flex-start;
-        }
-      `}</style>
     </article>
   );
 }
