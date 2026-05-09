@@ -2,12 +2,10 @@ export const metadata = { title: "Çerez Politikası | Alıcılar Sigorta" };
 
 export default function CerezPolitikasiPage() {
   return (
-    <div style={{ paddingTop: '160px', paddingBottom: '100px', backgroundColor: 'var(--bg-main)', minHeight: '100vh' }}>
+    <div className="legal-page">
       <div className="container" style={{ maxWidth: '800px' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '2rem' }}>
-          Çerez <span style={{ color: 'var(--primary-color)' }}>Politikası</span>
-        </h1>
-        <div className="card" style={{ padding: '3rem', color: 'var(--text-muted)', lineHeight: 1.8, fontSize: '0.95rem' }}>
+        <h1>Çerez <span className="gold">Politikası</span></h1>
+        <div className="card legal-card">
           <p style={{ marginBottom: '1.5rem' }}>
             Alıcılar Sigorta olarak, web sitemizden en verimli şekilde faydalanabilmeniz ve kullanıcı deneyiminizi geliştirebilmek için çerez (Cookie) kullanıyoruz. Çerez kullanılmasını tercih etmezseniz tarayıcınızın ayarlarından siltebilir veya engelleyebilirsiniz.
           </p>

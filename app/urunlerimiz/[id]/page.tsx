@@ -72,10 +72,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         />
 
         <div
-          className="container"
+          className="container product-hero-inner"
           style={{
-            paddingTop: "130px",
-            paddingBottom: "80px",
             position: "relative",
           }}
         >
@@ -328,7 +326,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       </div>
 
       {/* ── FAQ Section ── */}
-      <div className="container" style={{ maxWidth: "800px", padding: "80px 1.25rem" }}>
+      <div className="container product-faq-section" style={{ maxWidth: "800px" }}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -373,7 +371,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                   style={{
                     width: "100%",
-                    padding: "22px 28px",
+                    padding: "20px clamp(16px, 3vw, 28px)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
@@ -428,7 +426,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     >
                       <div
                         style={{
-                          padding: "0 28px 24px",
+                          padding: "0 clamp(16px, 3vw, 28px) 24px",
                           color: "var(--gray)",
                           fontSize: "0.95rem",
                           lineHeight: 1.7,
@@ -449,9 +447,9 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
       {/* ── CTA Section ── */}
       <div
+        className="product-cta"
         style={{
           background: "var(--black)",
-          padding: "80px 20px",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",
@@ -516,11 +514,19 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
       {/* Responsive CSS */}
       <style jsx global>{`
+        .product-hero-inner { padding: 130px 1.25rem 80px; }
+        .product-faq-section { padding: 80px 1.25rem; }
+        .product-cta { padding: 80px 1.25rem; }
         @media (min-width: 1024px) {
           .product-hero-grid {
             grid-template-columns: 1.1fr 1fr !important;
             gap: 64px !important;
           }
+        }
+        @media (max-width: 768px) {
+          .product-hero-inner { padding: 80px 1rem 56px; }
+          .product-faq-section { padding: 56px 1rem; }
+          .product-cta { padding: 56px 1rem; }
         }
       `}</style>
     </div>

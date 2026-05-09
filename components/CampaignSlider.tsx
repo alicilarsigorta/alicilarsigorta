@@ -25,9 +25,9 @@ export default function CampaignSlider() {
   const prevSlide = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <div style={{ position: "relative", width: "100%", overflow: "hidden", paddingTop: "var(--header-h)", background: "var(--white)" }}>
+    <div className="campaign-slider-wrap" style={{ position: "relative", width: "100%", overflow: "hidden", paddingTop: "var(--header-h)", background: "var(--white)" }}>
       {/* Slider Container */}
-      <div style={{ position: "relative", height: "450px", width: "100%", maxWidth: "1280px", margin: "0 auto", padding: "0 20px" }}>
+      <div className="campaign-slider" style={{ position: "relative", width: "100%", maxWidth: "1280px", margin: "0 auto", padding: "0 20px" }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={current}
@@ -35,37 +35,38 @@ export default function CampaignSlider() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="campaign-slide"
             style={{
-              position: "absolute",
-              top: "20px", left: "20px", right: "20px", bottom: "20px",
               background: slides[current].color,
-              borderRadius: "32px",
-              display: "flex", alignItems: "center", padding: "40px 60px",
-              color: slides[current].textColor, 
+              borderRadius: "28px",
+              display: "flex", alignItems: "center",
+              color: slides[current].textColor,
               boxShadow: "0 20px 60px rgba(0,0,0,0.05)",
-              overflow: "hidden"
+              overflow: "hidden",
+              position: "relative"
             }}
           >
             {/* Background elements */}
             <div style={{ position: "absolute", top: "-50%", right: "-10%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(212,160,23,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
             {/* Left Content */}
-            <div style={{ maxWidth: "55%", position: "relative", zIndex: 10 }}>
+            <div className="campaign-text" style={{ position: "relative", zIndex: 10 }}>
               <motion.span 
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.5 }}
                 style={{ display: "inline-block", background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.1)", padding: "8px 20px", borderRadius: "100px", fontSize: "0.85rem", fontWeight: 800, letterSpacing: "1px", marginBottom: "20px", color: "var(--gold-dark)" }}
               >
                 {slides[current].tag}
               </motion.span>
-              <motion.h2 
+              <motion.h2
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.5 }}
-                style={{ fontSize: "clamp(2.5rem, 4vw, 3.5rem)", fontWeight: 900, marginBottom: "20px", lineHeight: 1.1, letterSpacing: "-0.03em" }}
+                style={{ fontSize: "clamp(1.6rem, 4.5vw, 3.5rem)", fontWeight: 900, marginBottom: "16px", lineHeight: 1.15, letterSpacing: "-0.03em" }}
               >
                 {slides[current].title}
               </motion.h2>
-              <motion.p 
+              <motion.p
                 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.5 }}
-                style={{ fontSize: "1.1rem", color: "var(--gray)", lineHeight: 1.7, fontWeight: 500, marginBottom: "32px", maxWidth: "480px" }}
+                className="campaign-desc"
+                style={{ color: "var(--gray)", lineHeight: 1.65, fontWeight: 500, marginBottom: "24px", maxWidth: "480px" }}
               >
                 {slides[current].desc}
               </motion.p>
@@ -78,10 +79,11 @@ export default function CampaignSlider() {
             </div>
 
             {/* Right Image */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.8, x: 50 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+              className="campaign-image hide-on-mobile"
               style={{ position: "absolute", right: "2%", top: "50%", transform: "translateY(-50%)", width: "45%", height: "130%", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 5 }}
             >
               <motion.div
@@ -102,15 +104,37 @@ export default function CampaignSlider() {
         </AnimatePresence>
 
         {/* Controls */}
-        <div style={{ position: "absolute", bottom: "40px", left: "60px", display: "flex", gap: "12px", zIndex: 20 }}>
-          <button onClick={prevSlide} style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--white)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 5px 15px rgba(0,0,0,0.05)", color: "var(--dark)", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"} onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
+        <div className="campaign-controls" style={{ display: "flex", gap: "10px", zIndex: 20 }}>
+          <button onClick={prevSlide} aria-label="Önceki" style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--white)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 5px 15px rgba(0,0,0,0.05)", color: "var(--dark)", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"} onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
             <ChevronLeft size={20} />
           </button>
-          <button onClick={nextSlide} style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--white)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 5px 15px rgba(0,0,0,0.05)", color: "var(--dark)", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"} onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
+          <button onClick={nextSlide} aria-label="Sonraki" style={{ width: 44, height: 44, borderRadius: "50%", background: "var(--white)", border: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 5px 15px rgba(0,0,0,0.05)", color: "var(--dark)", transition: "all 0.2s" }} onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"} onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
             <ChevronRight size={20} />
           </button>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .campaign-slider { height: 450px; padding: 0 20px; }
+        .campaign-slide { position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; padding: 40px 60px; }
+        .campaign-text { max-width: 55%; }
+        .campaign-desc { font-size: 1.1rem; }
+        .campaign-controls { position: absolute; bottom: 40px; left: 60px; }
+
+        @media (max-width: 768px) {
+          .campaign-slider { height: auto; padding: 0 12px; }
+          .campaign-slide {
+            position: relative !important;
+            top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+            padding: 28px 20px 80px !important;
+            border-radius: 22px !important;
+            min-height: 280px;
+          }
+          .campaign-text { max-width: 100% !important; }
+          .campaign-desc { font-size: 0.95rem !important; }
+          .campaign-controls { bottom: 20px !important; left: 20px !important; }
+        }
+      `}} />
     </div>
   );
 }

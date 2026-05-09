@@ -129,10 +129,10 @@ export default function OfferForm() {
   };
 
   return (
-    <div className="card" style={{ padding: "3rem", border: "1px solid var(--border)" }}>
+    <div className="card offer-form-card" style={{ border: "1px solid var(--border)" }}>
 
       {/* Step Indicator */}
-      <div style={{ display: "flex", justifyContent: "space-between", position: "relative", marginBottom: 48 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", position: "relative", marginBottom: 40 }}>
         <div style={{ position: "absolute", top: 20, left: "10%", right: "10%", height: 3, background: "var(--border)", zIndex: 0 }} />
         <div style={{ position: "absolute", top: 20, left: "10%", height: 3, background: "linear-gradient(90deg, var(--gold), var(--gold-light))", zIndex: 0, width: `${((step - 1) / (steps.length - 1)) * 80}%`, transition: "width 0.5s ease" }} />
 
@@ -141,7 +141,7 @@ export default function OfferForm() {
             <div style={{ width: 44, height: 44, borderRadius: "50%", background: step >= id ? "linear-gradient(135deg, var(--gold), var(--gold-light))" : "var(--white)", border: step >= id ? "none" : "2px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.4s", boxShadow: step >= id ? "0 6px 20px var(--gold-glow)" : "none" }}>
               <Icon size={20} color={step >= id ? "#fff" : "var(--gray)"} />
             </div>
-            <span style={{ fontSize: "0.8rem", fontWeight: 800, color: step >= id ? "var(--gold-dark)" : "var(--gray)" }}>{label}</span>
+            <span className="offer-step-label" style={{ fontSize: "0.8rem", fontWeight: 800, color: step >= id ? "var(--gold-dark)" : "var(--gray)", whiteSpace: "nowrap" }}>{label}</span>
           </div>
         ))}
       </div>
@@ -223,7 +223,7 @@ export default function OfferForm() {
             <p style={{ color: "var(--gray)", marginBottom: 36, fontSize: "1.05rem", lineHeight: 1.75 }}>
               Talebiniz alındı. Uzman ekibimiz 20+ şirketin tekliflerini analiz edip en kısa sürede size ulaşacak.
             </p>
-            <div style={{ display: "flex", gap: 16 }}>
+            <div className="offer-success-actions" style={{ display: "flex", gap: 12 }}>
               <button onClick={() => window.location.href = "/"} className="btn btn-outline" style={{ flex: 1 }}>
                 Ana Sayfaya Dön
               </button>
@@ -237,17 +237,25 @@ export default function OfferForm() {
 
       {/* Navigation */}
       {step < 3 && (
-        <div style={{ display: "flex", gap: 16, marginTop: 40 }}>
+        <div className="offer-nav" style={{ display: "flex", gap: 12, marginTop: 32 }}>
           {step > 1 && (
-            <button onClick={() => setStep(s => s - 1)} className="btn btn-outline" style={{ flex: 1, padding: "1.1rem" }}>
+            <button onClick={() => setStep(s => s - 1)} className="btn btn-outline" style={{ flex: 1, padding: "1.05rem" }}>
               <ArrowLeft size={18} /> Geri
             </button>
           )}
-          <button onClick={nextStep} className="btn btn-gold" style={{ flex: 2, padding: "1.1rem" }}>
+          <button onClick={nextStep} className="btn btn-gold" style={{ flex: 2, padding: "1.05rem" }}>
             {step === 2 ? "Teklifleri Getir" : "Devam Et"} <ArrowRight size={18} />
           </button>
         </div>
       )}
+      <style jsx>{`
+        .offer-form-card { padding: 3rem; }
+        @media (max-width: 768px) {
+          .offer-form-card { padding: 1.5rem 1.1rem; }
+          :global(.offer-step-label) { font-size: 0.7rem !important; }
+          :global(.offer-success-actions) { flex-direction: column; }
+        }
+      `}</style>
     </div>
   );
 }

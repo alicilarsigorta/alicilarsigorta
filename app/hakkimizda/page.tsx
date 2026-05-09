@@ -12,7 +12,7 @@ export default function HakkimizdaPage() {
   return (
     <>
       {/* Page Header */}
-      <div style={{ background: "var(--cream)", padding: "80px 20px", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
+      <div className="page-hero" style={{ background: "var(--cream)", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
         <div className="container">
           <div className="section-badge">● Kurumsal</div>
           <h1 className="section-title">Biz <span className="gold">Kimiz?</span></h1>
@@ -27,7 +27,7 @@ export default function HakkimizdaPage() {
         <div className="container">
           <div className="grid-2" style={{ gap: "4rem", alignItems: "center" }}>
             <div>
-              <h2 style={{ fontSize: "2.5rem", fontWeight: 900, marginBottom: "1.5rem", lineHeight: 1.2, color: "var(--black)" }}>
+              <h2 style={{ fontSize: "clamp(1.7rem, 4.5vw, 2.5rem)", fontWeight: 900, marginBottom: "1.25rem", lineHeight: 1.2, color: "var(--black)" }}>
                 Güveniniz, Bizim <br/><span className="gold">En Büyük Sermayemiz</span>
               </h2>
               <p style={{ color: "var(--gray)", fontSize: "1.1rem", lineHeight: 1.8, marginBottom: "1.5rem" }}>
@@ -67,7 +67,7 @@ export default function HakkimizdaPage() {
       {/* CTA */}
       <section className="section-sm" style={{ background: "var(--black)", textAlign: "center", color: "white" }}>
         <div className="container">
-          <h2 style={{ fontSize: "2rem", fontWeight: 900, marginBottom: "1.5rem" }}>Hemen Güvence Altına Alın</h2>
+          <h2 style={{ fontSize: "clamp(1.5rem, 4vw, 2rem)", fontWeight: 900, marginBottom: "1.25rem" }}>Hemen Güvence Altına Alın</h2>
           <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: "2rem", fontSize: "1.1rem" }}>
             Siz de binlerce mutlu müşterimiz arasına katılın. Saniyeler içinde ücretsiz teklifinizi alın.
           </p>

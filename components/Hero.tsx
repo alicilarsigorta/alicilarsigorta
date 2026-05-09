@@ -44,10 +44,11 @@ export default function Hero() {
   const parallaxOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
-    <section ref={sectionRef} style={{ padding: "60px 0", display: "flex", flexDirection: "column", justifyContent: "center", backgroundColor: "var(--white)", position: "relative", overflow: "hidden" }}>
+    <section ref={sectionRef} className="hero-section" style={{ display: "flex", flexDirection: "column", justifyContent: "center", backgroundColor: "var(--white)", position: "relative", overflow: "hidden" }}>
 
       {/* Animated gradient orbs */}
       <motion.div
+        className="decor-mobile-hide"
         animate={{
           scale: [1, 1.3, 1],
           opacity: [0.1, 0.25, 0.1],
@@ -58,6 +59,7 @@ export default function Hero() {
         style={{ position: "absolute", top: "-10%", right: "-15%", width: 900, height: 900, borderRadius: "50%", background: "radial-gradient(circle, rgba(212,160,23,0.2) 0%, transparent 60%)", pointerEvents: "none" }}
       />
       <motion.div
+        className="decor-mobile-hide"
         animate={{
           scale: [1, 1.2, 1],
           opacity: [0.05, 0.15, 0.05],
@@ -70,6 +72,7 @@ export default function Hero() {
       {[...Array(5)].map((_, i) => (
         <motion.div
           key={i}
+          className="decor-mobile-hide"
           animate={{
             y: [0, -40 - i * 10, 0],
             x: [0, 15 * (i % 2 === 0 ? 1 : -1), 0],
@@ -90,8 +93,8 @@ export default function Hero() {
       ))}
 
       <motion.div style={{ y: parallaxY, opacity: parallaxOpacity }} className="container" >
-        <div style={{ position: "relative", zIndex: 1, paddingTop: "80px", paddingBottom: "80px" }}>
-          <div className="grid-2" style={{ alignItems: "center", gap: "6rem" }}>
+        <div className="hero-inner" style={{ position: "relative", zIndex: 1 }}>
+          <div className="grid-2 hero-grid" style={{ alignItems: "center" }}>
 
             {/* LEFT CONTENT */}
             <motion.div variants={stagger} initial="hidden" animate="visible">
@@ -109,7 +112,7 @@ export default function Hero() {
                 </motion.div>
               </motion.div>
 
-              <motion.h1 variants={fadeUp} style={{ fontSize: "clamp(3.2rem, 5.5vw, 5.2rem)", fontWeight: 900, color: "var(--black)", lineHeight: 1.08, letterSpacing: "-0.04em", marginBottom: "28px" }}>
+              <motion.h1 variants={fadeUp} style={{ fontSize: "clamp(2.2rem, 6.2vw, 5.2rem)", fontWeight: 900, color: "var(--black)", lineHeight: 1.08, letterSpacing: "-0.04em", marginBottom: "24px" }}>
                 {hero.title}<br />
                 <motion.span
                   className="gold"
@@ -139,13 +142,13 @@ export default function Hero() {
                 </motion.span>
               </motion.h1>
 
-              <motion.p variants={fadeUp} style={{ fontSize: "1.2rem", color: "var(--gray)", lineHeight: 1.7, marginBottom: "44px", maxWidth: 540, fontWeight: 500 }}>
+              <motion.p variants={fadeUp} className="hero-sub" style={{ color: "var(--gray)", lineHeight: 1.7, marginBottom: "32px", maxWidth: 540, fontWeight: 500 }}>
                 {hero.subtitle}
               </motion.p>
 
-              <motion.div variants={fadeUp} style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginBottom: "40px" }}>
-                <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} transition={springTransition}>
-                  <Link href="/teklif-al" className="btn btn-gold" style={{ fontSize: "1.1rem", padding: "1.1rem 2.8rem", borderRadius: "100px", boxShadow: "0 15px 40px rgba(212,160,23,0.3)" }}>
+              <motion.div variants={fadeUp} className="hero-cta-row" style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginBottom: "32px" }}>
+                <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} transition={springTransition} className="hero-cta-wrap">
+                  <Link href="/teklif-al" className="btn btn-gold hero-cta" style={{ borderRadius: "100px", boxShadow: "0 15px 40px rgba(212,160,23,0.3)" }}>
                     {hero.ctaText}
                     <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
                       <ChevronRight size={20} />
@@ -161,7 +164,7 @@ export default function Hero() {
               variants={scaleIn}
               initial="hidden"
               animate="visible"
-              style={{ position: "relative", height: "100%", minHeight: "500px", display: "flex", alignItems: "center", justifyContent: "center" }}
+              style={{ position: "relative", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
               className="hero-graphics"
             >
               {/* Orbit ring 1 */}
@@ -216,7 +219,8 @@ export default function Hero() {
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "2px", marginTop: "80px", background: "var(--border)", borderRadius: "32px", overflow: "hidden", boxShadow: "0 20px 80px rgba(0,0,0,0.04)" }}
+            className="hero-stats"
+            style={{ display: "grid", gap: "2px", marginTop: "56px", background: "var(--border)", borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 80px rgba(0,0,0,0.04)" }}
           >
             {hero.stats.map((s, i) => (
               <motion.div
@@ -227,18 +231,19 @@ export default function Hero() {
                 animate="visible"
                 whileHover={{ backgroundColor: "var(--cream)", scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                style={{ background: "var(--white)", padding: "32px 24px", textAlign: "center", cursor: "default" }}
+                className="hero-stat-cell"
+                style={{ background: "var(--white)", textAlign: "center", cursor: "default" }}
               >
                 <motion.div
                   className="stat-number"
-                  style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)" }}
+                  style={{ fontSize: "clamp(1.6rem, 4.5vw, 3.2rem)" }}
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.2 + i * 0.15, duration: 0.6, type: "spring", stiffness: 200 }}
                 >
                   {s.value}
                 </motion.div>
-                <div style={{ fontSize: "1rem", color: "var(--gray)", fontWeight: 700, marginTop: 8, letterSpacing: "-0.3px" }}>{s.label}</div>
+                <div className="hero-stat-label" style={{ color: "var(--gray)", fontWeight: 700, marginTop: 6, letterSpacing: "-0.3px" }}>{s.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -246,7 +251,31 @@ export default function Hero() {
       </motion.div>
 
       <style dangerouslySetInnerHTML={{__html: `
-        @media (max-width: 1024px) { .hero-graphics { display: none !important; } }
+        .hero-section { padding: 60px 0; }
+        .hero-inner { padding: 60px 0 60px; }
+        .hero-grid { gap: 6rem; }
+        .hero-graphics { min-height: 500px; }
+        .hero-sub { font-size: 1.2rem; }
+        .hero-cta { font-size: 1.1rem; padding: 1.1rem 2.8rem; }
+        .hero-stats { grid-template-columns: repeat(4, 1fr); }
+        .hero-stat-cell { padding: 32px 24px; }
+        .hero-stat-label { font-size: 1rem; }
+
+        @media (max-width: 1024px) {
+          .hero-graphics { display: none !important; min-height: 0 !important; }
+          .hero-grid { gap: 0 !important; }
+        }
+        @media (max-width: 768px) {
+          .hero-section { padding: 28px 0 48px; }
+          .hero-inner { padding: 28px 0 24px; }
+          .hero-sub { font-size: 1.02rem; line-height: 1.6; margin-bottom: 24px !important; }
+          .hero-cta-row { width: 100%; }
+          .hero-cta-wrap { width: 100%; }
+          .hero-cta { width: 100%; font-size: 1rem; padding: 0.95rem 1.5rem !important; }
+          .hero-stats { grid-template-columns: repeat(2, 1fr) !important; margin-top: 40px !important; border-radius: 18px !important; }
+          .hero-stat-cell { padding: 22px 12px !important; }
+          .hero-stat-label { font-size: 0.82rem; }
+        }
       `}} />
     </section>
   );
