@@ -28,8 +28,17 @@ export default function WhatsAppButton() {
       animate={{ scale: 1, opacity: 1 }}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      className="fixed bottom-6 left-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-green-500 text-white shadow-lg shadow-green-500/30"
-      style={{ isolation: 'isolate' }}
+      aria-label="WhatsApp ile iletişime geç"
+      className="flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg shadow-green-500/30"
+      style={{
+        position: 'fixed',
+        bottom: 'calc(env(safe-area-inset-bottom, 0px) + 1.25rem)',
+        left: 'calc(env(safe-area-inset-left, 0px) + 1.25rem)',
+        height: 56,
+        width: 56,
+        zIndex: 95,
+        isolation: 'isolate',
+      }}
     >
       <motion.div
         animate={{

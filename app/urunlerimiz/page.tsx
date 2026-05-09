@@ -46,10 +46,8 @@ export default function UrunlerimizPage() {
         />
 
         <div
-          className="container"
+          className="container urunler-hero-inner"
           style={{
-            paddingTop: "140px",
-            paddingBottom: "80px",
             textAlign: "center",
             position: "relative",
           }}
@@ -120,7 +118,7 @@ export default function UrunlerimizPage() {
       </div>
 
       {/* ── Insurance Cards Section ── */}
-      <div className="container section" style={{ paddingTop: "80px", paddingBottom: "80px" }}>
+      <div className="container urunler-cards-section">
         <InsuranceCards />
       </div>
 
@@ -149,9 +147,8 @@ export default function UrunlerimizPage() {
         />
 
         <div
-          className="container"
+          className="container urunler-cta"
           style={{
-            padding: "80px 1.25rem",
             textAlign: "center",
             position: "relative",
           }}
@@ -222,6 +219,16 @@ export default function UrunlerimizPage() {
           </motion.div>
         </div>
       </div>
+      <style jsx global>{`
+        .urunler-hero-inner { padding: 140px 1.25rem 80px; }
+        .urunler-cards-section { padding: 80px 1.25rem; }
+        .urunler-cta { padding: 80px 1.25rem; }
+        @media (max-width: 768px) {
+          .urunler-hero-inner { padding: 80px 1rem 56px; }
+          .urunler-cards-section { padding: 56px 1rem; }
+          .urunler-cta { padding: 56px 1rem; }
+        }
+      `}</style>
     </div>
   );
 }

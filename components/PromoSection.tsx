@@ -28,12 +28,12 @@ export default function PromoSection() {
   const { promo } = content;
 
   return (
-    <section className="section" style={{ background: "var(--white)", overflow: "hidden" }}>
+    <section className="section promo-section" style={{ background: "var(--white)", overflow: "hidden" }}>
       <div className="container">
-        <div className="grid-2" style={{ alignItems: "center", gap: "5rem" }}>
+        <div className="grid-2 promo-grid" style={{ alignItems: "center", gap: "5rem" }}>
 
           {/* Images column */}
-          <motion.div variants={slideRight} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} style={{ position: "relative", height: 560 }}>
+          <motion.div variants={slideRight} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }} className="promo-images" style={{ position: "relative", height: 560 }}>
             
             {/* Main image */}
             <motion.div
@@ -78,6 +78,7 @@ export default function PromoSection() {
               animate={{ y: [0, -18, 0], rotate: [0, 4, -4, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
               whileHover={{ scale: 1.1, boxShadow: "0 25px 60px rgba(212,160,23,0.25)" }}
+              className="promo-star-badge"
               style={{ position: "absolute", top: "12%", left: "-8%", background: "#fff", borderRadius: 24, padding: "20px 24px", boxShadow: "0 20px 50px rgba(212,160,23,0.15)", border: "1px solid var(--border)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, zIndex: 3, cursor: "default" }}
             >
               <div style={{ display: "flex", gap: 4 }}>
@@ -160,6 +161,19 @@ export default function PromoSection() {
 
         </div>
       </div>
+      <style dangerouslySetInnerHTML={{__html: `
+        @media (max-width: 1024px) {
+          .promo-grid { gap: 3rem !important; }
+        }
+        @media (max-width: 768px) {
+          .promo-grid { gap: 2rem !important; }
+          .promo-images { height: 360px !important; order: 2; }
+          .promo-star-badge { left: 4% !important; padding: 14px 18px !important; transform: scale(0.85); transform-origin: top left; }
+        }
+        @media (max-width: 480px) {
+          .promo-images { height: 300px !important; }
+        }
+      `}} />
     </section>
   );
 }

@@ -2,12 +2,10 @@ export const metadata = { title: "Kullanım Şartları | Alıcılar Sigorta" };
 
 export default function KullanimSartlariPage() {
   return (
-    <div style={{ paddingTop: '160px', paddingBottom: '100px', backgroundColor: 'var(--bg-main)', minHeight: '100vh' }}>
+    <div className="legal-page">
       <div className="container" style={{ maxWidth: '800px' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '2rem' }}>
-          Kullanım <span style={{ color: 'var(--primary-color)' }}>Şartları</span>
-        </h1>
-        <div className="card" style={{ padding: '3rem', color: 'var(--text-muted)', lineHeight: 1.8, fontSize: '0.95rem' }}>
+        <h1>Kullanım <span className="gold">Şartları</span></h1>
+        <div className="card legal-card">
           <p style={{ marginBottom: '1.5rem' }}>
             Bu web sitesini ziyaret ederek veya bu sitede sunulan hizmetlerden faydalanarak, aşağıdaki kullanım şartlarını kabul etmiş sayılırsınız. Lütfen dikkatlice okuyunuz.
           </p>

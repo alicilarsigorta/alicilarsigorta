@@ -30,6 +30,51 @@
   --header-h: 88px;
 }
 
+@media (max-width: 768px) {
+  :root {
+    --header-h: 68px;
+    --radius-lg: 20px;
+    --radius-xl: 24px;
+  }
+}
+
+/* Legacy/aliased tokens used in some static pages */
+:root {
+  --bg-main: var(--white);
+  --text-main: var(--dark);
+  --text-muted: var(--gray);
+  --primary-color: var(--gold);
+  --border-color: var(--border);
+}
+
+/* Prevent content/blog HTML from overflowing on small screens */
+img, video, iframe { max-width: 100%; }
+img { height: auto; }
+
+/* Generic legal/static page wrapper for consistent mobile layout */
+.legal-page {
+  padding-top: clamp(48px, 10vw, 160px);
+  padding-bottom: clamp(56px, 8vw, 100px);
+  background-color: var(--white);
+  min-height: 100vh;
+}
+.legal-page h1 {
+  font-size: clamp(1.7rem, 5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+.legal-card {
+  padding: clamp(1.25rem, 4vw, 3rem);
+  color: var(--gray);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  word-wrap: break-word;
+}
+.legal-card p { margin-bottom: 1.25rem; }
+.legal-card strong { color: var(--dark); }
+
 .dark {
   --white: #0a0a0a;
   --off-white: #111111;
@@ -54,6 +99,27 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+/* iOS safe-area support for fixed elements */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Prevent iOS auto-zoom on form inputs (must be ≥16px) */
+input, select, textarea {
+  font-size: 16px;
+}
+
+/* Disable hover transforms on touch devices to avoid sticky states */
+@media (hover: none) {
+  .card:hover { transform: none !important; }
+  .btn-gold:hover, .btn-outline:hover, .btn-dark:hover { transform: none !important; }
 }
 
 /* ── LAYOUT ── */
@@ -71,6 +137,11 @@ body {
 
 .section { padding: 120px 0; }
 .section-sm { padding: 80px 0; }
+
+@media (max-width: 768px) {
+  .section { padding: 64px 0; }
+  .section-sm { padding: 48px 0; }
+}
 
 /* ── TYPOGRAPHY ── */
 .section-badge {
@@ -90,11 +161,13 @@ body {
 }
 
 .section-title {
-  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-size: clamp(1.85rem, 4.5vw, 3.5rem);
   font-weight: 900;
   color: var(--black);
-  line-height: 1.1;
+  line-height: 1.15;
   letter-spacing: -0.03em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .section-title .gold {
@@ -111,6 +184,10 @@ body {
   font-weight: 500;
   max-width: 580px;
   margin-top: 16px;
+}
+@media (max-width: 768px) {
+  .section-sub { font-size: 1rem; line-height: 1.65; }
+  .section-badge { padding: 6px 16px; font-size: 0.72rem; margin-bottom: 18px; }
 }
 
 /* ── BUTTONS ── */
@@ -130,6 +207,15 @@ body {
   border: none;
   outline: none;
   padding: 0; /* set via custom */
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .btn-gold, .btn-outline, .btn-dark {
+    padding: 0.95rem 1.6rem !important;
+    font-size: 0.95rem;
+  }
 }
 
 .btn-gold {
@@ -292,6 +378,49 @@ body {
 .footer-link { display: block; color: rgba(255,255,255,0.55); font-size: 0.95rem; margin-bottom: 12px; text-decoration: none; transition: color 0.2s; font-weight: 500; }
 .footer-link:hover { color: var(--gold); }
 .footer-col-title { color: #fff; font-size: 1rem; font-weight: 800; margin-bottom: 20px; letter-spacing: 0.5px; }
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3rem 2rem;
+}
+.footer-col-brand { grid-column: span 4; }
+.footer-col-2 { grid-column: span 2; }
+
+@media (max-width: 1024px) {
+  .footer-col-brand { grid-column: span 12; }
+  .footer-col-2 { grid-column: span 4; }
+}
+@media (max-width: 640px) {
+  .footer-grid { gap: 2.25rem 1.25rem; }
+  .footer-col-2 { grid-column: span 6; }
+  .footer-col-title { font-size: 0.95rem; margin-bottom: 14px; }
+  .footer-link { font-size: 0.9rem; margin-bottom: 10px; }
+}
+
+/* ── PAGE HERO (subpage headers) ── */
+.page-hero {
+  padding: 80px 20px;
+}
+@media (max-width: 768px) {
+  .page-hero { padding: 48px 18px; }
+}
+
+/* ── MOBILE HELPERS ── */
+.hide-on-mobile { }
+@media (max-width: 768px) {
+  .hide-on-mobile { display: none !important; }
+}
+.show-on-mobile { display: none; }
+@media (max-width: 768px) {
+  .show-on-mobile { display: block; }
+}
+
+/* Reduce expensive heavy animations on small/touch devices for perf */
+@media (max-width: 768px) {
+  /* Hide heavy decorative orbits/particles on mobile to save paint */
+  .decor-mobile-hide { display: none !important; }
+}
 
 /* ── MARQUEE ── */
 .marquee-track { display: flex; will-change: transform; }

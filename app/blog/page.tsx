@@ -88,10 +88,8 @@ export default function BlogPage() {
         />
 
         <div
-          className="container"
+          className="container blog-hero-inner"
           style={{
-            paddingTop: "140px",
-            paddingBottom: "80px",
             textAlign: "center",
             position: "relative",
           }}
@@ -221,7 +219,7 @@ export default function BlogPage() {
       </div>
 
       {/* ── Content ── */}
-      <div className="container" style={{ padding: "60px 1.25rem 100px" }}>
+      <div className="container blog-content" style={{ padding: "60px 1.25rem 100px" }}>
         {filteredBlogs.length === 0 ? (
           <motion.div
             initial={{ opacity: 0 }}
@@ -336,7 +334,7 @@ export default function BlogPage() {
                       </div>
 
                       {/* Text */}
-                      <div style={{ padding: "36px 40px" }}>
+                      <div className="blog-featured-text" style={{ padding: "clamp(20px, 4vw, 36px) clamp(20px, 4vw, 40px)" }}>
                         <div
                           style={{
                             display: "flex",
@@ -623,9 +621,9 @@ export default function BlogPage() {
 
       {/* ── CTA Section ── */}
       <div
+        className="blog-cta"
         style={{
           background: "var(--black)",
-          padding: "80px 20px",
           textAlign: "center",
         }}
       >
@@ -666,6 +664,9 @@ export default function BlogPage() {
 
       {/* Responsive styles */}
       <style jsx global>{`
+        .blog-hero-inner { padding: 140px 1.25rem 80px; }
+        .blog-content { padding: 60px 1.25rem 100px; }
+        .blog-cta { padding: 80px 1.25rem; }
         @media (min-width: 768px) {
           .blog-featured-grid {
             grid-template-columns: 1fr 1fr !important;
@@ -674,6 +675,11 @@ export default function BlogPage() {
             height: auto !important;
             min-height: 360px;
           }
+        }
+        @media (max-width: 768px) {
+          .blog-hero-inner { padding: 80px 1rem 48px; }
+          .blog-content { padding: 36px 1rem 60px; }
+          .blog-cta { padding: 56px 1rem; }
         }
       `}</style>
     </div>

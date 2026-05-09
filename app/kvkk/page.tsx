@@ -2,12 +2,12 @@ export const metadata = { title: "KVKK Aydınlatma Metni | Alıcılar Sigorta" }
 
 export default function KVKKPage() {
   return (
-    <div style={{ paddingTop: '160px', paddingBottom: '100px', backgroundColor: 'var(--bg-main)', minHeight: '100vh' }}>
+    <div className="legal-page">
       <div className="container" style={{ maxWidth: '800px' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '2rem' }}>
-          Kişisel Verilerin Korunması <span style={{ color: 'var(--primary-color)' }}>(KVKK)</span>
+        <h1>
+          Kişisel Verilerin Korunması <span className="gold">(KVKK)</span>
         </h1>
-        <div className="card" style={{ padding: '3rem', color: 'var(--text-muted)', lineHeight: 1.8, fontSize: '0.95rem' }}>
+        <div className="card legal-card">
           <p style={{ marginBottom: '1.5rem' }}>
             <strong style={{ color: 'var(--text-main)' }}>1. Veri Sorumlusunun Kimliği</strong><br/>
             Alıcılar Sigorta Aracılık Hizmetleri Ltd. Şti. ("Şirket") olarak, müşterilerimizin kişisel verilerinin Türkiye Cumhuriyeti Anayasası ve 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") ile uyumlu bir biçimde işlenmesine ve korunmasına büyük önem vermekteyiz.

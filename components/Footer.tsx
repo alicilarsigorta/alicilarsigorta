@@ -10,15 +10,15 @@ export default function Footer() {
 
   return (
     <footer className="footer">
-      <div className="container" style={{ paddingTop: "80px", paddingBottom: "40px" }}>
+      <div className="container footer-container">
 
         {/* Top gold line */}
-        <div className="gold-divider" style={{ marginBottom: "60px" }} />
+        <div className="gold-divider footer-top-divider" />
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "3rem 2rem" }}>
+        <div className="footer-grid">
 
           {/* Brand */}
-          <div style={{ gridColumn: "span 4" }}>
+          <div className="footer-col-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(212,160,23,0.1)", border: "1px solid rgba(212,160,23,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <img src="/logo.png" alt="" style={{ width: 28, objectFit: "contain" }} />
@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
 
           {/* Ürünler */}
-          <div style={{ gridColumn: "span 2" }}>
+          <div className="footer-col-2">
             <div className="footer-col-title">Ürünler</div>
             <Link href="/urunlerimiz/trafik-sigortasi" className="footer-link">Trafik Sigortası</Link>
             <Link href="/urunlerimiz/kasko" className="footer-link">Kasko</Link>
@@ -61,7 +61,7 @@ export default function Footer() {
           </div>
 
           {/* Kurumsal */}
-          <div style={{ gridColumn: "span 2" }}>
+          <div className="footer-col-2">
             <div className="footer-col-title">Kurumsal</div>
             <Link href="/hakkimizda" className="footer-link">Hakkımızda</Link>
             <Link href="/vizyon-misyon" className="footer-link">Vizyon & Misyon</Link>
@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
 
           {/* Yasal */}
-          <div style={{ gridColumn: "span 2" }}>
+          <div className="footer-col-2">
             <div className="footer-col-title">Yasal</div>
             <Link href="/kvkk" className="footer-link">KVKK Metni</Link>
             <Link href="/cerez-politikasi" className="footer-link">Çerez Politikası</Link>
@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
 
           {/* İletişim */}
-          <div style={{ gridColumn: "span 2" }}>
+          <div className="footer-col-2">
             <div className="footer-col-title">İletişim</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
@@ -101,7 +101,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="gold-divider" style={{ margin: "40px 0 30px" }} />
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16, fontSize: "0.85rem" }}>
+        <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Alıcılar Sigorta Aracılık Hizmetleri Ltd. Şti. Tüm hakları saklıdır.</span>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--gold)" }}>
             <Shield size={16} />
@@ -110,6 +110,16 @@ export default function Footer() {
         </div>
 
       </div>
+      <style dangerouslySetInnerHTML={{__html: `
+        .footer-container { padding-top: 80px; padding-bottom: 40px; }
+        .footer-top-divider { margin-bottom: 60px; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; }
+        @media (max-width: 768px) {
+          .footer-container { padding-top: 56px; padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 90px); }
+          .footer-top-divider { margin-bottom: 36px; }
+          .footer-bottom { font-size: 0.78rem; gap: 12px; }
+        }
+      `}} />
     </footer>
   );
 }

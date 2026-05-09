@@ -10,7 +10,7 @@ export default function IletisimPage() {
   return (
     <>
       {/* Page Header */}
-      <div style={{ background: "var(--cream)", padding: "80px 20px", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
+      <div className="page-hero" style={{ background: "var(--cream)", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
         <div className="container">
           <div className="section-badge">● 7/24 Destek</div>
           <h1 className="section-title">Bize <span className="gold">Ulaşın</span></h1>
@@ -23,11 +23,11 @@ export default function IletisimPage() {
       {/* Main Content */}
       <section className="section" style={{ backgroundColor: "var(--white)" }}>
         <div className="container">
-          <div className="grid-2" style={{ gap: "4rem" }}>
-            
+          <div className="grid-2 iletisim-grid" style={{ gap: "4rem" }}>
+
             {/* Contact Info Cards */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              <div className="card" style={{ padding: "2rem", display: "flex", gap: "1.5rem", alignItems: "center" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
                 <div className="icon-box" style={{ width: 64, height: 64 }}><Phone size={28} /></div>
                 <div>
                   <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Telefon</h3>
@@ -35,7 +35,7 @@ export default function IletisimPage() {
                 </div>
               </div>
               
-              <div className="card" style={{ padding: "2rem", display: "flex", gap: "1.5rem", alignItems: "center" }}>
+              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
                 <div className="icon-box" style={{ width: 64, height: 64 }}><Mail size={28} /></div>
                 <div>
                   <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>E-Posta</h3>
@@ -43,7 +43,7 @@ export default function IletisimPage() {
                 </div>
               </div>
 
-              <div className="card" style={{ padding: "2rem", display: "flex", gap: "1.5rem", alignItems: "center" }}>
+              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
                 <div className="icon-box" style={{ width: 64, height: 64 }}><MapPin size={28} /></div>
                 <div>
                   <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Genel Müdürlük</h3>
@@ -51,7 +51,7 @@ export default function IletisimPage() {
                 </div>
               </div>
 
-              <div className="card" style={{ padding: "2rem", display: "flex", gap: "1.5rem", alignItems: "center" }}>
+              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
                 <div className="icon-box" style={{ width: 64, height: 64 }}><Clock size={28} /></div>
                 <div>
                   <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Çalışma Saatleri</h3>
@@ -61,9 +61,9 @@ export default function IletisimPage() {
             </div>
 
             {/* Contact Form */}
-            <div className="card" style={{ padding: "3rem", border: "1px solid var(--gold)" }}>
-              <h2 style={{ fontSize: "1.8rem", fontWeight: 900, marginBottom: "2rem" }}>Mesaj Gönderin</h2>
-              <form style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <div className="card iletisim-form-card" style={{ border: "1px solid var(--gold)" }}>
+              <h2 style={{ fontSize: "clamp(1.4rem, 4vw, 1.8rem)", fontWeight: 900, marginBottom: "1.5rem" }}>Mesaj Gönderin</h2>
+              <form style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   <label style={{ fontWeight: 700, fontSize: "0.9rem" }}>Adınız Soyadınız</label>
                   <input type="text" placeholder="Örn: Ahmet Yılmaz" style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border)", background: "var(--cream)", outline: "none", fontSize: "1rem" }} />
@@ -85,6 +85,15 @@ export default function IletisimPage() {
           </div>
         </div>
       </section>
+      <style dangerouslySetInnerHTML={{__html: `
+        .iletisim-card { padding: 1.75rem; }
+        .iletisim-form-card { padding: 2.5rem; }
+        @media (max-width: 768px) {
+          .iletisim-grid { gap: 2rem !important; }
+          .iletisim-card { padding: 1.25rem !important; gap: 1rem !important; }
+          .iletisim-form-card { padding: 1.5rem 1.25rem !important; }
+        }
+      `}} />
     </>
   );
 }
