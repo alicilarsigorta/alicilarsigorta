@@ -8,7 +8,7 @@ import WhyUs from "@/components/WhyUs";
 import PromoSection from "@/components/PromoSection";
 import FAQ from "@/components/FAQ";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Shield } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Home() {

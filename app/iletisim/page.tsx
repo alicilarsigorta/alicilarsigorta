@@ -6,94 +6,162 @@ export const metadata: Metadata = {
   description: "Bize ulaşın. Uzman sigorta danışmanlarımız 7/24 size destek olmak için hazır.",
 };
 
+const contactItems = [
+  { icon: Phone, label: "Telefon", value: "0850 123 45 67" },
+  { icon: Mail, label: "E-Posta", value: "bilgi@alicilarsigorta.com.tr" },
+  { icon: MapPin, label: "Genel Müdürlük", value: "Levent Mah. Büyükdere Cad. No:199, Şişli / İstanbul" },
+  { icon: Clock, label: "Çalışma Saatleri", value: "Hafta içi 09:00 – 18:00 • Destek 7/24" },
+];
+
 export default function IletisimPage() {
   return (
     <>
-      {/* Page Header */}
-      <div className="page-hero" style={{ background: "var(--cream)", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
+      <section className="page-hero">
         <div className="container">
-          <div className="section-badge">● 7/24 Destek</div>
-          <h1 className="section-title">Bize <span className="gold">Ulaşın</span></h1>
-          <p className="section-sub" style={{ margin: "16px auto 0", maxWidth: 600 }}>
-            Sigorta uzmanlarımız sorularınızı yanıtlamak ve size en uygun çözümleri sunmak için hazır.
-          </p>
+          <div className="page-hero__inner">
+            <div className="section-badge">7/24 Destek</div>
+            <h1 className="page-hero__title">Bize <span className="gold">ulaşın</span></h1>
+            <p className="page-hero__sub">
+              Sigorta uzmanlarımız sorularınızı yanıtlamak ve size en uygun çözümleri sunmak için hazır.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Main Content */}
-      <section className="section" style={{ backgroundColor: "var(--white)" }}>
+      <section className="section" style={{ background: "var(--white)" }}>
         <div className="container">
-          <div className="grid-2 iletisim-grid" style={{ gap: "4rem" }}>
-
-            {/* Contact Info Cards */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-                <div className="icon-box" style={{ width: 64, height: 64 }}><Phone size={28} /></div>
-                <div>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Telefon</h3>
-                  <p style={{ color: "var(--gray)", fontSize: "1.1rem" }}>0850 123 45 67</p>
+          <div className="il-grid">
+            <div className="il-info">
+              {contactItems.map(({ icon: Icon, label, value }) => (
+                <div key={label} className="il-row">
+                  <span className="il-row__icon"><Icon size={18} strokeWidth={1.5} /></span>
+                  <div>
+                    <p className="il-row__label">{label}</p>
+                    <p className="il-row__value">{value}</p>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-                <div className="icon-box" style={{ width: 64, height: 64 }}><Mail size={28} /></div>
-                <div>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>E-Posta</h3>
-                  <p style={{ color: "var(--gray)", fontSize: "1.1rem" }}>bilgi@alicilarsigorta.com.tr</p>
-                </div>
-              </div>
-
-              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-                <div className="icon-box" style={{ width: 64, height: 64 }}><MapPin size={28} /></div>
-                <div>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Genel Müdürlük</h3>
-                  <p style={{ color: "var(--gray)", fontSize: "1rem" }}>Levent Mah. Büyükdere Cad. No:199<br/>Şişli / İstanbul</p>
-                </div>
-              </div>
-
-              <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
-                <div className="icon-box" style={{ width: 64, height: 64 }}><Clock size={28} /></div>
-                <div>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Çalışma Saatleri</h3>
-                  <p style={{ color: "var(--gray)", fontSize: "1rem" }}>Hafta İçi: 09:00 - 18:00<br/>Destek Hattı: 7/24 Aktif</p>
-                </div>
-              </div>
+              ))}
             </div>
 
-            {/* Contact Form */}
-            <div className="card iletisim-form-card" style={{ border: "1px solid var(--gold)" }}>
-              <h2 style={{ fontSize: "clamp(1.4rem, 4vw, 1.8rem)", fontWeight: 900, marginBottom: "1.5rem" }}>Mesaj Gönderin</h2>
-              <form style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <label style={{ fontWeight: 700, fontSize: "0.9rem" }}>Adınız Soyadınız</label>
-                  <input type="text" placeholder="Örn: Ahmet Yılmaz" style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border)", background: "var(--cream)", outline: "none", fontSize: "1rem" }} />
+            <div className="il-form">
+              <h2 className="il-h2">Mesaj <span className="gold">gönderin</span></h2>
+              <form>
+                <div className="il-field">
+                  <label>Ad Soyad</label>
+                  <input type="text" placeholder="Ahmet Yılmaz" />
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <label style={{ fontWeight: 700, fontSize: "0.9rem" }}>E-Posta Adresiniz</label>
-                  <input type="email" placeholder="ornek@email.com" style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border)", background: "var(--cream)", outline: "none", fontSize: "1rem" }} />
+                <div className="il-field">
+                  <label>E-posta</label>
+                  <input type="email" placeholder="ornek@email.com" />
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <label style={{ fontWeight: 700, fontSize: "0.9rem" }}>Mesajınız</label>
-                  <textarea rows={5} placeholder="Size nasıl yardımcı olabiliriz?" style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border)", background: "var(--cream)", outline: "none", fontSize: "1rem", resize: "vertical" }} />
+                <div className="il-field">
+                  <label>Mesajınız</label>
+                  <textarea rows={5} placeholder="Size nasıl yardımcı olabiliriz?" />
                 </div>
-                <button type="button" className="btn btn-gold" style={{ width: "100%", padding: "1.2rem", marginTop: "1rem" }}>
+                <button type="button" className="btn btn-gold" style={{ width: "100%", marginTop: 8 }}>
                   Mesajı Gönder
                 </button>
               </form>
             </div>
-
           </div>
         </div>
       </section>
-      <style dangerouslySetInnerHTML={{__html: `
-        .iletisim-card { padding: 1.75rem; }
-        .iletisim-form-card { padding: 2.5rem; }
-        @media (max-width: 768px) {
-          .iletisim-grid { gap: 2rem !important; }
-          .iletisim-card { padding: 1.25rem !important; gap: 1rem !important; }
-          .iletisim-form-card { padding: 1.5rem 1.25rem !important; }
+
+      <style>{`
+        .il-grid {
+          display: grid;
+          grid-template-columns: 1fr 1.2fr;
+          gap: clamp(40px, 6vw, 96px);
+          align-items: start;
         }
-      `}} />
+        .il-info {
+          display: flex;
+          flex-direction: column;
+          border-top: 1px solid var(--hairline);
+        }
+        .il-row {
+          display: flex;
+          align-items: flex-start;
+          gap: 18px;
+          padding: clamp(20px, 3vw, 28px) 0;
+          border-bottom: 1px solid var(--hairline);
+        }
+        .il-row__icon {
+          width: 40px; height: 40px;
+          border-radius: 50%;
+          border: 1px solid var(--hairline);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--gold-dark);
+          flex-shrink: 0;
+        }
+        .il-row__label {
+          font-family: var(--font-sans);
+          font-size: 0.72rem;
+          font-weight: 600;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--muted);
+          margin: 0 0 4px;
+        }
+        .il-row__value {
+          font-family: var(--font-serif);
+          font-size: 1.1rem;
+          font-weight: 400;
+          color: var(--ink);
+          line-height: 1.4;
+          letter-spacing: -0.01em;
+          margin: 0;
+        }
+
+        .il-form {
+          background: var(--white);
+          border: 1px solid var(--hairline);
+          border-radius: var(--radius-lg);
+          padding: clamp(28px, 4vw, 48px);
+        }
+        .il-h2 {
+          font-family: var(--font-serif);
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          font-weight: 400;
+          letter-spacing: -0.02em;
+          color: var(--ink);
+          margin: 0 0 28px;
+        }
+        .il-h2 .gold { font-style: italic; color: var(--gold-dark); font-weight: 300; }
+        .il-form form { display: flex; flex-direction: column; gap: 18px; }
+        .il-field { display: flex; flex-direction: column; gap: 8px; }
+        .il-field label {
+          font-family: var(--font-sans);
+          font-size: 0.78rem;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--ink);
+        }
+        .il-field input, .il-field textarea {
+          width: 100%;
+          padding: 14px;
+          border-radius: var(--radius-md);
+          border: 1px solid var(--hairline);
+          background: var(--white);
+          font-family: var(--font-sans);
+          font-size: 1rem;
+          color: var(--ink);
+          outline: none;
+          transition: border-color 0.2s, box-shadow 0.2s;
+          resize: vertical;
+        }
+        .il-field input:focus, .il-field textarea:focus {
+          border-color: var(--ink);
+          box-shadow: 0 0 0 3px rgba(12,12,13,0.05);
+        }
+
+        @media (max-width: 768px) {
+          .il-grid { grid-template-columns: 1fr; gap: 32px; }
+        }
+      `}</style>
     </>
   );
 }
