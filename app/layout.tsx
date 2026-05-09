@@ -1,23 +1,16 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Fraunces } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import LoadingScreen from "@/components/LoadingScreen";
 
-const outfit = Outfit({
+const outfit = Outfit({ 
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-outfit",
   display: "swap",
-});
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  display: "swap",
-  axes: ["opsz", "SOFT"],
 });
 
 export const viewport: Viewport = {
@@ -61,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-title" content="AS Admin" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className={`${outfit.variable} ${fraunces.variable} ${outfit.className}`}>
+      <body className={outfit.className}>
         <Providers>
           <ConditionalLayout>
             {children}

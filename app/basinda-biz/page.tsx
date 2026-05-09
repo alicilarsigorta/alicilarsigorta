@@ -2,96 +2,41 @@ import { Newspaper } from "lucide-react";
 
 export const metadata = { title: "Basında Biz | Alıcılar Sigorta" };
 
-const items = [
-  { title: "Alıcılar Sigorta Sektöre Dijital Bir Nefes Getiriyor", source: "Ekonomi Haberleri", date: "15 Ekim 2025" },
-  { title: "20'den Fazla Acentelik ile Rekor Büyüme", source: "Finans Gündemi", date: "02 Eylül 2025" },
-  { title: "Yılın Müşteri Odaklı Sigorta Platformu Ödülü", source: "Tech & Insurtech", date: "18 Haziran 2025" },
-];
-
 export default function BasindaBizPage() {
   return (
     <div className="legal-page">
-      <div className="container" style={{ maxWidth: 880 }}>
-        <h1>Basında <span className="gold">biz</span></h1>
+      <div className="container" style={{ maxWidth: '900px' }}>
+        <h1>Basında <span className="gold">Biz</span></h1>
 
-        <div className="press-list">
-          {items.map((item, i) => (
-            <article key={i} className="press-row">
-              <span className="press-row__num">{String(i + 1).padStart(2, "0")}</span>
-              <div className="press-row__icon"><Newspaper size={20} strokeWidth={1.5} /></div>
-              <div className="press-row__body">
-                <span className="press-row__meta">{item.date} · {item.source}</span>
-                <h3 className="press-row__title">{item.title}</h3>
-                <p className="press-row__sum">
-                  Sektör yeniliklerimiz ve dijital dönüşüm adımlarımız medya kuruluşlarında büyük ilgi görmeye devam ediyor.
+        <div style={{ display: 'grid', gap: '1.25rem' }}>
+          {[
+            { title: "Alıcılar Sigorta Sektöre Dijital Bir Nefes Getiriyor", source: "Ekonomi Haberleri", date: "15 Ekim 2025" },
+            { title: "20'den Fazla Acentelik ile Rekor Büyüme", source: "Finans Gündemi", date: "02 Eylül 2025" },
+            { title: "Yılın Müşteri Odaklı Sigorta Platformu Ödülü", source: "Tech & Insurtech", date: "18 Haziran 2025" },
+          ].map((item, i) => (
+            <div key={i} className="card press-card">
+              <div className="press-icon">
+                <Newspaper size={26} />
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <span style={{ fontSize: '0.8rem', color: 'var(--gold-dark)', fontWeight: 700, letterSpacing: '0.05em' }}>{item.date} — {item.source}</span>
+                <h3 style={{ fontSize: 'clamp(1.05rem, 3vw, 1.4rem)', fontWeight: 800, color: 'var(--dark)', marginTop: '6px', lineHeight: 1.3 }}>{item.title}</h3>
+                <p style={{ color: 'var(--gray)', fontSize: '0.92rem', marginTop: '8px', lineHeight: 1.6 }}>
+                  Sektör yeniliklerimiz ve dijital dönüşüm adımlarımız medya kuruluşlarında büyük ilgi görmeye devam ediyor...
                 </p>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
-      <style>{`
-        .press-list {
-          margin-top: clamp(28px, 4vw, 48px);
-          border-top: 1px solid var(--hairline);
-        }
-        .press-row {
-          display: grid;
-          grid-template-columns: 40px 44px 1fr;
-          gap: 18px;
-          align-items: flex-start;
-          padding: clamp(20px, 3vw, 32px) 0;
-          border-bottom: 1px solid var(--hairline);
-        }
-        .press-row__num {
-          font-family: var(--font-serif);
-          font-size: 1rem;
-          color: var(--gold-dark);
-          font-feature-settings: "tnum" 1, "lnum" 1;
-          padding-top: 14px;
-        }
-        .press-row__icon {
-          width: 44px; height: 44px;
-          border-radius: 50%;
-          border: 1px solid var(--hairline);
-          background: var(--white);
-          color: var(--gold-dark);
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          flex-shrink: 0;
-          margin-top: 8px;
-        }
-        .press-row__meta {
-          font-family: var(--font-sans);
-          font-size: 0.78rem;
-          color: var(--muted);
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          font-weight: 500;
-        }
-        .press-row__title {
-          font-family: var(--font-serif);
-          font-size: clamp(1.15rem, 2.4vw, 1.5rem);
-          font-weight: 400;
-          letter-spacing: -0.015em;
-          line-height: 1.25;
-          color: var(--ink);
-          margin: 8px 0 8px;
-        }
-        .press-row__sum {
-          font-family: var(--font-sans);
-          font-size: 0.95rem;
-          color: var(--muted);
-          line-height: 1.6;
-          margin: 0;
-          max-width: 600px;
-        }
+      <style dangerouslySetInnerHTML={{__html: `
+        .press-card { padding: 1.75rem; display: flex; gap: 18px; align-items: center; }
+        .press-icon { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-light)); display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
         @media (max-width: 640px) {
-          .press-row { grid-template-columns: 32px 1fr; }
-          .press-row__icon { display: none; }
+          .press-card { padding: 1.25rem; gap: 14px; align-items: flex-start; }
+          .press-icon { width: 44px; height: 44px; }
         }
-      `}</style>
+      `}} />
     </div>
   );
 }

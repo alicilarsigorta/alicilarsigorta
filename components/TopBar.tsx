@@ -6,94 +6,63 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export default function TopBar() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-    <div className="topbar">
-      <div className="container topbar__inner">
-        <div className="topbar__left">
-          <a href="tel:+908501234567" className="topbar__link">
-            <Phone size={13} strokeWidth={1.75} />
-            <span>0850 123 45 67</span>
+    <div style={{ background: "var(--black)", color: "rgba(255,255,255,0.8)", fontSize: "0.85rem", padding: "10px 0", zIndex: 1001, position: "relative" }}>
+      <div className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+
+        {/* Left: Contact Info */}
+        <div style={{ display: "flex", gap: "20px", alignItems: "center", minWidth: 0, flex: "1 1 auto" }}>
+          <a href="tel:+908501234567" style={{ display: "flex", alignItems: "center", gap: "8px", color: "inherit", textDecoration: "none", transition: "color 0.2s", whiteSpace: "nowrap" }} onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}>
+            <Phone size={15} color="var(--gold)" />
+            <span style={{ fontWeight: 600 }}>0850 123 45 67</span>
           </a>
-          <a href="mailto:bilgi@alicilarsigorta.com.tr" className="topbar__link topbar__hide-sm">
-            <Mail size={13} strokeWidth={1.75} />
-            <span className="topbar__ellipsis">bilgi@alicilarsigorta.com.tr</span>
+          <a href="mailto:bilgi@alicilarsigorta.com.tr" style={{ display: "flex", alignItems: "center", gap: "8px", color: "inherit", textDecoration: "none", transition: "color 0.2s", minWidth: 0 }} className="hide-mobile" onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}>
+            <Mail size={15} color="var(--gold)" />
+            <span style={{ fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>bilgi@alicilarsigorta.com.tr</span>
           </a>
         </div>
 
-        <div className="topbar__right">
-          <div className="topbar__socials topbar__hide-sm">
-            <Link href="#" aria-label="Instagram" className="topbar__icon"><Instagram size={13} strokeWidth={1.75} /></Link>
-            <Link href="#" aria-label="Facebook" className="topbar__icon"><Facebook size={13} strokeWidth={1.75} /></Link>
-            <Link href="#" aria-label="Twitter" className="topbar__icon"><Twitter size={13} strokeWidth={1.75} /></Link>
+        {/* Right: Social & Navigation */}
+        <div style={{ display: "flex", gap: "20px", alignItems: "center", flexShrink: 0 }}>
+          <div style={{ display: "flex", gap: "16px", alignItems: "center", borderRight: "1px solid rgba(255,255,255,0.15)", paddingRight: "20px" }} className="hide-mobile">
+            <Link href="#" aria-label="Instagram" style={{ color: "inherit", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}><Instagram size={15} /></Link>
+            <Link href="#" aria-label="Facebook" style={{ color: "inherit", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}><Facebook size={15} /></Link>
+            <Link href="#" aria-label="Twitter" style={{ color: "inherit", transition: "color 0.2s" }} onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}><Twitter size={15} /></Link>
           </div>
-          <Link href="/iletisim" className="topbar__link topbar__hide-sm">
-            <MapPin size={13} strokeWidth={1.75} />
+          <Link href="/iletisim" className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: "8px", color: "white", textDecoration: "none", fontWeight: 700, transition: "color 0.2s", paddingRight: "20px", borderRight: "1px solid rgba(255,255,255,0.15)" }} onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "white"}>
+            <MapPin size={15} color="var(--gold)" />
             Acentelerimiz
           </Link>
+          
           {mounted && (
-            <button
+            <button 
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-              className="topbar__icon"
-              aria-label="Tema değiştir"
+              style={{ background: "transparent", border: "none", color: "white", cursor: "pointer", display: "flex", alignItems: "center", transition: "color 0.2s" }}
+              onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} 
+              onMouseLeave={e => e.currentTarget.style.color = "white"}
+              aria-label="Toggle Dark Mode"
             >
-              {resolvedTheme === "dark" ? <Sun size={14} strokeWidth={1.75} /> : <Moon size={14} strokeWidth={1.75} />}
+              {resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
             </button>
           )}
         </div>
+        
       </div>
-
-      <style jsx>{`
-        .topbar {
-          background: var(--ink);
-          color: rgba(255,255,255,0.72);
-          font-size: 0.78rem;
-          padding: 9px 0;
-          z-index: 1001;
-          position: relative;
-          letter-spacing: 0.005em;
-        }
-        .topbar__inner {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 16px;
-        }
-        .topbar__left { display: flex; gap: 22px; align-items: center; min-width: 0; flex: 1 1 auto; }
-        .topbar__right { display: flex; gap: 18px; align-items: center; flex-shrink: 0; }
-        .topbar__link {
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
-          color: inherit;
-          text-decoration: none;
-          transition: color 0.2s ease;
-          font-weight: 500;
-          min-width: 0;
-        }
-        .topbar__link:hover { color: var(--gold-light); }
-        .topbar__ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .topbar__socials { display: flex; gap: 14px; align-items: center; padding-right: 16px; border-right: 1px solid rgba(255,255,255,0.12); }
-        .topbar__icon {
-          color: rgba(255,255,255,0.72);
-          background: transparent;
-          border: 0;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          transition: color 0.2s ease;
-          padding: 4px;
-        }
-        .topbar__icon:hover { color: var(--gold-light); }
-
+      <style dangerouslySetInnerHTML={{__html: `
         @media (max-width: 768px) {
-          .topbar__hide-sm { display: none !important; }
+          .hide-mobile { display: none !important; }
         }
-      `}</style>
+        @media (max-width: 480px) {
+          .topbar-phone-text { display: none; }
+        }
+      `}} />
     </div>
   );
 }
