@@ -8,22 +8,14 @@ const iconMap: Record<string, any> = {
   Award, Zap, Headphones: HeadphonesIcon, Lock,
 };
 
-const container: Variants = {
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+};
+
+const stagger: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.2 } }
-};
-
-const item: Variants = {
-  hidden: { opacity: 0, y: 50, scale: 0.9, filter: "blur(8px)" },
-  visible: { 
-    opacity: 1, y: 0, scale: 1, filter: "blur(0px)", 
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } 
-  }
-};
-
-const titleReveal: Variants = {
-  hidden: { opacity: 0, y: 40, filter: "blur(12px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } }
+  visible: { transition: { staggerChildren: 0.08 } }
 };
 
 export default function WhyUs() {
@@ -31,59 +23,27 @@ export default function WhyUs() {
   const { whyUs } = content;
 
   return (
-    <section className="section" style={{ background: "var(--off-white)", position: "relative", overflow: "hidden" }}>
-
-      {/* Animated orbit rings */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        style={{ position: "absolute", top: "50%", right: "-20%", transform: "translateY(-50%)", width: 700, height: 700, borderRadius: "50%", border: "1px solid rgba(212,160,23,0.1)", pointerEvents: "none" }}
-      />
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-        style={{ position: "absolute", top: "50%", right: "-20%", transform: "translateY(-50%)", width: 500, height: 500, borderRadius: "50%", border: "1px dashed rgba(212,160,23,0.12)", pointerEvents: "none" }}
-      />
-
-      {/* Floating accent dots */}
-      {[0,1,2].map(i => (
+    <section className="whyus-editorial">
+      <div className="container">
         <motion.div
-          key={i}
-          animate={{ y: [0, -30, 0], opacity: [0.2, 0.5, 0.2] }}
-          transition={{ duration: 5 + i * 2, repeat: Infinity, delay: i, ease: "easeInOut" }}
-          style={{
-            position: "absolute", width: 8, height: 8, borderRadius: "50%",
-            background: "var(--gold)", top: `${30 + i * 25}%`, left: `${5 + i * 35}%`,
-            pointerEvents: "none", filter: "blur(1px)"
-          }}
-        />
-      ))}
-
-      <div className="container" style={{ position: "relative", zIndex: 1 }}>
-
-        <motion.div
-          variants={titleReveal}
+          className="whyus-editorial__head"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          style={{ textAlign: "center", marginBottom: "72px" }}
+          variants={stagger}
         >
-          <motion.div
-            className="section-badge"
-            whileHover={{ scale: 1.08, boxShadow: "0 8px 25px rgba(212,160,23,0.15)" }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            {whyUs.badge}
-          </motion.div>
-          <h2 className="section-title">{whyUs.title} <span className="gold">{whyUs.titleHighlight}</span> Sigorta Platformu</h2>
-          <p className="section-sub" style={{ margin: "16px auto 0", textAlign: "center" }}>
+          <motion.div variants={fadeUp} className="section-badge">{whyUs.badge}</motion.div>
+          <motion.h2 variants={fadeUp} className="section-title">
+            {whyUs.title} <span className="gold">{whyUs.titleHighlight}</span>
+          </motion.h2>
+          <motion.p variants={fadeUp} className="section-sub">
             {whyUs.subtitle}
-          </p>
+          </motion.p>
         </motion.div>
 
         <motion.div
-          className="grid-4"
-          variants={container}
+          className="whyus-editorial__grid"
+          variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
@@ -91,29 +51,85 @@ export default function WhyUs() {
           {whyUs.features.map(({ icon, title, desc }, idx) => {
             const Icon = iconMap[icon] || Award;
             return (
-              <motion.div key={title} variants={item}>
-                <motion.div
-                  className="card"
-                  style={{ padding: "2.5rem 2rem", display: "flex", flexDirection: "column", gap: "1.25rem", height: "100%" }}
-                  whileHover={{ y: -10, boxShadow: "0 30px 80px rgba(212,160,23,0.15)" }}
-                  transition={{ type: "spring", stiffness: 250, damping: 20 }}
-                >
-                  <motion.div
-                    className="icon-box"
-                    whileHover={{ rotate: 12, scale: 1.15 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 12 }}
-                  >
-                    <Icon size={30} />
-                  </motion.div>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 900, color: "var(--black)" }}>{title}</h3>
-                  <p style={{ color: "var(--gray)", lineHeight: 1.7, fontSize: "0.97rem", fontWeight: 500 }}>{desc}</p>
-                </motion.div>
+              <motion.div key={title} variants={fadeUp} className="whyus-feat">
+                <div className="whyus-feat__top">
+                  <span className="editorial-number">{String(idx + 1).padStart(2, "0")}</span>
+                  <span className="whyus-feat__icon">
+                    <Icon size={20} strokeWidth={1.5} />
+                  </span>
+                </div>
+                <h3 className="whyus-feat__title">{title}</h3>
+                <p className="whyus-feat__desc">{desc}</p>
               </motion.div>
             );
           })}
         </motion.div>
-
       </div>
+
+      <style jsx>{`
+        .whyus-editorial {
+          padding: clamp(64px, 9vw, 128px) 0;
+          background: var(--off-white);
+        }
+        .whyus-editorial__head {
+          max-width: 720px;
+          margin-bottom: clamp(48px, 6vw, 88px);
+        }
+        .whyus-editorial__grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0;
+          border-top: 1px solid var(--hairline);
+        }
+        .whyus-feat {
+          padding: clamp(28px, 3vw, 40px) clamp(20px, 2.5vw, 32px);
+          border-right: 1px solid var(--hairline);
+          background: var(--white);
+        }
+        .whyus-feat:last-child { border-right: 0; }
+        .whyus-feat__top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: clamp(28px, 4vw, 48px);
+        }
+        .whyus-feat__icon {
+          width: 40px; height: 40px;
+          border-radius: 50%;
+          border: 1px solid var(--hairline);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink);
+        }
+        .whyus-feat__title {
+          font-family: var(--font-serif);
+          font-size: clamp(1.2rem, 2vw, 1.45rem);
+          font-weight: 400;
+          color: var(--ink);
+          letter-spacing: -0.015em;
+          line-height: 1.2;
+          margin: 0 0 12px;
+        }
+        .whyus-feat__desc {
+          font-family: var(--font-sans);
+          font-size: 0.93rem;
+          line-height: 1.6;
+          color: var(--muted);
+          margin: 0;
+        }
+
+        @media (max-width: 1024px) {
+          .whyus-editorial__grid { grid-template-columns: repeat(2, 1fr); }
+          .whyus-feat:nth-child(2n) { border-right: 0; }
+          .whyus-feat:nth-child(-n+2) { border-bottom: 1px solid var(--hairline); }
+        }
+        @media (max-width: 640px) {
+          .whyus-editorial__grid { grid-template-columns: 1fr; }
+          .whyus-feat { border-right: 0; border-bottom: 1px solid var(--hairline); }
+          .whyus-feat:last-child { border-bottom: 0; }
+        }
+      `}</style>
     </section>
   );
 }
