@@ -109,7 +109,7 @@ export default function PromoSection() {
 
           {/* Text column */}
           <motion.div variants={slideLeft} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
-            <motion.div className="section-badge" whileHover={{ scale: 1.05 }}>{promo.badge}</motion.div>
+            <div className="section-badge">{promo.badge}</div>
             <h2 className="section-title">{promo.title} <span className="gold">{promo.titleHighlight}</span> Tanımlıyoruz</h2>
             <p className="section-sub" style={{ marginBottom: "36px" }}>
               {promo.subtitle}
@@ -120,43 +120,27 @@ export default function PromoSection() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: "40px" }}
+              style={{ display: "flex", flexDirection: "column", gap: 0, marginBottom: "40px", borderTop: "1px solid var(--hairline)" }}
             >
               {promo.bullets.map((b, i) => (
                 <motion.div
                   key={i}
                   variants={bulletItem}
-                  whileHover={{ x: 8, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 400 }}
-                  style={{ display: "flex", alignItems: "flex-start", gap: 14, cursor: "default" }}
+                  style={{ display: "flex", alignItems: "center", gap: 18, padding: "16px 0", borderBottom: "1px solid var(--hairline)" }}
                 >
-                  <motion.div
-                    initial={{ scale: 0, rotate: -180 }}
-                    whileInView={{ scale: 1, rotate: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.4 + i * 0.12, type: "spring", stiffness: 400, damping: 15 }}
-                    style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, var(--gold), var(--gold-light))", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2, boxShadow: "0 4px 12px rgba(212,160,23,0.3)" }}
-                  >
-                    <Check size={14} color="#fff" strokeWidth={3} />
-                  </motion.div>
-                  <p style={{ fontWeight: 600, color: "var(--dark)", fontSize: "1.05rem", lineHeight: 1.55 }}>{b}</p>
+                  <Check size={18} color="var(--gold-dark)" strokeWidth={1.75} style={{ flexShrink: 0 }} />
+                  <p style={{ fontWeight: 400, color: "var(--ink)", fontSize: "1.02rem", lineHeight: 1.5, fontFamily: "var(--font-sans)", margin: 0 }}>{b}</p>
                 </motion.div>
               ))}
             </motion.div>
 
-            <motion.div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-              <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
-                <Link href="/teklif-al" className="btn btn-gold">Teklif Al</Link>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
-                <Link href="/hakkimizda" className="btn btn-outline" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <motion.span animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 2, repeat: Infinity }}>
-                    <PlayCircle size={20} />
-                  </motion.span>
-                  Daha Fazla
-                </Link>
-              </motion.div>
-            </motion.div>
+            <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "center" }}>
+              <Link href="/teklif-al" className="btn btn-gold">Teklif Al</Link>
+              <Link href="/hakkimizda" style={{ color: "var(--ink)", fontWeight: 500, fontSize: "0.95rem", textDecoration: "none", borderBottom: "1px solid var(--ink)", paddingBottom: 2, display: "inline-flex", alignItems: "center", gap: 6 }}>
+                Daha Fazla
+                <PlayCircle size={16} strokeWidth={1.5} />
+              </Link>
+            </div>
           </motion.div>
 
         </div>
