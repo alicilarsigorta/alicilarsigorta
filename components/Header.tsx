@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, MessageCircle, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
@@ -29,7 +29,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  // Prevent scroll when mobile menu is open
   useEffect(() => {
     if (menuOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
@@ -43,10 +42,9 @@ export default function Header() {
   return (
     <>
       <header className={`header ${scrolled ? "scrolled" : ""}`}>
-        <div className="container" style={{ display: "flex", alignItems: "center", height: "100%", position: "relative" }}>
+        <div className="container header__inner">
 
-          {/* LEFT NAV (Desktop) */}
-          <nav className="desktop-nav" style={{ flex: 1, display: "none" }} id="nav-left">
+          <nav className="header__nav header__nav--left desktop-nav">
             {navLeft.map(link => (
               <Link key={link.href} href={link.href} className={`nav-link ${isActive(link.href) ? "active" : ""}`}>
                 {link.name}
@@ -54,99 +52,60 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* CENTER LOGO */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "flex-start", alignItems: "center", zIndex: 100 }} className="logo-container">
-            <Link href="/" style={{ display: "flex", flexDirection: "row", alignItems: "center", textDecoration: "none", gap: 8 }} className="logo-link">
-              <motion.img
-                src="/logo.png"
-                alt="Alıcılar Sigorta"
-                className="header-logo-img"
-                style={{ width: 44, height: 44, objectFit: "contain" }}
-                whileHover={{ rotate: 10, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              />
-              <span className="header-logo-text" style={{ fontSize: "0.7rem", fontWeight: 900, letterSpacing: "0.18em", color: "var(--gold-dark)", textTransform: "uppercase", whiteSpace: "nowrap" }}>Alıcılar Sigorta</span>
+          <div className="header__logo-wrap">
+            <Link href="/" className="header__logo">
+              <img src="/logo.png" alt="Alıcılar Sigorta" className="header__logo-img" />
+              <span className="header__logo-text">Alıcılar Sigorta</span>
             </Link>
           </div>
 
-          {/* RIGHT NAV (Desktop) */}
-          <nav className="desktop-nav" style={{ flex: 1, justifyContent: "flex-end", display: "none" }} id="nav-right">
+          <nav className="header__nav header__nav--right desktop-nav">
             {navRight.map(link => (
               <Link key={link.href} href={link.href} className={`nav-link ${isActive(link.href) ? "active" : ""}`}>
                 {link.name}
               </Link>
             ))}
-            <div style={{ marginLeft: "1.5rem" }}>
-              <ThemeToggle />
-            </div>
-            <Link href="/teklif-al" className="btn btn-gold" style={{ padding: "0.7rem 1.8rem", fontSize: "0.95rem", borderRadius: "100px", marginLeft: "1.5rem" }}>
+            <span className="header__divider" />
+            <ThemeToggle />
+            <Link href="/teklif-al" className="header__cta">
               Teklif Al
+              <ArrowUpRight size={14} strokeWidth={1.75} />
             </Link>
           </nav>
 
-          {/* MOBILE TOGGLE */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "0.5rem", zIndex: 100 }} className="mobile-toggle">
+          <div className="mobile-toggle">
             <ThemeToggle />
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Menüyü kapat" : "Menüyü aç"}
               aria-expanded={menuOpen}
-              style={{ background: menuOpen ? "var(--cream)" : "transparent", border: "1px solid var(--border)", borderRadius: "50%", width: 44, height: 44, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s", flexShrink: 0 }}
+              className="header__menu-btn"
             >
-              {menuOpen ? <X size={22} color="var(--gold-dark)" /> : <Menu size={22} color="var(--dark)" />}
+              {menuOpen ? <X size={20} strokeWidth={1.75} /> : <Menu size={20} strokeWidth={1.75} />}
             </button>
           </div>
-
-          <style dangerouslySetInnerHTML={{__html: `
-            @media(min-width: 1024px) {
-              #nav-left, #nav-right { display: flex !important; }
-              .logo-container { flex: 0 0 auto !important; position: absolute; left: 50%; transform: translateX(-50%); }
-              .logo-link { margin: 0 !important; flex-direction: column !important; gap: 0 !important; }
-              .header-logo-img { width: 56px !important; height: 56px !important; }
-              .header-logo-text { font-size: 0.65rem !important; letter-spacing: 0.25em !important; margin-top: 2px; }
-              .mobile-toggle { display: none !important; }
-            }
-            @media (max-width: 480px) {
-              .header-logo-text { font-size: 0.62rem !important; letter-spacing: 0.14em !important; }
-              .header-logo-img { width: 38px !important; height: 38px !important; }
-            }
-          `}} />
-
         </div>
       </header>
 
-      {/* STUNNING MOBILE FULLSCREEN MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)", transition: { duration: 0.3 } }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-              background: "rgba(255,255,255,0.97)", zIndex: 99,
-              display: "flex", flexDirection: "column",
-              padding: "calc(var(--header-h) + 1rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 1.5rem) 1.5rem",
-              overflowY: "auto",
-              WebkitOverflowScrolling: "touch"
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="mobile-menu"
           >
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "4px", marginTop: "0.5rem" }}>
+            <div className="mobile-menu__nav">
               {[...navLeft, ...navRight].map((link, i) => (
                 <motion.div
                   key={link.href}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-                  transition={{ delay: i * 0.06, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
+                  transition={{ delay: i * 0.05, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 >
-                  <Link href={link.href} style={{
-                    display: "block", fontSize: "clamp(1.8rem, 7vw, 2.5rem)", fontWeight: 900,
-                    color: isActive(link.href) ? "var(--gold)" : "var(--black)",
-                    padding: "12px 0", textDecoration: "none",
-                    letterSpacing: "-0.03em", lineHeight: 1.1
-                  }}>
+                  <Link href={link.href} className={`mobile-menu__link ${isActive(link.href) ? "is-active" : ""}`}>
                     {link.name}
                   </Link>
                 </motion.div>
@@ -154,30 +113,177 @@ export default function Header() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: 0.3, duration: 0.45 }}
-              style={{ paddingBottom: "1rem", marginTop: "1.5rem" }}
+              transition={{ delay: 0.25, duration: 0.4 }}
+              className="mobile-menu__footer"
             >
-              <Link href="/teklif-al" className="btn btn-gold" style={{ width: "100%", justifyContent: "center", fontSize: "1.05rem", padding: "1rem", borderRadius: "16px", boxShadow: "0 20px 40px var(--gold-glow)" }}>
-                Hemen Ücretsiz Teklif Al
+              <Link href="/teklif-al" className="btn btn-gold mobile-menu__cta">
+                Ücretsiz Teklif Al
+                <ArrowUpRight size={16} strokeWidth={1.75} />
               </Link>
-
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginTop: "0.75rem" }}>
-                <a href="tel:+908501234567" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "var(--cream)", padding: "0.9rem", borderRadius: "14px", textDecoration: "none", color: "var(--dark)", fontWeight: 700, fontSize: "0.95rem", minHeight: 48 }}>
-                  <Phone size={18} color="var(--gold-dark)" />
-                  Ara
-                </a>
-                <a href="https://wa.me/908501234567" target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#e8f7ea", padding: "0.9rem", borderRadius: "14px", textDecoration: "none", color: "#10b981", fontWeight: 700, fontSize: "0.95rem", minHeight: 48 }}>
-                  <MessageCircle size={18} color="#10b981" />
-                  WhatsApp
-                </a>
+              <div className="mobile-menu__contact">
+                <a href="tel:+908501234567"><Phone size={16} strokeWidth={1.75} />Ara</a>
+                <a href="https://wa.me/908501234567" target="_blank" rel="noreferrer"><MessageCircle size={16} strokeWidth={1.75} />WhatsApp</a>
               </div>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style jsx>{`
+        .header__inner {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          position: relative;
+        }
+        .header__nav {
+          flex: 1;
+          display: none;
+          gap: 28px;
+          align-items: center;
+        }
+        .header__nav--left { justify-content: flex-start; }
+        .header__nav--right { justify-content: flex-end; }
+        .header__logo-wrap {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          z-index: 100;
+        }
+        .header__logo {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          text-decoration: none;
+        }
+        .header__logo-img { width: 38px; height: 38px; object-fit: contain; }
+        .header__logo-text {
+          font-family: var(--font-serif);
+          font-size: 1rem;
+          font-weight: 400;
+          color: var(--ink);
+          letter-spacing: -0.01em;
+          white-space: nowrap;
+        }
+        .header__divider {
+          width: 1px;
+          height: 18px;
+          background: var(--hairline);
+          margin: 0 8px;
+        }
+        .header__cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: var(--ink);
+          color: var(--white);
+          padding: 0.6rem 1.1rem;
+          border-radius: 999px;
+          font-family: var(--font-sans);
+          font-size: 0.85rem;
+          font-weight: 500;
+          text-decoration: none;
+          transition: background 0.25s ease, transform 0.25s ease;
+        }
+        .header__cta:hover { background: var(--gold-dark); transform: translateY(-1px); }
+        .mobile-toggle {
+          flex: 1;
+          display: none;
+          justify-content: flex-end;
+          align-items: center;
+          gap: 8px;
+          z-index: 100;
+        }
+        .header__menu-btn {
+          background: transparent;
+          border: 1px solid var(--hairline);
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink);
+          transition: background 0.25s ease, border-color 0.25s ease;
+        }
+        .header__menu-btn:hover { background: var(--cream); border-color: var(--ink); }
+
+        @media (min-width: 1024px) {
+          .header__nav { display: flex !important; }
+          .header__logo-wrap { flex: 0 0 auto; position: absolute; left: 50%; transform: translateX(-50%); }
+          .header__logo { flex-direction: column; gap: 2px; }
+          .header__logo-img { width: 52px; height: 52px; }
+          .header__logo-text { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-dark); font-family: var(--font-sans); font-weight: 600; }
+        }
+        @media (max-width: 1024px) {
+          .mobile-toggle { display: flex; }
+        }
+        @media (max-width: 480px) {
+          .header__logo-text { font-size: 0.92rem; }
+          .header__logo-img { width: 34px; height: 34px; }
+        }
+
+        .mobile-menu {
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: var(--white);
+          z-index: 99;
+          display: flex;
+          flex-direction: column;
+          padding: calc(var(--header-h) + 1.25rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 1.5rem);
+          overflow-y: auto;
+        }
+        .mobile-menu__nav {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 4px;
+          padding-top: 1rem;
+          border-top: 1px solid var(--hairline);
+          padding-block: 24px;
+        }
+        .mobile-menu__link {
+          display: block;
+          font-family: var(--font-serif);
+          font-size: clamp(2rem, 8vw, 3rem);
+          font-weight: 400;
+          color: var(--ink);
+          padding: 14px 0;
+          text-decoration: none;
+          letter-spacing: -0.025em;
+          line-height: 1.1;
+          border-bottom: 1px solid var(--hairline);
+        }
+        .mobile-menu__link.is-active { font-style: italic; color: var(--gold-dark); }
+        .mobile-menu__footer { padding-top: 1.5rem; }
+        .mobile-menu__cta { width: 100% !important; justify-content: center; padding: 1.05rem !important; }
+        .mobile-menu__contact {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+          margin-top: 12px;
+        }
+        .mobile-menu__contact a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          background: var(--cream);
+          padding: 0.95rem;
+          border-radius: var(--radius-md);
+          text-decoration: none;
+          color: var(--ink);
+          font-weight: 500;
+          font-size: 0.95rem;
+          min-height: 48px;
+          border: 1px solid var(--hairline);
+        }
+      `}</style>
     </>
   );
 }
