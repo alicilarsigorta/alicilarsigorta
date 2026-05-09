@@ -1,0 +1,89 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import Sidebar from "@/components/admin/Sidebar";
+import AdminHeader from "@/components/admin/AdminHeader";
+import { InstallPrompt } from "@/components/admin/NotificationCenter";
+import { Toaster } from "sonner";
+import { usePWA, useNotifications } from "@/lib/use-notifications";
+import "./admin.css";
+
+const pageTitles: Record<string, string> = {
+  "/admin": "Dashboard",
+  "/admin/teklifler": "Teklif Yönetimi",
+  "/admin/icerik": "İçerik Yönetimi",
+  "/admin/gorunum": "Görünüm Ayarları",
+  "/admin/ayarlar": "Ayarlar",
+};
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [checking, setChecking] = useState(true);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // PWA & Notifications
+  usePWA();
+  const { requestPermission } = useNotifications();
+
+  // Request notification permission on admin auth
+  useEffect(() => {
+    if (isAuthed) {
+      requestPermission();
+    }
+  }, [isAuthed, requestPermission]);
+
+  // Auth check
+  useEffect(() => {
+    if (pathname === "/admin/login") {
+      setChecking(false);
+      setIsAuthed(false);
+      return;
+    }
+    const auth = sessionStorage.getItem("admin_auth");
+    if (auth !== "true") {
+      router.push("/admin/login");
+    } else {
+      setIsAuthed(true);
+    }
+    setChecking(false);
+  }, [pathname, router]);
+
+  // Login page gets a minimal layout
+  if (pathname === "/admin/login") {
+    return (
+      <>
+        {children}
+        <Toaster position="top-right" richColors theme="dark" />
+      </>
+    );
+  }
+
+  if (checking) {
+    return (
+      <div style={{ minHeight: "100vh", background: "#0c0e14", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="admin-loading-spinner" />
+      </div>
+    );
+  }
+
+  if (!isAuthed) return null;
+
+  const title = pageTitles[pathname] || "Admin Panel";
+
+  return (
+    <div className="admin-layout">
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <main className="admin-main">
+        <InstallPrompt />
+        <AdminHeader title={title} onMenuToggle={() => setSidebarOpen(prev => !prev)} />
+        <div className="admin-content">
+          {children}
+        </div>
+      </main>
+      <Toaster position="top-center" richColors theme="dark" />
+    </div>
+  );
+}

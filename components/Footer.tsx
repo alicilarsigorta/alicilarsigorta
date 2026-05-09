@@ -1,0 +1,115 @@
+"use client";
+
+import Link from "next/link";
+import { Instagram, Linkedin, Twitter, Phone, Mail, MapPin, Shield } from "lucide-react";
+import { useContent } from "@/lib/content-context";
+
+export default function Footer() {
+  const { content } = useContent();
+  const { contact } = content;
+
+  return (
+    <footer className="footer">
+      <div className="container" style={{ paddingTop: "80px", paddingBottom: "40px" }}>
+
+        {/* Top gold line */}
+        <div className="gold-divider" style={{ marginBottom: "60px" }} />
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(12, 1fr)", gap: "3rem 2rem" }}>
+
+          {/* Brand */}
+          <div style={{ gridColumn: "span 4" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(212,160,23,0.1)", border: "1px solid rgba(212,160,23,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="/logo.png" alt="" style={{ width: 28, objectFit: "contain" }} />
+              </div>
+              <div>
+                <div style={{ color: "#fff", fontWeight: 900, fontSize: "1.2rem", letterSpacing: "-0.02em" }}>ALICILAR</div>
+                <div style={{ color: "var(--gold)", fontWeight: 800, fontSize: "0.65rem", letterSpacing: "0.2em" }}>SİGORTA</div>
+              </div>
+            </div>
+            <p style={{ fontSize: "0.95rem", lineHeight: 1.8, marginBottom: 24 }}>
+              Türkiye&apos;nin en güvenilir sigorta karşılaştırma platformu. 20+ şirket, anında teklif, gerçek güvence.
+            </p>
+            <div style={{ display: "flex", gap: 14 }}>
+              {[
+                { Icon: Instagram, link: contact.socialLinks.instagram },
+                { Icon: Twitter, link: contact.socialLinks.twitter },
+                { Icon: Linkedin, link: contact.socialLinks.linkedin },
+              ].map(({ Icon, link }, i) => (
+                <a key={i} href={link} target="_blank" rel="noreferrer" style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.2s", textDecoration: "none" }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,160,23,0.2)") }
+                  onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+                >
+                  <Icon size={18} color="var(--gold)" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Ürünler */}
+          <div style={{ gridColumn: "span 2" }}>
+            <div className="footer-col-title">Ürünler</div>
+            <Link href="/urunlerimiz/trafik-sigortasi" className="footer-link">Trafik Sigortası</Link>
+            <Link href="/urunlerimiz/kasko" className="footer-link">Kasko</Link>
+            <Link href="/urunlerimiz/konut-sigortasi" className="footer-link">Konut Sigortası</Link>
+            <Link href="/urunlerimiz/saglik-sigortasi-fiyatlari" className="footer-link">Sağlık Sigortası</Link>
+            <Link href="/urunlerimiz/dask-sorgulama" className="footer-link">DASK</Link>
+            <Link href="/urunlerimiz/is-yeri-sigortasi" className="footer-link">İş Yeri Sigortası</Link>
+            <Link href="/urunlerimiz/sorumluluk-sigortasi" className="footer-link">Sorumluluk Sigortası</Link>
+            <Link href="/urunlerimiz/seyahat-sigortasi" className="footer-link">Seyahat Sigortası</Link>
+          </div>
+
+          {/* Kurumsal */}
+          <div style={{ gridColumn: "span 2" }}>
+            <div className="footer-col-title">Kurumsal</div>
+            <Link href="/hakkimizda" className="footer-link">Hakkımızda</Link>
+            <Link href="/vizyon-misyon" className="footer-link">Vizyon & Misyon</Link>
+            <Link href="/basinda-biz" className="footer-link">Basında Biz</Link>
+            <Link href="/insan-kaynaklari" className="footer-link">İnsan Kaynakları</Link>
+            <Link href="/sss" className="footer-link">Sıkça Sorulan Sorular</Link>
+          </div>
+
+          {/* Yasal */}
+          <div style={{ gridColumn: "span 2" }}>
+            <div className="footer-col-title">Yasal</div>
+            <Link href="/kvkk" className="footer-link">KVKK Metni</Link>
+            <Link href="/cerez-politikasi" className="footer-link">Çerez Politikası</Link>
+            <Link href="/kullanim-sartlari" className="footer-link">Kullanım Şartları</Link>
+          </div>
+
+          {/* İletişim */}
+          <div style={{ gridColumn: "span 2" }}>
+            <div className="footer-col-title">İletişim</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <Phone size={16} color="var(--gold)" style={{ marginTop: 2, flexShrink: 0 }} />
+                <span style={{ fontSize: "0.95rem" }}>{contact.phone}</span>
+              </div>
+              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <Mail size={16} color="var(--gold)" style={{ marginTop: 2, flexShrink: 0 }} />
+                <span style={{ fontSize: "0.9rem" }}>{contact.email}</span>
+              </div>
+              <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                <MapPin size={16} color="var(--gold)" style={{ marginTop: 2, flexShrink: 0 }} />
+                <span style={{ fontSize: "0.9rem" }}>{contact.address}</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom */}
+        <div className="gold-divider" style={{ margin: "40px 0 30px" }} />
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16, fontSize: "0.85rem" }}>
+          <span>© {new Date().getFullYear()} Alıcılar Sigorta Aracılık Hizmetleri Ltd. Şti. Tüm hakları saklıdır.</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--gold)" }}>
+            <Shield size={16} />
+            <span style={{ fontWeight: 700 }}>SEGEM Lisanslı & Güvenli</span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+}
