@@ -44,55 +44,53 @@ export default function LoadingScreen() {
           }}
           className="dark:bg-surface" // Dark mode destekli
         >
-          <div style={{ position: "relative", width: 140, height: 140, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {/* Pulse Glow Effect (Güven Hissi) */}
+          <div style={{ position: "relative", width: 160, height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {/* Pulse Glow Effect */}
             <motion.div
-              initial={{ scale: 0.5, opacity: 0.5 }}
-              animate={{ scale: 1.5, opacity: 0 }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "easeOut" }}
+              initial={{ scale: 0.6, opacity: 0.5 }}
+              animate={{ scale: 1.6, opacity: 0 }}
+              transition={{ repeat: Infinity, duration: 1.8, ease: "easeOut" }}
               style={{
                 position: "absolute",
                 inset: 0,
                 background: "var(--gold)",
                 borderRadius: "50%",
-                filter: "blur(20px)",
+                filter: "blur(28px)",
+                opacity: 0.4,
                 zIndex: 0
               }}
             />
-            
-            {/* Kalkan ve Onay İşareti (Sigorta / Koruma Konsepti) */}
-            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--gold-dark)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ zIndex: 10, position: "relative" }}>
-              <motion.path
-                d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
-                initial={{ pathLength: 0, fill: "rgba(212, 175, 55, 0)" }}
-                animate={{ pathLength: 1, fill: "rgba(212, 175, 55, 0.15)" }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
-              />
-              <motion.path
-                d="M9 12l2 2 4-4"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 1, ease: "easeOut" }}
-                strokeWidth="2.5"
-              />
-            </svg>
+
+            {/* Brand Logo */}
+            <motion.img
+              src="/logo-dark.png"
+              alt="Alıcılar Sigorta"
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                width: 130,
+                height: 130,
+                objectFit: "contain",
+                position: "relative",
+                zIndex: 10,
+                filter: "drop-shadow(0 8px 24px rgba(201, 164, 73, 0.35))",
+              }}
+            />
           </div>
 
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.5 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
             style={{
-              marginTop: 32,
+              marginTop: 28,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 12
+              gap: 14
             }}
           >
-            <h2 style={{ fontSize: "1.7rem", fontWeight: 900, color: "var(--text-main)", letterSpacing: "0.05em", margin: 0 }} className="text-text-main">
-              ALICILAR <span className="text-gold-dark">SİGORTA</span>
-            </h2>
             <div style={{ display: "flex", gap: 6 }}>
               {[0, 1, 2].map((i) => (
                 <motion.div

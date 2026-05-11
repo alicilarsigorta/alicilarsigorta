@@ -24,17 +24,22 @@ const PARTNER_DOMAINS: Record<string, string> = {
   "Bereket Sigorta": "bereketsigorta.com.tr",
 };
 
-function logoUrl(name: string): string | null {
+function logoSources(name: string): string[] {
   const domain = PARTNER_DOMAINS[name];
-  if (!domain) return null;
-  return `https://logo.clearbit.com/${domain}?size=200`;
+  if (!domain) return [];
+  return [
+    `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+    `https://icons.duckduckgo.com/ip3/${domain}.ico`,
+    `https://logo.clearbit.com/${domain}?size=200`,
+  ];
 }
 
 function PartnerItem({ name }: { name: string }) {
-  const [errored, setErrored] = useState(false);
-  const url = logoUrl(name);
+  const sources = logoSources(name);
+  const [srcIndex, setSrcIndex] = useState(0);
+  const [failed, setFailed] = useState(false);
 
-  if (!url || errored) {
+  if (sources.length === 0 || failed) {
     return (
       <div className="partner-card">
         <span className="partner-card__text">{name}</span>
@@ -43,14 +48,18 @@ function PartnerItem({ name }: { name: string }) {
   }
 
   return (
-    <div className="partner-card">
+    <div className="partner-card" title={name}>
       <img
-        src={url}
+        src={sources[srcIndex]}
         alt={name}
         loading="lazy"
-        onError={() => setErrored(true)}
+        onError={() => {
+          if (srcIndex + 1 < sources.length) setSrcIndex(srcIndex + 1);
+          else setFailed(true);
+        }}
         className="partner-card__img"
       />
+      <span className="partner-card__name">{name}</span>
     </div>
   );
 }
@@ -88,44 +97,56 @@ export default function PartnerMarquee() {
 
         .partner-card {
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 18px 36px;
+          gap: 10px;
+          padding: 18px 28px;
           background: var(--white);
           border: 1px solid var(--border);
-          border-radius: 20px;
-          min-width: 200px;
-          height: 96px;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+          border-radius: 18px;
+          min-width: 180px;
+          height: 110px;
+          box-shadow: 0 1px 3px rgba(35,36,39,0.04), 0 8px 24px rgba(35,36,39,0.04);
           transition: all 0.3s ease;
           flex-shrink: 0;
         }
         .partner-card__img {
-          max-width: 130px;
-          max-height: 56px;
-          width: auto;
-          height: auto;
+          width: 40px;
+          height: 40px;
           object-fit: contain;
-          filter: grayscale(100%) contrast(0.95);
-          opacity: 0.75;
+          filter: grayscale(100%) contrast(0.9);
+          opacity: 0.7;
           transition: filter 0.3s ease, opacity 0.3s ease;
         }
-        .partner-card__text {
-          font-weight: 900;
-          font-size: 1.05rem;
-          color: var(--black);
+        .partner-card__name {
+          font-family: 'Outfit', sans-serif;
+          font-weight: 700;
+          font-size: 0.82rem;
+          color: var(--gray);
           white-space: nowrap;
-          letter-spacing: -0.02em;
+          letter-spacing: 0.02em;
+          transition: color 0.3s ease;
+        }
+        .partner-card__text {
+          font-weight: 800;
+          font-size: 1rem;
+          color: var(--dark);
+          white-space: nowrap;
+          letter-spacing: -0.01em;
         }
         @media (hover: hover) {
           .partner-card:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(212,160,23,0.15);
+            border-color: var(--border-gold);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(201,164,73,0.12);
           }
           .partner-card:hover .partner-card__img {
             filter: grayscale(0%) contrast(1);
             opacity: 1;
+          }
+          .partner-card:hover .partner-card__name {
+            color: var(--gold-dark);
           }
           .partner-card:hover .partner-card__text {
             color: var(--gold-dark);
@@ -136,12 +157,14 @@ export default function PartnerMarquee() {
           .partner-marquee-title { font-size: 0.72rem; letter-spacing: 2px; margin-bottom: 28px; }
           .partner-marquee-fade-l, .partner-marquee-fade-r { width: 60px; }
           .partner-card {
-            padding: 14px 24px;
-            min-width: 160px;
-            height: 80px;
+            padding: 14px 20px;
+            min-width: 150px;
+            height: 96px;
+            gap: 8px;
           }
-          .partner-card__img { max-width: 110px; max-height: 44px; }
-          .partner-card__text { font-size: 0.9rem; }
+          .partner-card__img { width: 32px; height: 32px; }
+          .partner-card__name { font-size: 0.75rem; }
+          .partner-card__text { font-size: 0.88rem; }
         }
       `}} />
     </div>
