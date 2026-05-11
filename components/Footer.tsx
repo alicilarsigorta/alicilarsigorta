@@ -21,7 +21,7 @@ export default function Footer() {
           <div className="footer-col-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(212,160,23,0.1)", border: "1px solid rgba(212,160,23,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <img src="/logo.png" alt="" style={{ width: 28, objectFit: "contain" }} />
+                <img src="/logo-dark.png" alt="" style={{ width: 28, objectFit: "contain" }} />
               </div>
               <div>
                 <div style={{ color: "#fff", fontWeight: 900, fontSize: "1.2rem", letterSpacing: "-0.02em" }}>ALICILAR</div>

@@ -41,7 +41,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
         {/* Brand */}
         <div className="admin-sidebar-brand">
-          <img src="/logo.png" alt="Alıcılar Sigorta" />
+          <img src="/logo-dark.png" alt="Alıcılar Sigorta" />
           <div className="admin-sidebar-brand-text">
             <span className="admin-sidebar-brand-name">ALICILAR</span>
             <span className="admin-sidebar-brand-sub">Admin Panel</span>

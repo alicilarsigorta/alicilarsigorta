@@ -297,7 +297,7 @@ export default function BlogPage() {
                         }}
                       >
                         <Image
-                          src={featuredBlog.image || "/logo.png"}
+                          src={featuredBlog.image || "/logo-dark.png"}
                           alt={featuredBlog.title}
                           fill
                           style={{
@@ -474,7 +474,7 @@ export default function BlogPage() {
                           }}
                         >
                           <Image
-                            src={blog.image || "/logo.png"}
+                            src={blog.image || "/logo-dark.png"}
                             alt={blog.title}
                             fill
                             style={{
