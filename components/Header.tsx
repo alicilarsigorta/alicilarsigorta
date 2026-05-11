@@ -58,7 +58,7 @@ export default function Header() {
           <div style={{ flex: 1, display: "flex", justifyContent: "flex-start", alignItems: "center", zIndex: 100 }} className="logo-container">
             <Link href="/" style={{ display: "flex", flexDirection: "row", alignItems: "center", textDecoration: "none", gap: 8 }} className="logo-link">
               <motion.img
-                src="/logo.png"
+                src="/logo-dark.png"
                 alt="Alıcılar Sigorta"
                 className="header-logo-img"
                 style={{ width: 44, height: 44, objectFit: "contain" }}
