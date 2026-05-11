@@ -32,12 +32,12 @@
 
   --radius-lg: 24px;
   --radius-xl: 32px;
-  --header-h: 88px;
+  --header-h: 128px;
 }
 
 @media (max-width: 768px) {
   :root {
-    --header-h: 68px;
+    --header-h: 96px;
     --radius-lg: 20px;
     --radius-xl: 24px;
   }

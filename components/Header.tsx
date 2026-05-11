@@ -61,7 +61,7 @@ export default function Header() {
                 src="/logo-dark.png"
                 alt="Alıcılar Sigorta"
                 className="header-logo-img"
-                style={{ width: 64, height: 64, objectFit: "contain" }}
+                style={{ width: 96, height: 96, objectFit: "contain" }}
                 whileHover={{ rotate: 10, scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300 }}
               />
@@ -101,11 +101,11 @@ export default function Header() {
               #nav-left, #nav-right { display: flex !important; }
               .logo-container { flex: 0 0 auto !important; position: absolute; left: 50%; transform: translateX(-50%); }
               .logo-link { margin: 0 !important; flex-direction: column !important; gap: 0 !important; }
-              .header-logo-img { width: 80px !important; height: 80px !important; }
+              .header-logo-img { width: 120px !important; height: 120px !important; }
               .mobile-toggle { display: none !important; }
             }
             @media (max-width: 480px) {
-              .header-logo-img { width: 56px !important; height: 56px !important; }
+              .header-logo-img { width: 80px !important; height: 80px !important; }
             }
           `}} />
 
