@@ -49,7 +49,7 @@ export default function Home() {
       <WhyUs />
 
       {/* CTA Banner — Animated */}
-      <section className="section-sm" style={{ background: "#2a2a2e", position: "relative", overflow: "hidden" }}>
+      <section className="section-sm" style={{ background: "linear-gradient(135deg, #2a2b2f 0%, #3a3b40 100%)", position: "relative", overflow: "hidden" }}>
         {/* Animated glow */}
         <motion.div
           animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15] }}
