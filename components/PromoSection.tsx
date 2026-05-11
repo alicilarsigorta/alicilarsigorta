@@ -120,7 +120,7 @@ export default function PromoSection() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: "40px" }}
+              style={{ display: promo.bullets.length ? "flex" : "none", flexDirection: "column", gap: 16, marginBottom: "40px" }}
             >
               {promo.bullets.map((b, i) => (
                 <motion.div
