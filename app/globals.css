@@ -32,12 +32,12 @@
 
   --radius-lg: 24px;
   --radius-xl: 32px;
-  --header-h: 128px;
+  --header-h: 88px;
 }
 
 @media (max-width: 768px) {
   :root {
-    --header-h: 96px;
+    --header-h: 68px;
     --radius-lg: 20px;
     --radius-xl: 24px;
   }
@@ -321,7 +321,9 @@ input, select, textarea {
   -webkit-backdrop-filter: blur(22px) saturate(140%);
   border-bottom: 1px solid transparent;
   transition: all 0.3s ease;
+  overflow: visible;
 }
+.header .container { overflow: visible; }
 
 .header.scrolled {
   background: rgba(247, 247, 248, 0.95);
