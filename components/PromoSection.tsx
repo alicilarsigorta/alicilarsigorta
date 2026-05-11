@@ -110,8 +110,8 @@ export default function PromoSection() {
           {/* Text column */}
           <motion.div variants={slideLeft} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-80px" }}>
             <motion.div className="section-badge" whileHover={{ scale: 1.05 }}>{promo.badge}</motion.div>
-            <h2 className="section-title">{promo.title} <span className="gold">{promo.titleHighlight}</span> Tanımlıyoruz</h2>
-            <p className="section-sub" style={{ marginBottom: "36px" }}>
+            <h2 className="section-title">{promo.title} <span className="gold">{promo.titleHighlight}</span></h2>
+            <p className="section-sub" style={{ marginBottom: "36px", whiteSpace: "pre-line" }}>
               {promo.subtitle}
             </p>
 

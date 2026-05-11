@@ -202,9 +202,9 @@ export const defaultContent: SiteContent = {
 
   promo: {
     badge: "● Neden Alıcılar Sigorta?",
-    title: "Sigortacılığı",
-    titleHighlight: "Yeniden",
-    subtitle: "Karmaşık sigorta süreçlerini ortadan kaldırarak; hız, şeffaflık ve güveni bir arada sunuyoruz.",
+    title: "Karabük'te Tamamlayıcı Sağlık Sigortasında Güçlü Çözüm Ortağı:",
+    titleHighlight: "ALICILAR SİGORTA",
+    subtitle: "Karabük merkezli hizmet anlayışıyla faaliyet gösteren ALICILAR SİGORTA, Tamamlayıcı Sağlık Sigortası başta olmak üzere sigortacılık alanında hem yerel hem de Türkiye genelinde müşterilerine güvenilir çözümler sunmaktadır.\n\nKarabük'te güçlü müşteri ağı ve güven odaklı hizmet anlayışıyla öne çıkan acentemiz, aynı zamanda online ve uzaktan hızlı poliçe hizmetleri sayesinde Türkiye'nin dört bir yanındaki müşterilerine ulaşmaktadır.\n\nUzman danışman kadromuz ile ihtiyaçlarınıza en uygun Tamamlayıcı Sağlık Sigortası seçeneklerini sunuyor, özel hastanelerde yüksek maliyetlerle karşılaşmadan kaliteli sağlık hizmetine erişmenize yardımcı oluyoruz.\n\nMüşteri memnuniyetini ön planda tutan yaklaşımımız, hızlı teklif süreçlerimiz ve satış sonrası desteğimiz ile sigortayı daha kolay, güvenilir ve ulaşılabilir hale getiriyoruz. Siz de sağlığınızı ve bütçenizi güvence altına almak için ALICILAR SİGORTA güvencesiyle tanışın.",
     bullets: [
       "20'den fazla güvenilir sigorta şirketiyle anlaşmalıyız.",
       "Gizli komisyon veya sürpriz ücret kesinlikle yoktur.",
