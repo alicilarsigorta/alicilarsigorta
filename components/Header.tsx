@@ -61,11 +61,10 @@ export default function Header() {
                 src="/logo-dark.png"
                 alt="Alıcılar Sigorta"
                 className="header-logo-img"
-                style={{ width: 44, height: 44, objectFit: "contain" }}
+                style={{ width: 64, height: 64, objectFit: "contain" }}
                 whileHover={{ rotate: 10, scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300 }}
               />
-              <span className="header-logo-text" style={{ fontSize: "0.7rem", fontWeight: 900, letterSpacing: "0.18em", color: "var(--gold-dark)", textTransform: "uppercase", whiteSpace: "nowrap" }}>Alıcılar Sigorta</span>
             </Link>
           </div>
 
@@ -102,13 +101,11 @@ export default function Header() {
               #nav-left, #nav-right { display: flex !important; }
               .logo-container { flex: 0 0 auto !important; position: absolute; left: 50%; transform: translateX(-50%); }
               .logo-link { margin: 0 !important; flex-direction: column !important; gap: 0 !important; }
-              .header-logo-img { width: 56px !important; height: 56px !important; }
-              .header-logo-text { font-size: 0.65rem !important; letter-spacing: 0.25em !important; margin-top: 2px; }
+              .header-logo-img { width: 80px !important; height: 80px !important; }
               .mobile-toggle { display: none !important; }
             }
             @media (max-width: 480px) {
-              .header-logo-text { font-size: 0.62rem !important; letter-spacing: 0.14em !important; }
-              .header-logo-img { width: 38px !important; height: 38px !important; }
+              .header-logo-img { width: 56px !important; height: 56px !important; }
             }
           `}} />
 

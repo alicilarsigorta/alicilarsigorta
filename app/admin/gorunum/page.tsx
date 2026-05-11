@@ -5,7 +5,7 @@ import { Image, Upload, Palette, RotateCcw, Save } from "lucide-react";
 import { toast } from "sonner";
 
 export default function GorunumPage() {
-  const [logo, setLogo] = useState("/logo.png");
+  const [logo, setLogo] = useState("/logo-dark.png");
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

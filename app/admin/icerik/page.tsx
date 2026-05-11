@@ -536,7 +536,7 @@ export default function IcerikPage() {
         <button
           className="admin-btn admin-btn-secondary admin-btn-sm"
           onClick={() => setBlogs([...blogs, {
-            id: `blog-${Date.now()}`, slug: "yeni-blog", title: "Yeni Blog", summary: "", content: "<p>İçerik buraya...</p>", image: "/logo.png", date: new Date().toISOString().split('T')[0], author: "Admin", category: "Genel"
+            id: `blog-${Date.now()}`, slug: "yeni-blog", title: "Yeni Blog", summary: "", content: "<p>İçerik buraya...</p>", image: "/logo-dark.png", date: new Date().toISOString().split('T')[0], author: "Admin", category: "Genel"
           }])}
           style={{ marginBottom: 12 }}
         >
