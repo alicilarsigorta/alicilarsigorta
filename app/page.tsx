@@ -49,7 +49,7 @@ export default function Home() {
       <WhyUs />
 
       {/* CTA Banner — Animated */}
-      <section className="section-sm" style={{ background: "var(--black)", position: "relative", overflow: "hidden" }}>
+      <section className="section-sm" style={{ background: "#2a2a2e", position: "relative", overflow: "hidden" }}>
         {/* Animated glow */}
         <motion.div
           animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15] }}
@@ -81,16 +81,21 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.div
-              className="section-badge"
-              style={{ background: "rgba(212,160,23,0.1)", borderColor: "rgba(212,160,23,0.3)", color: "var(--gold-light)" }}
-              whileHover={{ scale: 1.08 }}
-            >
-              <motion.span animate={{ rotate: [0, 360] }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }}>
-                <Sparkles size={14} />
-              </motion.span>
-              Hemen Başlayın
-            </motion.div>
+            <motion.img
+              src="/logo-dark.png"
+              alt="Alıcılar Sigorta"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                width: "clamp(140px, 18vw, 200px)",
+                height: "auto",
+                margin: "0 auto 32px",
+                display: "block",
+                filter: "drop-shadow(0 10px 40px rgba(212,160,23,0.25))",
+              }}
+            />
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", marginBottom: 20, lineHeight: 1.1 }}>
               Güvenliğiniz İçin <span style={{ background: "linear-gradient(135deg, var(--gold), var(--gold-light))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block" }}>Bir Adım Uzaktasınız</span>
             </h2>
