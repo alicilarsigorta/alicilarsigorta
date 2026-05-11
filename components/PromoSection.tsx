@@ -42,8 +42,8 @@ export default function PromoSection() {
               whileHover={{ scale: 1.02, boxShadow: "0 40px 100px rgba(212,160,23,0.2)" }}
               style={{ position: "absolute", top: 0, right: 0, width: "85%", height: "80%", borderRadius: 32, overflow: "hidden", border: "2px solid var(--border)", boxShadow: "0 30px 80px rgba(212,160,23,0.12)", transition: "box-shadow 0.4s" }}
             >
-              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg, var(--cream) 0%, #fdf4dc 100%)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16 }}>
-                <img src="/promo-1.png" alt="Tanıtım Görseli" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.currentTarget.style.display = "none"; }} />
+              <div style={{ width: "100%", height: "100%", background: "var(--cream)", position: "relative" }}>
+                <img src="/hastane.jpg" alt="Hastane" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.currentTarget.style.display = "none"; }} />
               </div>
               <motion.div
                 initial={{ x: -40, opacity: 0 }}
@@ -68,8 +68,8 @@ export default function PromoSection() {
               whileHover={{ scale: 1.03 }}
               style={{ position: "absolute", bottom: 0, left: 0, width: "55%", height: "52%", borderRadius: 28, overflow: "hidden", border: "8px solid var(--white)", boxShadow: "0 30px 60px rgba(0,0,0,0.12)" }}
             >
-              <div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg, #111 0%, #333 100%)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <img src="/promo-2.png" alt="Detay Görseli" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.currentTarget.style.display = "none"; }} />
+              <div style={{ width: "100%", height: "100%", background: "#111", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="/hastane2.jpg" alt="Hastane Detay" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.currentTarget.style.display = "none"; }} />
               </div>
             </motion.div>
 
