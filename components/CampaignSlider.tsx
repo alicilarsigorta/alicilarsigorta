@@ -100,25 +100,29 @@ export default function CampaignSlider() {
 
               {/* Right image */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.92, x: 40 }}
+                initial={{ opacity: 0, scale: 0.95, x: 30 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.25, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
                 className="campaign-image hide-on-mobile"
               >
-                <motion.div
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
-                  style={{ width: "100%", height: "100%", position: "relative" }}
-                >
-                  <Image
-                    src={slide.image}
-                    alt={slide.title}
-                    fill
-                    sizes="(max-width: 1024px) 42vw, 540px"
-                    style={{ objectFit: "contain", objectPosition: "center", filter: "drop-shadow(0 24px 50px rgba(0,0,0,0.16))" }}
-                    priority
-                  />
-                </motion.div>
+                <div className="campaign-image-frame">
+                  <div className="campaign-image-bg" />
+                  <motion.div
+                    animate={{ y: [0, -6, 0] }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+                    className="campaign-image-inner"
+                  >
+                    <Image
+                      src={slide.image}
+                      alt={slide.title}
+                      fill
+                      sizes="(max-width: 1024px) 42vw, 540px"
+                      style={{ objectFit: "contain", objectPosition: "center", filter: "drop-shadow(0 24px 40px rgba(0,0,0,0.18))" }}
+                      priority
+                    />
+                  </motion.div>
+                  <div className="campaign-image-shine" />
+                </div>
               </motion.div>
             </motion.div>
           </AnimatePresence>
@@ -160,11 +164,12 @@ export default function CampaignSlider() {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
-        .campaign-stage { position: relative; height: 480px; }
+        .campaign-stage { position: relative; height: 520px; }
         .campaign-slide {
           position: absolute; inset: 20px;
-          padding: 56px 64px;
-          display: flex; align-items: center;
+          padding: 0;
+          display: grid; grid-template-columns: 1.05fr 1fr;
+          align-items: stretch;
           border-radius: 28px;
           overflow: hidden;
           box-shadow: 0 30px 80px rgba(17,17,17,0.08);
@@ -175,7 +180,12 @@ export default function CampaignSlider() {
           background: radial-gradient(circle, rgba(212,160,23,0.18) 0%, transparent 65%);
           pointer-events: none;
         }
-        .campaign-text { max-width: 56%; position: relative; z-index: 5; }
+        .campaign-text {
+          position: relative; z-index: 5;
+          padding: 56px 56px 56px 64px;
+          display: flex; flex-direction: column; justify-content: center;
+          max-width: 100%;
+        }
         .campaign-tag {
           display: inline-flex; align-items: center; gap: 10px;
           background: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
@@ -208,10 +218,42 @@ export default function CampaignSlider() {
         .campaign-counter strong { color: var(--dark); font-weight: 900; font-size: 1.1rem; }
         .campaign-counter-sep { width: 28px; height: 1px; background: var(--border); }
         .campaign-image {
-          position: absolute; right: 3%; top: 50%; transform: translateY(-50%);
-          width: 42%; height: 88%;
+          position: relative;
           z-index: 4;
-          padding: 8px;
+          padding: 32px 40px;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .campaign-image-frame {
+          position: relative;
+          width: 100%; height: 100%;
+          border-radius: 22px;
+          background: linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.25) 100%);
+          border: 1px solid rgba(212,160,23,0.25);
+          overflow: hidden;
+          backdrop-filter: blur(6px);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 20px 50px rgba(17,17,17,0.06);
+        }
+        .campaign-image-bg {
+          position: absolute; inset: 0;
+          background:
+            radial-gradient(circle at 30% 30%, rgba(212,160,23,0.18), transparent 55%),
+            radial-gradient(circle at 70% 80%, rgba(212,160,23,0.10), transparent 60%);
+          pointer-events: none;
+        }
+        .campaign-image-inner {
+          position: absolute; inset: 14px;
+        }
+        .campaign-image-shine {
+          position: absolute; top: 0; left: -40%; width: 60%; height: 100%;
+          background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+          transform: skewX(-18deg);
+          pointer-events: none;
+          animation: campaign-shine 6s ease-in-out infinite;
+        }
+        @keyframes campaign-shine {
+          0%, 100% { left: -40%; opacity: 0; }
+          40% { left: 110%; opacity: 1; }
+          41%, 99% { left: 110%; opacity: 0; }
         }
 
         .campaign-pagination {
@@ -263,21 +305,21 @@ export default function CampaignSlider() {
         .campaign-arrow:hover { transform: scale(1.08); background: #fff; }
 
         @media (max-width: 1024px) {
-          .campaign-slide { padding: 44px 40px; }
-          .campaign-text { max-width: 58%; }
-          .campaign-image { width: 38%; height: 82%; }
+          .campaign-stage { height: 460px; }
+          .campaign-slide { grid-template-columns: 1.1fr 1fr; }
+          .campaign-text { padding: 40px 32px 40px 44px; }
+          .campaign-image { padding: 24px 28px; }
         }
         @media (max-width: 768px) {
           .campaign-stage { height: auto; }
           .campaign-slider { padding: 0 12px; }
           .campaign-slide {
             position: relative !important; inset: 0 !important;
-            padding: 28px 22px 36px !important;
+            grid-template-columns: 1fr !important;
             border-radius: 22px !important;
             min-height: 320px;
-            flex-direction: column;
           }
-          .campaign-text { max-width: 100% !important; }
+          .campaign-text { padding: 28px 22px 32px !important; }
           .campaign-desc { font-size: 0.98rem !important; margin-bottom: 22px; }
           .campaign-image { display: none; }
           .campaign-controls { display: none; }
