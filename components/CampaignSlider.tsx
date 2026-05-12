@@ -106,7 +106,7 @@ export default function CampaignSlider() {
                 className="campaign-image hide-on-mobile"
               >
                 <motion.div
-                  animate={{ y: [0, -14, 0] }}
+                  animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut" }}
                   style={{ width: "100%", height: "100%", position: "relative" }}
                 >
@@ -114,7 +114,8 @@ export default function CampaignSlider() {
                     src={slide.image}
                     alt={slide.title}
                     fill
-                    style={{ objectFit: "contain", filter: "drop-shadow(0 30px 60px rgba(0,0,0,0.18))" }}
+                    sizes="(max-width: 1024px) 42vw, 540px"
+                    style={{ objectFit: "contain", objectPosition: "center", filter: "drop-shadow(0 24px 50px rgba(0,0,0,0.16))" }}
                     priority
                   />
                 </motion.div>
@@ -208,8 +209,9 @@ export default function CampaignSlider() {
         .campaign-counter-sep { width: 28px; height: 1px; background: var(--border); }
         .campaign-image {
           position: absolute; right: 3%; top: 50%; transform: translateY(-50%);
-          width: 46%; height: 116%;
+          width: 42%; height: 88%;
           z-index: 4;
+          padding: 8px;
         }
 
         .campaign-pagination {
@@ -262,8 +264,8 @@ export default function CampaignSlider() {
 
         @media (max-width: 1024px) {
           .campaign-slide { padding: 44px 40px; }
-          .campaign-text { max-width: 60%; }
-          .campaign-image { width: 42%; height: 108%; }
+          .campaign-text { max-width: 58%; }
+          .campaign-image { width: 38%; height: 82%; }
         }
         @media (max-width: 768px) {
           .campaign-stage { height: auto; }
