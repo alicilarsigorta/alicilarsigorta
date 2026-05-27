@@ -71,9 +71,11 @@ export default function PartnerMarquee() {
 
   return (
     <div className="partner-marquee-wrap" style={{ borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", overflow: "hidden", background: "var(--off-white)" }}>
-      <p className="partner-marquee-title" style={{ textAlign: "center", fontWeight: 900, textTransform: "uppercase", color: "var(--gold-dark)" }}>
-        TÜRKİYE&apos;NİN EN GÜÇLÜ SİGORTA AĞI
-      </p>
+      <div className="partner-marquee-title-wrap">
+        <span className="eyebrow" style={{ margin: 0 }}>
+          Türkiye'nin en güçlü sigorta ağı · 20+ anlaşmalı şirket
+        </span>
+      </div>
 
       <div style={{ display: "flex", overflow: "hidden", position: "relative" }}>
         <div className="partner-marquee-fade-l" style={{ position: "absolute", top: 0, left: 0, bottom: 0, background: "linear-gradient(to right, var(--off-white), transparent)", zIndex: 2 }} />
@@ -92,7 +94,7 @@ export default function PartnerMarquee() {
 
       <style dangerouslySetInnerHTML={{__html: `
         .partner-marquee-wrap { padding: 80px 0; }
-        .partner-marquee-title { font-size: 0.85rem; letter-spacing: 3px; margin-bottom: 48px; padding: 0 1rem; }
+        .partner-marquee-title-wrap { display: flex; justify-content: center; margin-bottom: 48px; padding: 0 1rem; text-align: center; }
         .partner-marquee-fade-l, .partner-marquee-fade-r { width: 150px; }
 
         .partner-card {
@@ -154,7 +156,7 @@ export default function PartnerMarquee() {
         }
         @media (max-width: 768px) {
           .partner-marquee-wrap { padding: 48px 0; }
-          .partner-marquee-title { font-size: 0.72rem; letter-spacing: 2px; margin-bottom: 28px; }
+          .partner-marquee-title-wrap { margin-bottom: 28px; }
           .partner-marquee-fade-l, .partner-marquee-fade-r { width: 60px; }
           .partner-card {
             padding: 14px 20px;

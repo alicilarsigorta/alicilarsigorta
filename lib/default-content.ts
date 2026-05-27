@@ -105,16 +105,18 @@ export interface SiteContent {
 
 export const defaultContent: SiteContent = {
   hero: {
-    badge: "TÜRK VİZYONUNUN SİGORTA LİDERİ",
-    title: "En Değerliniz",
-    titleHighlight: "Bizimle Güvende.",
-    subtitle: "Kusursuz bir deneyimle Türkiye'nin en seçkin 20+ sigorta markasını aynı ekranda karşılaştırın, size özel tasarlanan VIP poliçeye dakikalar içinde sahip olun.",
-    ctaText: "Hemen Teklif Al",
+    badge: "TÜRKİYE'NİN GÜVENİLİR SİGORTA OTORİTESİ",
+    title: "Geleceğinizi",
+    titleHighlight: "güvenceye alın",
+    subtitle: "20'den fazla lider sigorta şirketinin tekliflerini tek ekranda karşılaştırın, size en uygun poliçeyi dakikalar içinde edinin. Şeffaf, denetimli ve %100 dijital.",
+    ctaText: "Ücretsiz Teklif Al",
     stats: [
-      { value: "20+", label: "Sigorta Şirketi" },
-      { value: "500K", label: "Mutlu Müşteri" },
-      { value: "%99", label: "Memnuniyet" },
-      { value: "7/24", label: "VIP Destek" },
+      { value: "1.247.000+", label: "Koruma Altındaki Hayat" },
+      { value: "20+", label: "Anlaşmalı Şirket" },
+      { value: "₺2,4M", label: "Aylık Hasar Ödemesi" },
+      { value: "4,9/5", label: "Müşteri Memnuniyeti" },
+      { value: "%99,2", label: "Onay Oranı" },
+      { value: "7/24", label: "Uzman Destek" },
     ],
   },
 

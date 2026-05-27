@@ -30,9 +30,9 @@ export default function FAQ() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{ textAlign: "center", marginBottom: 60 }}
         >
-          <div className="section-badge">● SSS</div>
-          <h2 className="section-title">Merak Ettiğiniz <span className="gold">Her Şey</span></h2>
-          <p className="section-sub" style={{ margin: "16px auto 0", textAlign: "center" }}>Sigortacılık hakkında en çok sorulan sorular ve cevapları.</p>
+          <span className="eyebrow">Sıkça Sorulan Sorular</span>
+          <h2 className="section-title">Merak ettiğiniz <span className="gold">her şey</span></h2>
+          <p className="section-sub" style={{ margin: "20px auto 0", textAlign: "center" }}>Sigortacılık hakkında en çok sorulan sorular — uzman ekibimizden net açıklamalar.</p>
         </motion.div>
 
         <motion.div
@@ -55,7 +55,7 @@ export default function FAQ() {
                   border: open === i ? "1px solid var(--gold)" : "1px solid var(--border)",
                 }}
                 animate={{
-                  boxShadow: open === i ? "0 20px 60px rgba(212,160,23,0.12)" : "0 0 0 rgba(0,0,0,0)",
+                  boxShadow: open === i ? "0 20px 60px rgba(201, 164, 73,0.12)" : "0 0 0 rgba(0,0,0,0)",
                 }}
                 transition={{ duration: 0.3 }}
                 whileHover={{ x: 6 }}
@@ -63,7 +63,7 @@ export default function FAQ() {
                 <motion.button
                   onClick={() => setOpen(open === i ? null : i)}
                   style={{ width: "100%", padding: "24px 28px", background: "transparent", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, textAlign: "left" }}
-                  whileHover={{ backgroundColor: "rgba(212,160,23,0.03)" }}
+                  whileHover={{ backgroundColor: "rgba(201, 164, 73,0.03)" }}
                   whileTap={{ scale: 0.99 }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: 14 }}>

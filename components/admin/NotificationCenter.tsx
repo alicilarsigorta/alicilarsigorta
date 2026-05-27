@@ -172,15 +172,15 @@ export default function NotificationCenter() {
                       style={{
                         padding: "14px 20px", borderBottom: "1px solid var(--admin-border)",
                         cursor: "pointer", display: "flex", gap: 12, alignItems: "flex-start",
-                        background: n.read ? "transparent" : "rgba(212,160,23,0.03)",
+                        background: n.read ? "transparent" : "rgba(201, 164, 73,0.03)",
                         transition: "background 0.2s",
                       }}
                       onMouseEnter={e => e.currentTarget.style.background = "var(--admin-surface-hover)"}
-                      onMouseLeave={e => e.currentTarget.style.background = n.read ? "transparent" : "rgba(212,160,23,0.03)"}
+                      onMouseLeave={e => e.currentTarget.style.background = n.read ? "transparent" : "rgba(201, 164, 73,0.03)"}
                     >
                       <div style={{
                         width: 36, height: 36, borderRadius: 10, flexShrink: 0,
-                        background: "rgba(212,160,23,0.1)", display: "flex",
+                        background: "rgba(201, 164, 73,0.1)", display: "flex",
                         alignItems: "center", justifyContent: "center", color: "var(--admin-gold)"
                       }}>
                         <FileText size={16} />

@@ -47,7 +47,7 @@ export default function CampaignSlider() {
             }}
           >
             {/* Background elements */}
-            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(212,160,23,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "-50%", right: "-10%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(201, 164, 73,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
 
             {/* Left Content */}
             <div className="campaign-text" style={{ position: "relative", zIndex: 10 }}>

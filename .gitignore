@@ -34,4 +34,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
+# claude code local config (per-developer, contains worktrees + launch.json)
+.claude/

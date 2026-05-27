@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-col-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(212,160,23,0.1)", border: "1px solid rgba(212,160,23,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(201, 164, 73,0.1)", border: "1px solid rgba(201, 164, 73,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <img src="/logo.png" alt="" style={{ width: 28, objectFit: "contain" }} />
               </div>
               <div>
@@ -38,7 +38,7 @@ export default function Footer() {
                 { Icon: Linkedin, link: contact.socialLinks.linkedin },
               ].map(({ Icon, link }, i) => (
                 <a key={i} href={link} target="_blank" rel="noreferrer" style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.2s", textDecoration: "none" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(212,160,23,0.2)") }
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(201, 164, 73,0.2)") }
                   onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
                 >
                   <Icon size={18} color="var(--gold)" />

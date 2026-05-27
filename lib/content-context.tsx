@@ -3,7 +3,9 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { SiteContent, defaultContent } from "./default-content";
 
-const STORAGE_KEY = "alicilar_site_content";
+// v2: schema bumped for premium redesign (6-stat hero, new sections).
+// Old localStorage from v1 is silently ignored.
+const STORAGE_KEY = "alicilar_site_content_v2";
 
 interface ContentContextType {
   content: SiteContent;

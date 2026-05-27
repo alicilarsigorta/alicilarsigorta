@@ -1,16 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Fraunces } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import LoadingScreen from "@/components/LoadingScreen";
 
-const outfit = Outfit({ 
+const outfit = Outfit({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-outfit",
   display: "swap",
+});
+
+// Serif display font for editorial/financial gravitas.
+// Fraunces is variable across wght (100-900), opsz (9-144), SOFT (0-100).
+// We omit `weight` so the font ships as truly variable — any font-weight value works in CSS.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
+  display: "swap",
+  axes: ["opsz", "SOFT"],
 });
 
 export const viewport: Viewport = {
@@ -45,7 +56,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" suppressHydrationWarning>
+    <html lang="tr" suppressHydrationWarning className={`${outfit.variable} ${fraunces.variable}`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icons/icon-192.svg" />

@@ -41,7 +41,7 @@ export default function AdminLoginPage() {
             width: 72, height: 72, borderRadius: 20,
             background: "linear-gradient(135deg, var(--admin-gold), var(--admin-gold-light))",
             display: "flex", alignItems: "center", justifyContent: "center",
-            margin: "0 auto 20px", boxShadow: "0 20px 50px rgba(212,160,23,0.2)"
+            margin: "0 auto 20px", boxShadow: "0 20px 50px rgba(201, 164, 73,0.2)"
           }}>
             <Shield size={36} color="#fff" />
           </div>
