@@ -6,7 +6,7 @@ const STATIC_ASSETS = [
   '/admin/gorunum',
   '/admin/ayarlar',
   '/manifest.json',
-  '/logo.png',
+  '/logo-dark.png',
 ];
 
 // Install — cache static assets

@@ -58,9 +58,9 @@
 }
 
 .admin-sidebar-brand img {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
   object-fit: contain;
 }
 

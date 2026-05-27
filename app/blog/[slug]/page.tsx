@@ -39,7 +39,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
         }}
       >
         <Image
-          src={blog.image || "/logo.png"}
+          src={blog.image || "/logo-dark.png"}
           alt={blog.title}
           fill
           style={{ objectFit: "cover" }}
@@ -306,7 +306,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                   >
                     <div style={{ position: "relative", height: "180px", overflow: "hidden" }}>
                       <Image
-                        src={otherBlog.image || "/logo.png"}
+                        src={otherBlog.image || "/logo-dark.png"}
                         alt={otherBlog.title}
                         fill
                         style={{ objectFit: "cover", transition: "transform 0.5s ease" }}

@@ -362,7 +362,9 @@ input, select, textarea {
   -webkit-backdrop-filter: blur(22px) saturate(140%);
   border-bottom: 1px solid transparent;
   transition: all 0.3s ease;
+  overflow: visible;
 }
+.header .container { overflow: visible; }
 
 .header.scrolled {
   background: rgba(247, 247, 248, 0.95);
