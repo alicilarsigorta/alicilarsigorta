@@ -1,282 +1,430 @@
 "use client";
 
-import { motion, Variants, useScroll, useTransform } from "framer-motion";
-import { ChevronRight, Star, Sparkles } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowRight, ArrowDown, ShieldCheck, Sparkles } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useContent } from "@/lib/content-context";
 import { useRef } from "react";
+import { useContent } from "@/lib/content-context";
+import {
+  fadeUp,
+  fadeUpBlur,
+  scaleIn,
+  stagger,
+  easeOutExpo,
+  spring,
+} from "@/lib/motion";
+import CountUp from "./CountUp";
 
-const springTransition = { type: "spring" as const, stiffness: 100, damping: 20 };
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 60, filter: "blur(10px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const stagger: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
-};
-
-const scaleIn: Variants = {
-  hidden: { opacity: 0, scale: 0.8, filter: "blur(20px)" },
-  visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const countUp: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { delay: 0.8 + i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }
-  })
-};
-
+/**
+ * Hero — disciplined premium.
+ *
+ * Replaces particle/orbit-ring composition with a single editorial layout:
+ * eyebrow → serif display → body → dual CTA → 6-stat strip.
+ * Animations are reveal-only (no perpetual decorative motion) except the
+ * shield's subtle float.
+ */
 export default function Hero() {
   const { content } = useContent();
   const { hero } = content;
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const parallaxOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+  // Very subtle parallax — disciplined, not theatrical.
+  const titleY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const shieldY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+
+  const scrollToNext = () => {
+    const next = document.getElementById("how-it-works");
+    if (next) {
+      next.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollBy({ top: window.innerHeight * 0.8, behavior: "smooth" });
+    }
+  };
 
   return (
-    <section ref={sectionRef} className="hero-section" style={{ display: "flex", flexDirection: "column", justifyContent: "center", backgroundColor: "var(--white)", position: "relative", overflow: "hidden" }}>
+    <section
+      ref={sectionRef}
+      className="hero-section"
+      style={{
+        position: "relative",
+        backgroundColor: "var(--white)",
+        overflow: "hidden",
+      }}
+    >
+      {/* Subtle geometric grid — replaces orbit/particle chaos */}
+      <div className="mesh-bg" aria-hidden />
 
-      {/* Animated gradient orbs */}
-      <motion.div
-        className="decor-mobile-hide"
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.1, 0.25, 0.1],
-          x: [0, 30, 0],
-          y: [0, -20, 0],
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        style={{ position: "absolute", top: "-10%", right: "-15%", width: 900, height: 900, borderRadius: "50%", background: "radial-gradient(circle, rgba(212,160,23,0.2) 0%, transparent 60%)", pointerEvents: "none" }}
-      />
-      <motion.div
-        className="decor-mobile-hide"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.05, 0.15, 0.05],
-        }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-        style={{ position: "absolute", bottom: "-20%", left: "-10%", width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(212,160,23,0.15) 0%, transparent 60%)", pointerEvents: "none" }}
+      {/* Single soft radial glow — not animated, just atmosphere */}
+      <div
+        aria-hidden
+        className="hero-bg-glow decor-mobile-hide"
       />
 
-      {/* Floating particles */}
-      {[...Array(5)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="decor-mobile-hide"
-          animate={{
-            y: [0, -40 - i * 10, 0],
-            x: [0, 15 * (i % 2 === 0 ? 1 : -1), 0],
-            opacity: [0, 0.6, 0],
-          }}
-          transition={{ duration: 4 + i * 1.5, repeat: Infinity, delay: i * 0.8, ease: "easeInOut" }}
-          style={{
-            position: "absolute",
-            width: 4 + i * 2, height: 4 + i * 2,
-            borderRadius: "50%",
-            background: "var(--gold)",
-            top: `${20 + i * 15}%`,
-            left: `${10 + i * 18}%`,
-            pointerEvents: "none",
-            filter: `blur(${i * 0.5}px)`,
-          }}
-        />
-      ))}
-
-      <motion.div style={{ y: parallaxY, opacity: parallaxOpacity }} className="container" >
-        <div className="hero-inner" style={{ position: "relative", zIndex: 1 }}>
-          <div className="grid-2 hero-grid" style={{ alignItems: "center" }}>
-
-            {/* LEFT CONTENT */}
-            <motion.div variants={stagger} initial="hidden" animate="visible">
-              <motion.div variants={fadeUp}>
-                <motion.div
-                  className="section-badge"
-                  style={{ background: "rgba(212,160,23,0.08)", border: "1px solid rgba(212,160,23,0.3)", color: "var(--gold-dark)" }}
-                  whileHover={{ scale: 1.05, boxShadow: "0 8px 25px rgba(212,160,23,0.2)" }}
-                  transition={springTransition}
-                >
-                  <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }}>
-                    <Sparkles size={14} fill="var(--gold-dark)" color="var(--gold-dark)" />
-                  </motion.div>
-                  {hero.badge}
-                </motion.div>
-              </motion.div>
-
-              <motion.h1 variants={fadeUp} style={{ fontSize: "clamp(2.2rem, 6.2vw, 5.2rem)", fontWeight: 900, color: "var(--black)", lineHeight: 1.08, letterSpacing: "-0.04em", marginBottom: "24px" }}>
-                {hero.title}<br />
-                <motion.span
-                  className="gold"
-                  style={{ position: "relative", zIndex: 1, display: "inline-block" }}
-                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-                >
-                  {hero.titleHighlight}
-                  <motion.svg
-                    viewBox="0 0 300 15"
-                    style={{ position: "absolute", bottom: -2, left: 0, width: "100%", height: "auto", zIndex: -1 }}
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: 1, opacity: 1 }}
-                    transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
-                  >
-                    <motion.path
-                      d="M5,10 Q150,-5 295,10"
-                      fill="none"
-                      stroke="rgba(212,160,23,0.3)"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                      initial={{ pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{ delay: 0.8, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-                    />
-                  </motion.svg>
-                </motion.span>
-              </motion.h1>
-
-              <motion.p variants={fadeUp} className="hero-sub" style={{ color: "var(--gray)", lineHeight: 1.7, marginBottom: "32px", maxWidth: 540, fontWeight: 500 }}>
-                {hero.subtitle}
-              </motion.p>
-
-              <motion.div variants={fadeUp} className="hero-cta-row" style={{ display: "flex", gap: "16px", flexWrap: "wrap", marginBottom: "32px" }}>
-                <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }} transition={springTransition} className="hero-cta-wrap">
-                  <Link href="/teklif-al" className="btn btn-gold hero-cta" style={{ borderRadius: "100px", boxShadow: "0 15px 40px rgba(212,160,23,0.3)" }}>
-                    {hero.ctaText}
-                    <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
-                      <ChevronRight size={20} />
-                    </motion.span>
-                  </Link>
-                </motion.div>
-              </motion.div>
-
-            </motion.div>
-
-            {/* RIGHT CONTENT — 3D Shield */}
-            <motion.div
-              variants={scaleIn}
-              initial="hidden"
-              animate="visible"
-              style={{ position: "relative", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}
-              className="hero-graphics"
-            >
-              {/* Orbit ring 1 */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                style={{ position: "absolute", width: 420, height: 420, borderRadius: "50%", border: "1px dashed rgba(212,160,23,0.2)", pointerEvents: "none" }}
-              />
-              {/* Orbit ring 2 */}
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                style={{ position: "absolute", width: 520, height: 520, borderRadius: "50%", border: "1px solid rgba(212,160,23,0.08)", pointerEvents: "none" }}
-              />
-
-              {/* Orbiting dots */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                style={{ position: "absolute", width: 420, height: 420, pointerEvents: "none" }}
-              >
-                <div style={{ position: "absolute", top: 0, left: "50%", transform: "translate(-50%, -50%)", width: 10, height: 10, borderRadius: "50%", background: "var(--gold)", boxShadow: "0 0 15px var(--gold)" }} />
-                <div style={{ position: "absolute", bottom: 0, right: 0, transform: "translate(50%, 50%)", width: 6, height: 6, borderRadius: "50%", background: "var(--gold-light)", boxShadow: "0 0 10px var(--gold-light)" }} />
-              </motion.div>
-
-              <motion.div
-                animate={{ y: [0, -20, 0], rotateY: [0, 5, 0, -5, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                style={{ position: "relative", width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center", perspective: 1000 }}
-              >
-                <Image
-                  src="/hero-shield.png"
-                  alt="Premium Insurance Shield"
-                  width={500}
-                  height={500}
-                  style={{ objectFit: "contain", filter: "drop-shadow(0 30px 60px rgba(212,160,23,0.3))", zIndex: 2 }}
-                  priority
-                />
-              </motion.div>
-
-              {/* Glowing Backdrop */}
-              <motion.div
-                animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 450, height: 450, background: "radial-gradient(circle, rgba(212,160,23,0.18) 0%, transparent 60%)", zIndex: 1, filter: "blur(40px)" }}
-              />
-            </motion.div>
-          </div>
-
-          {/* Stats Row — Animated counters */}
+      <div className="container" style={{ position: "relative", zIndex: 1 }}>
+        <div className="hero-grid">
+          {/* LEFT — editorial copy */}
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="hero-stats"
-            style={{ display: "grid", gap: "2px", marginTop: "56px", background: "var(--border)", borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 80px rgba(0,0,0,0.04)" }}
+            variants={stagger(0.12, 0.05)}
+            initial="hidden"
+            animate="visible"
+            className="hero-left"
+            style={{ y: titleY }}
           >
-            {hero.stats.map((s, i) => (
+            <motion.div variants={fadeUp}>
+              <span className="eyebrow">
+                <ShieldCheck size={14} strokeWidth={2} />
+                {hero.badge}
+              </span>
+            </motion.div>
+
+            <motion.h1
+              variants={fadeUpBlur}
+              className="hero-title"
+            >
+              {hero.title}{" "}
+              <span className="gold">
+                {hero.titleHighlight}
+              </span>
+            </motion.h1>
+
+            <motion.p variants={fadeUp} className="hero-sub">
+              {hero.subtitle}
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="hero-cta-row">
               <motion.div
-                key={i}
-                custom={i}
-                variants={countUp}
-                initial="hidden"
-                animate="visible"
-                whileHover={{ backgroundColor: "var(--cream)", scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="hero-stat-cell"
-                style={{ background: "var(--white)", textAlign: "center", cursor: "default" }}
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.97 }}
+                transition={spring.snappy}
               >
-                <motion.div
-                  className="stat-number"
-                  style={{ fontSize: "clamp(1.6rem, 4.5vw, 3.2rem)" }}
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.2 + i * 0.15, duration: 0.6, type: "spring", stiffness: 200 }}
+                <Link
+                  href="/teklif-al"
+                  className="btn btn-gold hero-cta-primary"
                 >
-                  {s.value}
-                </motion.div>
-                <div className="hero-stat-label" style={{ color: "var(--gray)", fontWeight: 700, marginTop: 6, letterSpacing: "-0.3px" }}>{s.label}</div>
+                  {hero.ctaText}
+                  <ArrowRight size={18} strokeWidth={2.3} />
+                </Link>
               </motion.div>
-            ))}
+
+              <motion.button
+                onClick={scrollToNext}
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.97 }}
+                transition={spring.snappy}
+                className="btn hero-cta-secondary"
+                aria-label="Sayfada aşağı kaydır — nasıl çalıştığımızı gör"
+              >
+                Nasıl Çalışıyor?
+                <ArrowDown size={18} strokeWidth={2.3} />
+              </motion.button>
+            </motion.div>
+
+            {/* Inline mini trust strip */}
+            <motion.div variants={fadeUp} className="hero-mini-trust">
+              <div className="hero-mini-trust-item">
+                <Sparkles size={14} color="var(--gold-dark)" />
+                <span>Anlık karşılaştırma</span>
+              </div>
+              <span className="hero-mini-trust-dot" />
+              <div className="hero-mini-trust-item">
+                <span>SEGEM Lisanslı</span>
+              </div>
+              <span className="hero-mini-trust-dot" />
+              <div className="hero-mini-trust-item">
+                <span>Komisyonsuz</span>
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* RIGHT — shield image, single float, no orbit rings */}
+          <motion.div
+            variants={scaleIn}
+            initial="hidden"
+            animate="visible"
+            className="hero-graphics"
+            style={{ y: shieldY }}
+          >
+            <motion.div
+              animate={{ y: [0, -16, 0] }}
+              transition={{
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="hero-shield-wrap"
+            >
+              <Image
+                src="/hero-shield.png"
+                alt="Alıcılar Sigorta — premium koruma"
+                width={520}
+                height={520}
+                priority
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "contain",
+                  filter: "drop-shadow(0 40px 80px rgba(201, 164, 73, 0.28))",
+                }}
+              />
+            </motion.div>
+
+            {/* Static glow behind shield — no pulsing */}
+            <div
+              aria-hidden
+              className="hero-shield-glow decor-mobile-hide"
+            />
           </motion.div>
         </div>
-      </motion.div>
 
-      <style dangerouslySetInnerHTML={{__html: `
-        .hero-section { padding: 60px 0; }
-        .hero-inner { padding: 60px 0 60px; }
-        .hero-grid { gap: 6rem; }
-        .hero-graphics { min-height: 500px; }
-        .hero-sub { font-size: 1.2rem; }
-        .hero-cta { font-size: 1.1rem; padding: 1.1rem 2.8rem; }
-        .hero-stats { grid-template-columns: repeat(4, 1fr); }
-        .hero-stat-cell { padding: 32px 24px; }
-        .hero-stat-label { font-size: 1rem; }
+        {/* 6-stat editorial strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.9, ease: easeOutExpo, delay: 0.2 }}
+          className="hero-stats"
+        >
+          {hero.stats.map((s, i) => (
+            <motion.div
+              key={`${s.label}-${i}`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{
+                delay: 0.4 + i * 0.08,
+                duration: 0.7,
+                ease: easeOutExpo,
+              }}
+              className="hero-stat-cell"
+            >
+              <div className="stat-number">
+                <CountUp value={s.value} duration={1700 + i * 80} />
+              </div>
+              <div className="hero-stat-label">{s.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        .hero-section {
+          padding: clamp(60px, 8vw, 110px) 0 clamp(50px, 6vw, 80px);
+        }
+        .hero-bg-glow {
+          position: absolute;
+          top: -20%;
+          right: -10%;
+          width: 720px;
+          height: 720px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(201,164,73,0.13) 0%, transparent 60%);
+          pointer-events: none;
+          filter: blur(20px);
+        }
+        .hero-grid {
+          display: grid;
+          grid-template-columns: 1.2fr 1fr;
+          gap: clamp(2rem, 6vw, 6rem);
+          align-items: center;
+          min-height: 520px;
+        }
+        .hero-left { max-width: 640px; }
+
+        .hero-title {
+          font-family: var(--font-display);
+          font-weight: 500;
+          font-size: clamp(2.4rem, 6.2vw, 5.6rem);
+          line-height: 1.02;
+          letter-spacing: -0.035em;
+          color: var(--ink);
+          margin: 0 0 24px;
+          font-optical-sizing: auto;
+          font-feature-settings: "ss01" on, "ss02" on;
+        }
+        .hero-title .gold {
+          font-style: italic;
+          font-weight: 400;
+          background: linear-gradient(135deg, var(--gold-deep) 0%, var(--gold-dark) 35%, var(--gold) 75%, var(--gold-light) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          display: inline-block;
+        }
+
+        .hero-sub {
+          font-size: 1.18rem;
+          line-height: 1.65;
+          color: var(--gray);
+          font-weight: 500;
+          margin-bottom: 36px;
+          max-width: 560px;
+        }
+
+        .hero-cta-row {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          flex-wrap: wrap;
+          margin-bottom: 28px;
+        }
+        .hero-cta-primary {
+          padding: 1.05rem 2.2rem !important;
+          font-size: 1rem;
+          border-radius: 100px;
+          box-shadow: 0 18px 40px rgba(201, 164, 73, 0.28);
+        }
+        .hero-cta-secondary {
+          background: transparent;
+          color: var(--ink);
+          padding: 1.05rem 1.7rem !important;
+          border: 1px solid var(--border-strong);
+          font-weight: 700;
+          font-size: 1rem;
+          border-radius: 100px;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hero-cta-secondary:hover {
+          background: var(--cream);
+          border-color: var(--ink);
+        }
+
+        .hero-mini-trust {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          flex-wrap: wrap;
+          font-size: 0.84rem;
+          color: var(--gray);
+          font-weight: 600;
+          letter-spacing: 0.01em;
+        }
+        .hero-mini-trust-item {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .hero-mini-trust-dot {
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+          background: var(--border-strong);
+        }
+
+        .hero-graphics {
+          position: relative;
+          height: 100%;
+          min-height: 460px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .hero-shield-wrap {
+          position: relative;
+          width: 100%;
+          max-width: 520px;
+          z-index: 2;
+        }
+        .hero-shield-glow {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 480px;
+          height: 480px;
+          background: radial-gradient(circle, rgba(201,164,73,0.20) 0%, transparent 65%);
+          filter: blur(36px);
+          z-index: 1;
+        }
+
+        .hero-stats {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 1px;
+          margin-top: clamp(48px, 6vw, 80px);
+          background: var(--border);
+          border-radius: 24px;
+          overflow: hidden;
+          border: 1px solid var(--border);
+        }
+        .hero-stat-cell {
+          background: var(--white);
+          padding: 28px 18px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          transition: background 0.3s ease;
+        }
+        .hero-stat-cell:hover {
+          background: var(--off-white);
+        }
+        .hero-stat-cell .stat-number {
+          font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+          line-height: 1;
+        }
+        .hero-stat-label {
+          font-size: 0.8rem;
+          color: var(--gray);
+          font-weight: 600;
+          letter-spacing: 0.02em;
+          line-height: 1.3;
+        }
 
         @media (max-width: 1024px) {
-          .hero-graphics { display: none !important; min-height: 0 !important; }
-          .hero-grid { gap: 0 !important; }
+          .hero-grid {
+            grid-template-columns: 1fr;
+            min-height: 0;
+          }
+          .hero-graphics { display: none; }
+          .hero-stats {
+            grid-template-columns: repeat(3, 1fr);
+          }
         }
-        @media (max-width: 768px) {
-          .hero-section { padding: 28px 0 48px; }
-          .hero-inner { padding: 28px 0 24px; }
-          .hero-sub { font-size: 1.02rem; line-height: 1.6; margin-bottom: 24px !important; }
-          .hero-cta-row { width: 100%; }
-          .hero-cta-wrap { width: 100%; }
-          .hero-cta { width: 100%; font-size: 1rem; padding: 0.95rem 1.5rem !important; }
-          .hero-stats { grid-template-columns: repeat(2, 1fr) !important; margin-top: 40px !important; border-radius: 18px !important; }
-          .hero-stat-cell { padding: 22px 12px !important; }
-          .hero-stat-label { font-size: 0.82rem; }
+        @media (max-width: 640px) {
+          .hero-section {
+            padding: 32px 0 36px;
+          }
+          .hero-title {
+            font-size: clamp(2rem, 9vw, 3rem);
+            line-height: 1.05;
+          }
+          .hero-sub {
+            font-size: 1rem;
+            margin-bottom: 24px;
+          }
+          .hero-cta-row {
+            width: 100%;
+            gap: 10px;
+          }
+          .hero-cta-primary, .hero-cta-secondary {
+            width: 100%;
+            padding: 0.95rem 1.4rem !important;
+          }
+          .hero-mini-trust {
+            font-size: 0.78rem;
+            gap: 10px;
+          }
+          .hero-stats {
+            grid-template-columns: repeat(2, 1fr);
+            border-radius: 18px;
+          }
+          .hero-stat-cell {
+            padding: 20px 12px;
+          }
+          .hero-stat-cell .stat-number {
+            font-size: clamp(1.4rem, 6.5vw, 1.9rem);
+          }
+          .hero-stat-label {
+            font-size: 0.72rem;
+          }
         }
-      `}} />
+        `,
+      }} />
     </section>
   );
 }

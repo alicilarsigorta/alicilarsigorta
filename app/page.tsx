@@ -2,41 +2,74 @@
 
 import CampaignSlider from "@/components/CampaignSlider";
 import Hero from "@/components/Hero";
+import TrustBar from "@/components/TrustBar";
 import PartnerMarquee from "@/components/PartnerMarquee";
 import InsuranceCards from "@/components/InsuranceCards";
-import WhyUs from "@/components/WhyUs";
+import PremiumEstimator from "@/components/PremiumEstimator";
+import HowItWorks from "@/components/HowItWorks";
 import PromoSection from "@/components/PromoSection";
+import LiveImpact from "@/components/LiveImpact";
+import WhyUs from "@/components/WhyUs";
+import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Link from "next/link";
-import { ArrowRight, Sparkles, Shield } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { easeOutExpo, viewportOnce, fadeUp, stagger } from "@/lib/motion";
 
 export default function Home() {
   return (
     <>
+      {/* Top — campaign carousel sits inside the header padding zone */}
       <CampaignSlider />
+
+      {/* Editorial hero */}
       <Hero />
 
+      {/* Regulatory trust signals — right below hero so they anchor first impression */}
+      <TrustBar />
+
+      {/* Partner logo marquee — sigorta şirketleri */}
       <PartnerMarquee />
 
-      {/* Products */}
+      {/* Products grid */}
       <section className="section" style={{ background: "var(--off-white)" }}>
         <div className="container">
           <motion.div
-            initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "56px", gap: 24, flexWrap: "wrap" }}
+            variants={stagger(0.08, 0)}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOnce}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              marginBottom: 56,
+              gap: 24,
+              flexWrap: "wrap",
+            }}
           >
-            <div>
-              <div className="section-badge">● Ürün Portföyümüz</div>
-              <h2 className="section-title">Tüm <span className="gold">Sigorta Çözümlerimiz</span></h2>
-              <p className="section-sub">İhtiyaç duyduğunuz güvence mutlaka var. Doğru branşı seçin, anında teklif alın.</p>
-            </div>
-            <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/urunlerimiz" className="btn btn-outline" style={{ fontSize: "0.95rem", padding: "0.9rem 2rem", flexShrink: 0 }}>
-                Tümünü Gör <ArrowRight size={18} />
+            <motion.div variants={fadeUp} style={{ maxWidth: 620 }}>
+              <span className="eyebrow">Portföyümüz · 8 branş</span>
+              <h2 className="section-title">
+                Hayatınızın her alanı için{" "}
+                <span className="gold">tek çatı</span>
+              </h2>
+              <p className="section-sub" style={{ marginTop: 16 }}>
+                İhtiyacınız ne olursa olsun, doğru branşı seçin — uzman ekibimiz dakikalar içinde size en uygun teminatı bulsun.
+              </p>
+            </motion.div>
+            <motion.div variants={fadeUp} whileHover={{ y: -2 }}>
+              <Link
+                href="/urunlerimiz"
+                className="btn btn-outline"
+                style={{
+                  fontSize: "0.95rem",
+                  padding: "0.85rem 1.8rem",
+                  flexShrink: 0,
+                }}
+              >
+                Tümünü Gör <ArrowRight size={16} />
               </Link>
             </motion.div>
           </motion.div>
@@ -44,78 +77,129 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Anlık tahmini fiyat — konversiyon canavarı */}
+      <PremiumEstimator />
+
+      {/* 4-step process */}
+      <HowItWorks />
+
+      {/* Editorial promo */}
       <PromoSection />
 
+      {/* Dark live-impact bar — visual rhythm break + corporate scale signal */}
+      <LiveImpact />
+
+      {/* Why us — 4 differentiators */}
       <WhyUs />
 
-      {/* CTA Banner — Animated */}
-      <section className="section-sm" style={{ background: "linear-gradient(135deg, #2a2b2f 0%, #3a3b40 100%)", position: "relative", overflow: "hidden" }}>
-        {/* Animated glow */}
-        <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.15, 0.3, 0.15] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 800, height: 400, background: "radial-gradient(ellipse, rgba(212,160,23,0.2) 0%, transparent 70%)", pointerEvents: "none" }}
-        />
-        {/* Floating particles */}
-        {[0,1,2,3].map(i => (
-          <motion.div
-            key={i}
-            animate={{
-              y: [0, -60 - i * 20, 0],
-              x: [0, 20 * (i % 2 === 0 ? 1 : -1), 0],
-              opacity: [0, 0.4, 0],
-            }}
-            transition={{ duration: 5 + i * 1.5, repeat: Infinity, delay: i * 1.2, ease: "easeInOut" }}
-            style={{
-              position: "absolute", width: 6, height: 6, borderRadius: "50%",
-              background: "var(--gold)", top: `${30 + i * 15}%`, left: `${15 + i * 20}%`,
-              pointerEvents: "none", filter: "blur(1px)",
-            }}
-          />
-        ))}
+      {/* Testimonials carousel */}
+      <Testimonials />
 
-        <div className="container" style={{ textAlign: "center", position: "relative", zIndex: 1 }}>
+      {/* Refined CTA banner — sade, kurumsal */}
+      <section
+        className="section-sm cta-banner"
+        style={{
+          background: "var(--ink)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div className="mesh-bg" aria-hidden style={{ opacity: 0.4 }} />
+        <div aria-hidden className="cta-banner-glow" />
+
+        <div
+          className="container"
+          style={{
+            position: "relative",
+            zIndex: 1,
+            textAlign: "center",
+            maxWidth: 720,
+            margin: "0 auto",
+          }}
+        >
           <motion.div
-            initial={{ opacity: 0, y: 50, filter: "blur(12px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.9, ease: easeOutExpo }}
           >
-            <motion.img
-              src="/logo-dark.png"
-              alt="Alıcılar Sigorta"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            <span
+              className="eyebrow"
+              style={{ color: "var(--gold-light)", justifyContent: "center", marginBottom: 24 }}
+            >
+              Bir adımınız kaldı
+            </span>
+            <h2
               style={{
-                width: "clamp(140px, 18vw, 200px)",
-                height: "auto",
-                margin: "0 auto 32px",
-                display: "block",
-                filter: "drop-shadow(0 10px 40px rgba(212,160,23,0.25))",
+                fontFamily: "var(--font-display)",
+                fontWeight: 500,
+                fontSize: "clamp(2rem, 4.5vw, 3.4rem)",
+                color: "#fff",
+                letterSpacing: "-0.025em",
+                lineHeight: 1.1,
+                marginBottom: 18,
+                fontOpticalSizing: "auto",
               }}
-            />
-            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.03em", marginBottom: 20, lineHeight: 1.1 }}>
-              Güvenliğiniz İçin <span style={{ background: "linear-gradient(135deg, var(--gold), var(--gold-light))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block" }}>Bir Adım Uzaktasınız</span>
+            >
+              Güvenceniz{" "}
+              <span
+                style={{
+                  fontStyle: "italic",
+                  fontWeight: 400,
+                  background:
+                    "linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  display: "inline-block",
+                }}
+              >
+                bir tık uzakta.
+              </span>
             </h2>
-            <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "1.1rem", marginBottom: 40, maxWidth: 500, margin: "0 auto 40px", lineHeight: 1.7 }}>
-              Ücretsiz teklif alın, 20+ şirketi karşılaştırın ve dakikalar içinde güvence altına girin.
+            <p
+              style={{
+                color: "rgba(255,255,255,0.65)",
+                fontSize: "1.08rem",
+                marginBottom: 36,
+                lineHeight: 1.7,
+                maxWidth: 540,
+                margin: "0 auto 36px",
+              }}
+            >
+              Ücretsiz teklif alın, 20+ şirketi karşılaştırın, dakikalar içinde dijital poliçenize sahip olun.
             </p>
             <motion.div
-              whileHover={{ scale: 1.05, y: -4 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.97 }}
               style={{ display: "inline-block" }}
             >
-              <Link href="/teklif-al" className="btn btn-gold" style={{ fontSize: "1.1rem", padding: "1.2rem 3rem" }}>
+              <Link
+                href="/teklif-al"
+                className="btn btn-gold"
+                style={{ fontSize: "1.05rem", padding: "1.15rem 2.8rem" }}
+              >
                 Ücretsiz Teklif Al
-                <motion.span animate={{ x: [0, 6, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                  <ArrowRight size={22} />
-                </motion.span>
+                <ArrowRight size={20} />
               </Link>
             </motion.div>
           </motion.div>
         </div>
+
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          .cta-banner-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 800px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(201,164,73,0.20) 0%, transparent 65%);
+            filter: blur(40px);
+            pointer-events: none;
+          }
+          `,
+        }} />
       </section>
 
       <FAQ />
