@@ -36,3 +36,5 @@ next-env.d.ts
 
 # claude code local config (per-developer, contains worktrees + launch.json)
 .claude/
+
+.vercel
