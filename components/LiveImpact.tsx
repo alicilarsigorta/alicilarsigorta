@@ -106,20 +106,22 @@ export default function LiveImpact() {
         __html: `
         .impact-section {
           position: relative;
-          background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 100%);
-          padding: clamp(72px, 9vw, 130px) 0;
+          background: var(--ink);
+          padding: clamp(80px, 10vw, 140px) 0;
           overflow: hidden;
           color: #fff;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .impact-glow {
           position: absolute;
-          top: 50%;
+          top: -20%;
           left: 50%;
-          transform: translate(-50%,-50%);
-          width: 900px;
-          height: 600px;
-          background: radial-gradient(ellipse, rgba(201,164,73,0.18) 0%, transparent 65%);
-          filter: blur(30px);
+          transform: translateX(-50%);
+          width: 1100px;
+          height: 700px;
+          background: radial-gradient(ellipse, rgba(201,164,73,0.16) 0%, transparent 60%);
+          filter: blur(40px);
           pointer-events: none;
         }
 
@@ -182,7 +184,7 @@ export default function LiveImpact() {
           overflow: hidden;
         }
         .impact-cell {
-          background: var(--navy-deep);
+          background: var(--ink);
           padding: 36px 28px;
           display: flex;
           flex-direction: column;
@@ -190,7 +192,7 @@ export default function LiveImpact() {
           transition: background 0.3s ease;
         }
         .impact-cell:hover {
-          background: rgba(0,0,0,0.25);
+          background: rgba(255,255,255,0.03);
         }
         .impact-cell-icon {
           width: 44px;

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { fadeUp, viewportOnce, easeOutExpo } from "@/lib/motion";
 
 interface Testimonial {
@@ -28,7 +28,7 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Annemin TSS poliçesini 3 dakikada karşılaştırıp aldık. Hastanede fark farkı ödememek için araştırmaya başlamıştık, bizi telefonla aradılar ve teminat farklarını tek tek anlattılar.",
+      "Annemin TSS poliçesini 3 dakikada karşılaştırıp aldık. Hastanede fark ödememek için araştırmaya başlamıştık, bizi telefonla aradılar ve teminat farklarını tek tek anlattılar.",
     name: "Ayşe D.",
     role: "Pazarlama Müdürü",
     city: "Ankara",
@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Geçen kış evimde su baskını oldu. Hasar dosyamı SMS ile açtım, 6 saat içinde eksper geldi, ertesi gün ödeme hesabımdaydı. Sigortayı tanımlamış oldular.",
+      "Geçen kış evimde su baskını oldu. Hasar dosyamı SMS ile açtım, 6 saat içinde eksper geldi, ertesi gün ödeme hesabımdaydı. Sigortayı yeniden tanımladılar.",
     name: "Burak T.",
     role: "Mimar",
     city: "İzmir",
@@ -72,12 +72,12 @@ export default function Testimonials() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  // Auto-advance every 8s unless paused
+  // Auto-advance every 9s unless paused
   useEffect(() => {
     if (paused) return;
     const t = setInterval(() => {
       setActive((a) => (a + 1) % testimonials.length);
-    }, 8000);
+    }, 9000);
     return () => clearInterval(t);
   }, [paused]);
 
@@ -91,64 +91,72 @@ export default function Testimonials() {
     <section
       className="section testimonials-section"
       style={{
-        background: "var(--off-white)",
+        background: "var(--paper-soft)",
         position: "relative",
       }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       <div className="container">
+        {/* Editorial 2-column header */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={viewportOnce}
           transition={{ duration: 0.9, ease: easeOutExpo }}
-          style={{ textAlign: "center", marginBottom: 60, maxWidth: 680, margin: "0 auto 60px" }}
+          className="testi-header"
         >
-          <span className="eyebrow">Müşterilerimiz · 4,9 / 5 ortalama puan</span>
-          <h2 className="section-title">
-            Türkiye'nin dört bir yanından{" "}
-            <span className="gold">gerçek hikâyeler</span>
-          </h2>
+          <div className="testi-header-left">
+            <span className="issue-marker">Müşterilerimiz &nbsp;·&nbsp; 4,9 / 5 puan</span>
+            <h2 className="headline-l">
+              Türkiye'nin dört bir yanından{" "}
+              <em>gerçek hikâyeler.</em>
+            </h2>
+          </div>
+          <div className="testi-header-right">
+            <p className="testi-lede">
+              On binlerce müşterimiz <em className="script">"sigorta"</em>{" "}
+              kelimesinin anlamını yeniden tarif ediyor. İşte birkaç ses.
+            </p>
+          </div>
         </motion.div>
+
+        <div className="rule-editorial" aria-hidden style={{ marginBottom: 0 }} />
 
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="testimonial-stage"
+          className="testi-stage"
         >
-          <Quote
-            size={56}
-            color="var(--gold)"
-            strokeWidth={1.2}
-            className="testimonial-quote-glyph"
-          />
+          {/* Open quote glyph, large editorial */}
+          <span className="testi-quote-glyph" aria-hidden>"</span>
 
-          <div className="testimonial-card-wrap">
+          <div className="testi-card-wrap">
             <AnimatePresence mode="wait">
-              <motion.div
+              <motion.blockquote
                 key={active}
-                initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+                initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -24, filter: "blur(8px)" }}
-                transition={{ duration: 0.6, ease: easeOutExpo }}
-                className="testimonial-card"
+                exit={{ opacity: 0, y: -18, filter: "blur(6px)" }}
+                transition={{ duration: 0.7, ease: easeOutExpo }}
+                className="testi-quote-block"
               >
-                <p className="testimonial-quote">"{t.quote}"</p>
+                <p className="testi-quote-text">{t.quote}</p>
 
-                <div className="testimonial-meta">
-                  <div className="testimonial-avatar" aria-hidden>
-                    {t.initials}
-                  </div>
-                  <div className="testimonial-meta-text">
-                    <div className="testimonial-name">{t.name}</div>
-                    <div className="testimonial-role">
-                      {t.role} · {t.city}
+                <footer className="testi-meta">
+                  <div className="testi-meta-left">
+                    <div className="testi-name">— {t.name}</div>
+                    <div className="testi-role">
+                      <span>{t.role}</span>
+                      <span className="testi-dot" />
+                      <span>{t.city}</span>
+                      <span className="testi-dot" />
+                      <span className="testi-policy">{t.policy}</span>
                     </div>
                   </div>
-                  <div className="testimonial-rating">
+                  <div className="testi-rating">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star
                         key={i}
@@ -157,38 +165,36 @@ export default function Testimonials() {
                         color="var(--gold)"
                       />
                     ))}
-                    <span className="testimonial-policy">{t.policy}</span>
                   </div>
-                </div>
-              </motion.div>
+                </footer>
+              </motion.blockquote>
             </AnimatePresence>
           </div>
 
-          {/* Controls */}
-          <div className="testimonial-controls">
+          {/* Controls — editorial pagination */}
+          <div className="testi-controls">
             <button
               onClick={() => go(-1)}
               aria-label="Önceki yorum"
-              className="testimonial-arrow"
+              className="testi-arrow"
             >
-              <ChevronLeft size={18} />
+              <ChevronLeft size={16} strokeWidth={2.2} />
+              <span>Önceki</span>
             </button>
-            <div className="testimonial-dots">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActive(i)}
-                  aria-label={`Yorum ${i + 1}`}
-                  className={`testimonial-dot ${active === i ? "active" : ""}`}
-                />
-              ))}
+
+            <div className="testi-counter">
+              <strong>{String(active + 1).padStart(2, "0")}</strong>
+              <span className="testi-counter-sep">/</span>
+              <span>{String(testimonials.length).padStart(2, "0")}</span>
             </div>
+
             <button
               onClick={() => go(1)}
               aria-label="Sonraki yorum"
-              className="testimonial-arrow"
+              className="testi-arrow"
             >
-              <ChevronRight size={18} />
+              <span>Sonraki</span>
+              <ChevronRight size={16} strokeWidth={2.2} />
             </button>
           </div>
         </motion.div>
@@ -196,148 +202,170 @@ export default function Testimonials() {
 
       <style dangerouslySetInnerHTML={{
         __html: `
-        .testimonial-stage {
+        .testimonials-section {
+          padding-top: clamp(80px, 10vw, 140px);
+          padding-bottom: clamp(80px, 10vw, 140px);
+        }
+
+        .testi-header {
+          display: grid;
+          grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+          gap: clamp(2rem, 6vw, 6rem);
+          align-items: flex-end;
+          margin-bottom: 56px;
+        }
+        .testi-header-left .issue-marker { margin-bottom: 24px; }
+        .testi-lede {
+          font-size: 1.04rem;
+          line-height: 1.7;
+          color: var(--gray);
+          font-weight: 500;
+          max-width: 460px;
+        }
+        .testi-lede em.script { color: var(--gold-dark); font-size: 1.12em; }
+
+        .testi-stage {
           position: relative;
-          max-width: 880px;
+          max-width: 980px;
           margin: 0 auto;
+          padding: 56px 0 0;
         }
-        .testimonial-quote-glyph {
+        .testi-quote-glyph {
           position: absolute;
-          top: -32px;
-          left: -8px;
-          opacity: 0.35;
-          z-index: 0;
+          top: -10px;
+          left: -20px;
+          font-family: var(--font-display);
+          font-style: italic;
+          font-weight: 500;
+          font-size: clamp(8rem, 16vw, 14rem);
+          line-height: 1;
+          color: var(--gold);
+          opacity: 0.18;
+          user-select: none;
+          pointer-events: none;
+          font-optical-sizing: auto;
         }
-        .testimonial-card-wrap {
+        .testi-card-wrap {
           position: relative;
           z-index: 1;
           min-height: 280px;
         }
-        .testimonial-card {
-          background: var(--white);
-          border: 1px solid var(--border);
-          border-left: 3px solid var(--gold);
-          border-radius: 24px;
-          padding: clamp(28px, 4vw, 48px);
-          box-shadow: var(--shadow-soft);
+        .testi-quote-block {
+          margin: 0;
         }
-        .testimonial-quote {
+        .testi-quote-text {
           font-family: var(--font-display);
-          font-size: clamp(1.15rem, 1.8vw, 1.5rem);
-          line-height: 1.55;
-          color: var(--ink);
+          font-style: italic;
           font-weight: 400;
-          letter-spacing: -0.005em;
-          margin-bottom: 32px;
+          font-size: clamp(1.4rem, 2.6vw, 2.1rem);
+          line-height: 1.4;
+          letter-spacing: -0.015em;
+          color: var(--ink);
+          margin: 0 0 40px;
           font-optical-sizing: auto;
         }
-        .testimonial-meta {
+
+        .testi-meta {
           display: flex;
           align-items: center;
-          gap: 16px;
+          justify-content: space-between;
+          gap: 20px;
+          padding-top: 24px;
+          border-top: 1px solid var(--border-strong);
           flex-wrap: wrap;
         }
-        .testimonial-avatar {
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 100%);
-          color: #fff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 700;
-          font-size: 0.95rem;
-          letter-spacing: 0.05em;
-          flex-shrink: 0;
-        }
-        .testimonial-meta-text {
+        .testi-meta-left {
           display: flex;
           flex-direction: column;
-          gap: 2px;
-          flex: 1;
-          min-width: 140px;
+          gap: 4px;
         }
-        .testimonial-name {
-          font-weight: 700;
-          font-size: 1rem;
-          color: var(--ink);
-        }
-        .testimonial-role {
-          font-size: 0.85rem;
-          color: var(--gray);
+        .testi-name {
+          font-family: var(--font-display);
+          font-style: italic;
           font-weight: 500;
+          font-size: 1.1rem;
+          color: var(--ink);
+          letter-spacing: -0.01em;
         }
-        .testimonial-rating {
+        .testi-role {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-family: var(--font-sans);
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--gray);
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          flex-wrap: wrap;
+        }
+        .testi-dot {
+          width: 3px;
+          height: 3px;
+          border-radius: 50%;
+          background: var(--border-strong);
+        }
+        .testi-policy { color: var(--gold-dark); }
+        .testi-rating {
           display: flex;
           align-items: center;
           gap: 4px;
-          padding-left: 16px;
-          border-left: 1px solid var(--border);
-        }
-        .testimonial-policy {
-          margin-left: 8px;
-          font-size: 0.78rem;
-          font-weight: 700;
-          color: var(--gold-dark);
-          letter-spacing: 0.02em;
         }
 
-        .testimonial-controls {
+        .testi-controls {
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: space-between;
           gap: 20px;
-          margin-top: 40px;
+          margin-top: 48px;
+          padding-top: 28px;
+          border-top: 1px solid var(--border);
         }
-        .testimonial-arrow {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: var(--white);
-          border: 1px solid var(--border);
-          display: flex;
+        .testi-arrow {
+          display: inline-flex;
           align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          color: var(--dark);
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .testimonial-arrow:hover {
-          border-color: var(--gold);
-          color: var(--gold-dark);
-          transform: translateY(-2px);
-        }
-        .testimonial-dots {
-          display: flex;
-          gap: 8px;
-        }
-        .testimonial-dot {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: var(--border-strong);
+          gap: 10px;
+          background: none;
           border: none;
-          padding: 0;
+          padding: 8px 0;
           cursor: pointer;
-          transition: all 0.25s ease;
+          color: var(--ink);
+          font-family: var(--font-sans);
+          font-size: 0.74rem;
+          font-weight: 800;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          transition: gap 0.3s ease, color 0.3s ease;
         }
-        .testimonial-dot.active {
-          background: var(--gold);
-          width: 28px;
-          border-radius: 4px;
+        .testi-arrow:hover { color: var(--gold-dark); gap: 14px; }
+        .testi-counter {
+          font-family: var(--font-display);
+          font-style: italic;
+          font-weight: 500;
+          font-size: 1rem;
+          color: var(--gray);
+          letter-spacing: -0.01em;
+        }
+        .testi-counter strong {
+          color: var(--ink);
+          font-weight: 500;
+          font-style: italic;
+          font-size: 1.4rem;
+        }
+        .testi-counter-sep {
+          color: var(--gold);
+          padding: 0 6px;
         }
 
+        @media (max-width: 1024px) {
+          .testi-header { grid-template-columns: 1fr; align-items: flex-start; gap: 24px; }
+        }
         @media (max-width: 640px) {
-          .testimonial-quote-glyph { display: none; }
-          .testimonial-card { border-radius: 18px; }
-          .testimonial-rating {
-            padding-left: 0;
-            border-left: none;
-            width: 100%;
-            margin-top: 8px;
-          }
-          .testimonial-policy { margin-left: auto; }
+          .testi-quote-glyph { font-size: 8rem; top: 8px; left: -8px; }
+          .testi-meta { flex-direction: column; align-items: flex-start; gap: 14px; }
+          .testi-role { font-size: 0.68rem; letter-spacing: 0.12em; }
+          .testi-controls { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 16px; }
+          .testi-counter { order: -1; flex-basis: 100%; text-align: center; }
         }
         `,
       }} />

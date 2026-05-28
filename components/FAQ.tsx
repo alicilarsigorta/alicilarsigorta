@@ -2,114 +2,204 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { useContent } from "@/lib/content-context";
+import { easeOutExpo } from "@/lib/motion";
 
 const container: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.2 } }
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } },
 };
 
 const item: Variants = {
-  hidden: { opacity: 0, x: -30, filter: "blur(6px)" },
-  visible: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } }
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: easeOutExpo },
+  },
 };
 
 export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(0);
   const { content } = useContent();
   const { faq: faqs } = content;
 
   return (
-    <section className="section" style={{ background: "var(--cream)" }}>
-      <div className="container" style={{ maxWidth: 800 }}>
+    <section
+      className="section faq-section"
+      style={{ background: "var(--paper-soft)" }}
+    >
+      <div className="container">
+        {/* Editorial header */}
         <motion.div
-          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ textAlign: "center", marginBottom: 60 }}
+          transition={{ duration: 0.8, ease: easeOutExpo }}
+          className="faq-header"
         >
-          <span className="eyebrow">Sıkça Sorulan Sorular</span>
-          <h2 className="section-title">Merak ettiğiniz <span className="gold">her şey</span></h2>
-          <p className="section-sub" style={{ margin: "20px auto 0", textAlign: "center" }}>Sigortacılık hakkında en çok sorulan sorular — uzman ekibimizden net açıklamalar.</p>
+          <div className="faq-header-left">
+            <span className="issue-marker">SSS &nbsp;·&nbsp; Q&amp;A</span>
+            <h2 className="headline-l">
+              Merak ettiğiniz <em>her şey.</em>
+            </h2>
+          </div>
+          <div className="faq-header-right">
+            <p className="faq-lede">
+              Sigortacılık hakkında en çok sorulan sorular —{" "}
+              <em className="script">uzman ekibimizden</em> net açıklamalar.
+            </p>
+          </div>
         </motion.div>
+
+        <div className="rule-editorial" aria-hidden style={{ marginBottom: 0 }} />
 
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-40px" }}
-          style={{ display: "flex", flexDirection: "column", gap: 12 }}
+          className="faq-list"
         >
-          {faqs.map((faq, i) => (
-            <motion.div
-              key={i}
-              variants={item}
-              layout
-            >
-              <motion.div
-                className="card"
-                style={{
-                  padding: 0, overflow: "hidden",
-                  border: open === i ? "1px solid var(--gold)" : "1px solid var(--border)",
-                }}
-                animate={{
-                  boxShadow: open === i ? "0 20px 60px rgba(201, 164, 73,0.12)" : "0 0 0 rgba(0,0,0,0)",
-                }}
-                transition={{ duration: 0.3 }}
-                whileHover={{ x: 6 }}
-              >
+          {faqs.map((faq, i) => {
+            const isOpen = open === i;
+            return (
+              <motion.div key={i} variants={item} className="faq-row" layout>
                 <motion.button
-                  onClick={() => setOpen(open === i ? null : i)}
-                  style={{ width: "100%", padding: "24px 28px", background: "transparent", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, textAlign: "left" }}
-                  whileHover={{ backgroundColor: "rgba(201, 164, 73,0.03)" }}
-                  whileTap={{ scale: 0.99 }}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="faq-button"
+                  aria-expanded={isOpen}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                    <motion.div
-                      animate={{ rotate: open === i ? 90 : 0, scale: open === i ? 1.1 : 1 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                      style={{ color: open === i ? "var(--gold)" : "var(--gray)", flexShrink: 0 }}
-                    >
-                      <HelpCircle size={20} />
-                    </motion.div>
-                    <span style={{ fontWeight: 700, fontSize: "1.05rem", color: open === i ? "var(--gold-dark)" : "var(--dark)" }}>{faq.q}</span>
-                  </div>
-                  <motion.div
-                    animate={{ rotate: open === i ? 180 : 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    style={{ flexShrink: 0 }}
-                  >
-                    <ChevronDown size={22} color={open === i ? "var(--gold)" : "var(--gray)"} />
-                  </motion.div>
+                  <span className="faq-idx">{String(i + 1).padStart(2, "0")}</span>
+                  <span className={`faq-question ${isOpen ? "faq-question-open" : ""}`}>
+                    {faq.q}
+                  </span>
+                  <span className={`faq-toggle ${isOpen ? "faq-toggle-open" : ""}`} aria-hidden>
+                    {isOpen ? <Minus size={16} strokeWidth={2.4} /> : <Plus size={16} strokeWidth={2.4} />}
+                  </span>
                 </motion.button>
-                <AnimatePresence>
-                  {open === i && (
+                <AnimatePresence initial={false}>
+                  {isOpen && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.45, ease: easeOutExpo }}
                       style={{ overflow: "hidden" }}
                     >
-                      <motion.p
-                        initial={{ y: -10, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        exit={{ y: -10, opacity: 0 }}
-                        transition={{ delay: 0.1, duration: 0.3 }}
-                        style={{ padding: "0 28px 28px 62px", color: "var(--gray)", lineHeight: 1.75, fontSize: "1rem", fontWeight: 500 }}
-                      >
-                        {faq.a}
-                      </motion.p>
+                      <p className="faq-answer">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </motion.div>
-            </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+        .faq-section {
+          padding-top: clamp(80px, 10vw, 140px);
+          padding-bottom: clamp(80px, 10vw, 140px);
+        }
+        .faq-header {
+          display: grid;
+          grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+          gap: clamp(2rem, 6vw, 6rem);
+          align-items: flex-end;
+          margin-bottom: 56px;
+        }
+        .faq-header-left .issue-marker { margin-bottom: 24px; }
+        .faq-lede {
+          font-size: 1.04rem;
+          line-height: 1.7;
+          color: var(--gray);
+          font-weight: 500;
+          max-width: 460px;
+        }
+        .faq-lede em.script { color: var(--gold-dark); font-size: 1.1em; }
+
+        .faq-list {
+          max-width: 980px;
+          margin: 0 auto;
+        }
+        .faq-row {
+          border-bottom: 1px solid var(--border);
+          position: relative;
+        }
+        .faq-button {
+          width: 100%;
+          padding: 28px 0;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          display: grid;
+          grid-template-columns: 80px 1fr 40px;
+          align-items: center;
+          gap: 24px;
+          text-align: left;
+          font-family: inherit;
+          transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .faq-button:hover { padding-left: 14px; }
+        .faq-idx {
+          font-family: var(--font-display);
+          font-style: italic;
+          font-weight: 500;
+          font-size: 1.4rem;
+          color: var(--gold);
+          letter-spacing: -0.02em;
+          font-variant-numeric: tabular-nums lining-nums;
+        }
+        .faq-question {
+          font-family: var(--font-display);
+          font-weight: 500;
+          font-size: clamp(1.12rem, 1.8vw, 1.4rem);
+          color: var(--ink);
+          letter-spacing: -0.015em;
+          line-height: 1.3;
+          transition: color 0.3s ease;
+        }
+        .faq-question-open { color: var(--gold-dark); font-style: italic; }
+        .faq-toggle {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: transparent;
+          border: 1px solid var(--border-strong);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ink);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .faq-toggle-open {
+          background: var(--ink);
+          color: var(--gold-light);
+          border-color: transparent;
+        }
+        .faq-answer {
+          padding: 0 0 28px 104px;
+          font-size: 1rem;
+          line-height: 1.75;
+          color: var(--gray);
+          font-weight: 400;
+          max-width: 720px;
+        }
+
+        @media (max-width: 1024px) {
+          .faq-header { grid-template-columns: 1fr; align-items: flex-start; gap: 20px; }
+        }
+        @media (max-width: 540px) {
+          .faq-button { grid-template-columns: 44px 1fr 32px; gap: 14px; padding: 22px 0; }
+          .faq-idx { font-size: 1.1rem; }
+          .faq-toggle { width: 30px; height: 30px; }
+          .faq-answer { padding-left: 58px; font-size: 0.95rem; }
+        }
+        `,
+      }} />
     </section>
   );
 }

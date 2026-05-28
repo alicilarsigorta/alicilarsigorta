@@ -15,17 +15,25 @@
   --gold-glow: rgba(201, 164, 73, 0.22);
   --gold-soft: rgba(201, 164, 73, 0.08);
 
+  /* Editorial paper-stock palette (warmer, more print-feel) */
+  --paper: #f4efe6;            /* warm newsprint/manila */
+  --paper-soft: #faf6ee;       /* lighter paper for surfaces */
+  --paper-deep: #ebe3d4;       /* heavier paper for emphasis */
+  --oxblood: #5c2a2a;          /* editorial accent — used sparingly */
+
   /* Sophisticated gray system (slate-tinted, not cold blue) */
   --white: #ffffff;
   --off-white: #f7f7f8;       /* soft surface (was cream/off-white warm) */
   --cream: #ececee;           /* pearl gray (replaces beige cream) */
   --black: #232427;           /* deep charcoal (was near-black) */
-  --ink: #14161a;             /* deepest text — display headings only */
+  --ink: #0e1014;             /* deepest text — display headings only (deeper) */
+  --ink-soft: #1c1f24;        /* nearly-ink for body emphasis */
   --dark: #2f3035;            /* primary dark / titles */
   --gray: #545861;            /* secondary text */
   --light-gray: #8a8d94;      /* muted text */
   --border: rgba(35, 36, 39, 0.10);
   --border-strong: rgba(35, 36, 39, 0.18);
+  --border-ink: rgba(14, 16, 20, 0.92);  /* heavy editorial rule */
   --border-gold: rgba(201, 164, 73, 0.22);
 
   /* Navy — corporate trust accent (subtle, used sparingly) */
@@ -830,7 +838,395 @@ body {
   user-select: none;
 }
 
-/* Process step connector line (HowItWorks) */
+/* ─────────────────────────────────────────────────
+   EDITORIAL MAGAZINE — Wallpaper/Monocle layer
+   For Hero, Ribbon, Bento, PullQuote, Masthead, etc.
+   ───────────────────────────────────────────────── */
+
+/* Editorial top ribbon — replaces auto-rotating carousels */
+.ed-ribbon {
+  position: relative;
+  background: var(--ink);
+  color: rgba(255,255,255,0.92);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-top: var(--header-h);
+  font-family: var(--font-sans);
+  overflow: hidden;
+}
+.ed-ribbon-inner {
+  display: grid;
+  grid-template-columns: minmax(180px, auto) 1fr minmax(140px, auto);
+  align-items: stretch;
+  border-top: 1px solid rgba(255,255,255,0.10);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+.ed-ribbon-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  border-right: 1px solid rgba(255,255,255,0.10);
+  white-space: nowrap;
+}
+.ed-ribbon-label::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(201,164,73,0.22);
+  animation: livePulse 2.4s infinite;
+}
+.ed-ribbon-track-wrap {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+}
+.ed-ribbon-track {
+  display: flex;
+  gap: 52px;
+  white-space: nowrap;
+  animation: ribbon-scroll 38s linear infinite;
+  will-change: transform;
+}
+.ed-ribbon-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: rgba(255,255,255,0.86);
+}
+.ed-ribbon-item-sep {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--gold-light);
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+.ed-ribbon-item strong {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.ed-ribbon-item em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold-light);
+  letter-spacing: -0.005em;
+  font-size: 1.02rem;
+}
+.ed-ribbon-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 22px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+  border-left: 1px solid rgba(255,255,255,0.10);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.ed-ribbon-cta:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+@keyframes ribbon-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ed-ribbon-track { animation-duration: 0s; }
+}
+@media (max-width: 768px) {
+  .ed-ribbon-inner {
+    grid-template-columns: minmax(120px, auto) 1fr;
+  }
+  .ed-ribbon-cta { display: none; }
+  .ed-ribbon-label { padding: 10px 14px; font-size: 0.62rem; letter-spacing: 0.18em; gap: 8px; }
+  .ed-ribbon-item { font-size: 0.78rem; }
+  .ed-ribbon-track { gap: 32px; animation-duration: 28s; }
+}
+
+/* Magazine masthead — Issue / Volume row */
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px 0 14px;
+  border-bottom: 1px solid var(--border-strong);
+  margin-bottom: clamp(36px, 6vw, 64px);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  flex-wrap: wrap;
+}
+.masthead-center {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  color: var(--gray);
+}
+.masthead-right {
+  color: var(--gold-dark);
+}
+.masthead-rule {
+  height: 1px;
+  background: var(--ink);
+  margin: 8px 0 24px;
+  opacity: 0.92;
+}
+.masthead-rule.thin { background: var(--border-strong); opacity: 1; }
+
+/* Heavy editorial rule — for separating sections magazine-style */
+.rule-editorial {
+  height: 2px;
+  background: var(--ink);
+  width: 100%;
+  margin: 0;
+  opacity: 0.92;
+}
+.rule-editorial.gold { background: var(--gold); opacity: 1; }
+.rule-editorial.hair { height: 1px; opacity: 0.18; background: var(--ink); }
+
+/* Issue/volume marker — small caps editorial label */
+.issue-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+.issue-marker::before, .issue-marker::after {
+  content: "";
+  height: 1px;
+  width: 24px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.issue-marker.no-rule::before, .issue-marker.no-rule::after { display: none; }
+
+/* Drop cap — for the start of editorial body copy */
+.drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-style: italic;
+  float: left;
+  font-size: 4.4em;
+  line-height: 0.85;
+  padding-right: 12px;
+  padding-top: 8px;
+  color: var(--gold-dark);
+  font-optical-sizing: auto;
+}
+
+/* Pull-quote — magazine-style giant block quote */
+.pull-quote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+  line-height: 1.32;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  padding-left: 28px;
+  border-left: 2px solid var(--gold);
+  font-optical-sizing: auto;
+}
+.pull-quote cite {
+  display: block;
+  margin-top: 18px;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+/* Editorial byline — small caps inline label */
+.byline {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+
+/* Cursive script accent — for magazine "the" or accent words */
+.script {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  font-optical-sizing: auto;
+}
+
+/* Bento grid — magazine-style asymmetric grid (12 col) */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+.bento-cell { grid-column: span 12; }
+.bento-cell-3 { grid-column: span 12; }
+.bento-cell-4 { grid-column: span 12; }
+.bento-cell-6 { grid-column: span 12; }
+.bento-cell-8 { grid-column: span 12; }
+
+@media (min-width: 640px) {
+  .bento-cell-3 { grid-column: span 6; }
+  .bento-cell-4 { grid-column: span 6; }
+  .bento-cell-6 { grid-column: span 12; }
+  .bento-cell-8 { grid-column: span 12; }
+}
+@media (min-width: 1024px) {
+  .bento { gap: 18px; }
+  .bento-cell-3 { grid-column: span 3; }
+  .bento-cell-4 { grid-column: span 4; }
+  .bento-cell-6 { grid-column: span 6; }
+  .bento-cell-8 { grid-column: span 8; }
+}
+
+/* Editorial index number — large bracketed counter, magazine-style */
+.idx {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  line-height: 0.9;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.03em;
+  font-optical-sizing: auto;
+}
+.idx-large {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(3.6rem, 7vw, 6rem);
+  line-height: 0.85;
+  color: var(--gold);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.04em;
+  font-optical-sizing: auto;
+}
+
+/* Editorial column rule — vertical divider with subtle taper */
+.col-rule {
+  position: relative;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent 0%, var(--border-strong) 15%, var(--border-strong) 85%, transparent 100%);
+}
+
+/* Editorial CTA — text-link with arrow + underline draw */
+.ed-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--ink);
+  transition: gap 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.ed-link:hover { gap: 16px; color: var(--gold-dark); border-bottom-color: var(--gold-dark); }
+.ed-link svg { transition: transform 0.3s ease; }
+.ed-link:hover svg { transform: translate(2px, -2px); }
+
+/* Headline ladder — three sizes for editorial hierarchy */
+.headline-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.8rem, 8vw, 7.2rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-optical-sizing: auto;
+  font-feature-settings: "ss01" on;
+}
+.headline-l {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 5.4vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  font-optical-sizing: auto;
+}
+.headline-m {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-optical-sizing: auto;
+}
+.headline-xl em,
+.headline-l em,
+.headline-m em {
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(135deg, var(--gold-deep) 0%, var(--gold-dark) 35%, var(--gold) 75%, var(--gold-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .headline-xl,
+.dark .headline-l,
+.dark .headline-m { color: var(--ink); }
+
+/* Paper card — warm off-white card surface */
+.paper-card {
+  background: var(--paper-soft);
+  border: 1px solid rgba(14,16,20,0.08);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.dark .paper-card {
+  background: var(--cream);
+  border-color: var(--border);
+}
+
+/* ─────────────────────────────────────────────────
+   Process step connector line (HowItWorks)
+   ───────────────────────────────────────────────── */
 .step-connector {
   position: absolute;
   top: 36px;

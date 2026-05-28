@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ArrowDown, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowUpRight, ArrowDown, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRef } from "react";
@@ -9,7 +9,6 @@ import { useContent } from "@/lib/content-context";
 import {
   fadeUp,
   fadeUpBlur,
-  scaleIn,
   stagger,
   easeOutExpo,
   spring,
@@ -17,12 +16,14 @@ import {
 import CountUp from "./CountUp";
 
 /**
- * Hero — disciplined premium.
+ * Hero — Editorial magazine cover.
  *
- * Replaces particle/orbit-ring composition with a single editorial layout:
- * eyebrow → serif display → body → dual CTA → 6-stat strip.
- * Animations are reveal-only (no perpetual decorative motion) except the
- * shield's subtle float.
+ * Layout is a magazine's front page:
+ * masthead row → heavy editorial rule → asymmetric headline+image grid →
+ * drop-cap lede paragraph → dual CTA → editorial stat table below.
+ *
+ * Inspired by Wallpaper/Monocle covers. No carousel, no decorative animation
+ * loops. Single subtle float on the shield image only.
  */
 export default function Hero() {
   const { content } = useContent();
@@ -32,9 +33,8 @@ export default function Hero() {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  // Very subtle parallax — disciplined, not theatrical.
-  const titleY = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const shieldY = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  // Very subtle parallax on the shield image — disciplined, not theatrical.
+  const shieldY = useTransform(scrollYProgress, [0, 1], [0, -60]);
 
   const scrollToNext = () => {
     const next = document.getElementById("how-it-works");
@@ -45,68 +45,72 @@ export default function Hero() {
     }
   };
 
+  const today = new Date();
+  const dateStr = today
+    .toLocaleDateString("tr-TR", { day: "2-digit", month: "long", year: "numeric" })
+    .toLocaleUpperCase("tr-TR");
+
   return (
     <section
       ref={sectionRef}
-      className="hero-section"
+      className="ed-hero"
       style={{
         position: "relative",
-        backgroundColor: "var(--white)",
+        backgroundColor: "var(--paper-soft)",
         overflow: "hidden",
       }}
     >
-      {/* Subtle geometric grid — replaces orbit/particle chaos */}
-      <div className="mesh-bg" aria-hidden />
-
-      {/* Single soft radial glow — not animated, just atmosphere */}
-      <div
-        aria-hidden
-        className="hero-bg-glow decor-mobile-hide"
-      />
-
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
-        <div className="hero-grid">
-          {/* LEFT — editorial copy */}
+        {/* MASTHEAD ROW — magazine masthead */}
+        <motion.div
+          variants={stagger(0.05, 0)}
+          initial="hidden"
+          animate="visible"
+          className="masthead"
+        >
+          <motion.span variants={fadeUp}>Alıcılar &nbsp;·&nbsp; Sigorta</motion.span>
+          <motion.span variants={fadeUp} className="masthead-center">
+            Issue 01 — Türkiye'nin sigorta gazetesi
+          </motion.span>
+          <motion.span variants={fadeUp} className="masthead-right">
+            {dateStr}
+          </motion.span>
+        </motion.div>
+
+        <div className="rule-editorial" aria-hidden />
+
+        {/* HEADLINE GRID */}
+        <div className="ed-hero-grid">
+          {/* LEFT — Editorial copy */}
           <motion.div
-            variants={stagger(0.12, 0.05)}
+            variants={stagger(0.1, 0.1)}
             initial="hidden"
             animate="visible"
-            className="hero-left"
-            style={{ y: titleY }}
+            className="ed-hero-left"
           >
-            <motion.div variants={fadeUp}>
-              <span className="eyebrow">
-                <ShieldCheck size={14} strokeWidth={2} />
-                {hero.badge}
-              </span>
-            </motion.div>
+            <motion.span variants={fadeUp} className="issue-marker">
+              <ShieldCheck size={12} strokeWidth={2.4} />
+              {hero.badge}
+            </motion.span>
 
-            <motion.h1
-              variants={fadeUpBlur}
-              className="hero-title"
-            >
+            <motion.h1 variants={fadeUpBlur} className="ed-hero-headline headline-xl">
               {hero.title}{" "}
-              <span className="gold">
-                {hero.titleHighlight}
-              </span>
+              <em>{hero.titleHighlight}.</em>
             </motion.h1>
 
-            <motion.p variants={fadeUp} className="hero-sub">
+            <motion.p variants={fadeUp} className="ed-hero-lede drop-cap">
               {hero.subtitle}
             </motion.p>
 
-            <motion.div variants={fadeUp} className="hero-cta-row">
+            <motion.div variants={fadeUp} className="ed-hero-cta-row">
               <motion.div
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.97 }}
                 transition={spring.snappy}
               >
-                <Link
-                  href="/teklif-al"
-                  className="btn btn-gold hero-cta-primary"
-                >
+                <Link href="/teklif-al" className="btn btn-gold ed-hero-cta-primary">
                   {hero.ctaText}
-                  <ArrowRight size={18} strokeWidth={2.3} />
+                  <ArrowUpRight size={18} strokeWidth={2.3} />
                 </Link>
               </motion.div>
 
@@ -115,312 +119,387 @@ export default function Hero() {
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.97 }}
                 transition={spring.snappy}
-                className="btn hero-cta-secondary"
+                className="ed-link"
                 aria-label="Sayfada aşağı kaydır — nasıl çalıştığımızı gör"
               >
-                Nasıl Çalışıyor?
-                <ArrowDown size={18} strokeWidth={2.3} />
+                Nasıl çalışıyor
+                <ArrowDown size={16} strokeWidth={2.3} />
               </motion.button>
-            </motion.div>
-
-            {/* Inline mini trust strip */}
-            <motion.div variants={fadeUp} className="hero-mini-trust">
-              <div className="hero-mini-trust-item">
-                <Sparkles size={14} color="var(--gold-dark)" />
-                <span>Anlık karşılaştırma</span>
-              </div>
-              <span className="hero-mini-trust-dot" />
-              <div className="hero-mini-trust-item">
-                <span>SEGEM Lisanslı</span>
-              </div>
-              <span className="hero-mini-trust-dot" />
-              <div className="hero-mini-trust-item">
-                <span>Komisyonsuz</span>
-              </div>
             </motion.div>
           </motion.div>
 
-          {/* RIGHT — shield image, single float, no orbit rings */}
+          {/* RIGHT — Cover image composition */}
           <motion.div
-            variants={scaleIn}
-            initial="hidden"
-            animate="visible"
-            className="hero-graphics"
-            style={{ y: shieldY }}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: easeOutExpo, delay: 0.2 }}
+            className="ed-hero-right"
           >
             <motion.div
-              animate={{ y: [0, -16, 0] }}
-              transition={{
-                duration: 7,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="hero-shield-wrap"
+              style={{ y: shieldY }}
+              className="ed-hero-cover"
             >
-              <Image
-                src="/hero-shield.png"
-                alt="Alıcılar Sigorta — premium koruma"
-                width={520}
-                height={520}
-                priority
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  objectFit: "contain",
-                  filter: "drop-shadow(0 40px 80px rgba(201, 164, 73, 0.28))",
-                }}
-              />
-            </motion.div>
+              {/* Photo credit (small caps, magazine-style) */}
+              <span className="ed-hero-photo-credit">
+                <span className="byline">cover</span>
+                <span className="ed-hero-credit-text">
+                  Issue 01 — <em className="script">Şeffaf Güvence</em>
+                </span>
+              </span>
 
-            {/* Static glow behind shield — no pulsing */}
-            <div
-              aria-hidden
-              className="hero-shield-glow decor-mobile-hide"
-            />
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                className="ed-hero-shield"
+              >
+                <Image
+                  src="/hero-shield.png"
+                  alt="Alıcılar Sigorta — premium koruma"
+                  width={520}
+                  height={520}
+                  priority
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "contain",
+                    filter: "drop-shadow(0 40px 80px rgba(201, 164, 73, 0.30))",
+                  }}
+                />
+              </motion.div>
+
+              {/* Floating editorial chips with live stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.7, ease: easeOutExpo }}
+                className="ed-hero-chip ed-hero-chip-tl"
+                aria-hidden
+              >
+                <span className="live-dot" />
+                <div>
+                  <div className="ed-hero-chip-label">Şu anda</div>
+                  <div className="ed-hero-chip-value">142 kişi teklif alıyor</div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.1, duration: 0.7, ease: easeOutExpo }}
+                className="ed-hero-chip ed-hero-chip-br"
+                aria-hidden
+              >
+                <div>
+                  <div className="ed-hero-chip-label">Ortalama tasarruf</div>
+                  <div className="ed-hero-chip-value">
+                    %32 <em className="script">avantaj</em>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         </div>
 
-        {/* 6-stat editorial strip */}
+        {/* EDITORIAL STAT TABLE — replaces the equal-grid stat strip */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.9, ease: easeOutExpo, delay: 0.2 }}
-          className="hero-stats"
+          transition={{ duration: 0.9, ease: easeOutExpo, delay: 0.1 }}
+          className="ed-hero-stats"
         >
-          {hero.stats.map((s, i) => (
-            <motion.div
-              key={`${s.label}-${i}`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                delay: 0.4 + i * 0.08,
-                duration: 0.7,
-                ease: easeOutExpo,
-              }}
-              className="hero-stat-cell"
-            >
-              <div className="stat-number">
-                <CountUp value={s.value} duration={1700 + i * 80} />
-              </div>
-              <div className="hero-stat-label">{s.label}</div>
-            </motion.div>
-          ))}
+          <div className="rule-editorial hair" aria-hidden style={{ marginBottom: 28 }} />
+          <div className="ed-hero-stats-header">
+            <span className="byline">Rakamlarla &nbsp;·&nbsp; 2026</span>
+            <span className="ed-hero-stats-foot">
+              <em className="script">Güncel performans</em>
+            </span>
+          </div>
+          <div className="ed-hero-stats-grid">
+            {hero.stats.map((s, i) => (
+              <motion.div
+                key={`${s.label}-${i}`}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  delay: 0.3 + i * 0.06,
+                  duration: 0.6,
+                  ease: easeOutExpo,
+                }}
+                className="ed-hero-stat-cell"
+              >
+                <span className="ed-hero-stat-idx">{String(i + 1).padStart(2, "0")}</span>
+                <div className="ed-hero-stat-num stat-number">
+                  <CountUp value={s.value} duration={1700 + i * 80} />
+                </div>
+                <div className="ed-hero-stat-lbl">{s.label}</div>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
 
       <style dangerouslySetInnerHTML={{
         __html: `
-        .hero-section {
-          padding: clamp(60px, 8vw, 110px) 0 clamp(50px, 6vw, 80px);
+        .ed-hero {
+          padding: clamp(36px, 5vw, 64px) 0 clamp(40px, 6vw, 80px);
         }
-        .hero-bg-glow {
-          position: absolute;
-          top: -20%;
-          right: -10%;
-          width: 720px;
-          height: 720px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(201,164,73,0.13) 0%, transparent 60%);
-          pointer-events: none;
-          filter: blur(20px);
-        }
-        .hero-grid {
+
+        .ed-hero-grid {
           display: grid;
-          grid-template-columns: 1.2fr 1fr;
-          gap: clamp(2rem, 6vw, 6rem);
-          align-items: center;
-          min-height: 520px;
+          grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+          gap: clamp(2rem, 5vw, 5rem);
+          align-items: stretch;
+          padding: clamp(36px, 6vw, 64px) 0 clamp(48px, 6vw, 80px);
         }
-        .hero-left { max-width: 640px; }
 
-        .hero-title {
-          font-family: var(--font-display);
-          font-weight: 500;
-          font-size: clamp(2.4rem, 6.2vw, 5.6rem);
-          line-height: 1.02;
-          letter-spacing: -0.035em;
-          color: var(--ink);
-          margin: 0 0 24px;
-          font-optical-sizing: auto;
-          font-feature-settings: "ss01" on, "ss02" on;
+        .ed-hero-left {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          max-width: 760px;
         }
-        .hero-title .gold {
-          font-style: italic;
+        .ed-hero-left .issue-marker { margin-bottom: 28px; }
+
+        .ed-hero-headline {
+          margin: 0 0 28px;
+          color: var(--ink);
+        }
+
+        .ed-hero-lede {
+          font-size: clamp(1.05rem, 1.4vw, 1.18rem);
+          line-height: 1.72;
+          color: var(--ink-soft);
           font-weight: 400;
-          background: linear-gradient(135deg, var(--gold-deep) 0%, var(--gold-dark) 35%, var(--gold) 75%, var(--gold-light) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          display: inline-block;
+          margin: 0 0 36px;
+          max-width: 580px;
         }
+        .dark .ed-hero-lede { color: var(--gray); }
 
-        .hero-sub {
-          font-size: 1.18rem;
-          line-height: 1.65;
-          color: var(--gray);
-          font-weight: 500;
-          margin-bottom: 36px;
-          max-width: 560px;
-        }
-
-        .hero-cta-row {
+        .ed-hero-cta-row {
           display: flex;
           align-items: center;
-          gap: 14px;
+          gap: 24px;
           flex-wrap: wrap;
-          margin-bottom: 28px;
         }
-        .hero-cta-primary {
-          padding: 1.05rem 2.2rem !important;
-          font-size: 1rem;
+        .ed-hero-cta-primary {
+          padding: 1.1rem 2.2rem !important;
+          font-size: 0.98rem;
           border-radius: 100px;
-          box-shadow: 0 18px 40px rgba(201, 164, 73, 0.28);
-        }
-        .hero-cta-secondary {
-          background: transparent;
-          color: var(--ink);
-          padding: 1.05rem 1.7rem !important;
-          border: 1px solid var(--border-strong);
-          font-weight: 700;
-          font-size: 1rem;
-          border-radius: 100px;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .hero-cta-secondary:hover {
-          background: var(--cream);
-          border-color: var(--ink);
-        }
-
-        .hero-mini-trust {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          flex-wrap: wrap;
-          font-size: 0.84rem;
-          color: var(--gray);
-          font-weight: 600;
+          box-shadow: 0 20px 44px rgba(201, 164, 73, 0.32);
           letter-spacing: 0.01em;
         }
-        .hero-mini-trust-item {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
+
+        /* RIGHT — cover */
+        .ed-hero-right {
+          position: relative;
+          min-height: 460px;
+          display: flex;
+          align-items: stretch;
+          justify-content: stretch;
         }
-        .hero-mini-trust-dot {
-          width: 4px;
-          height: 4px;
-          border-radius: 50%;
-          background: var(--border-strong);
+        .ed-hero-cover {
+          position: relative;
+          width: 100%;
+          background: linear-gradient(170deg, var(--paper) 0%, var(--paper-deep) 100%);
+          border: 1px solid rgba(14,16,20,0.08);
+          border-radius: 4px;
+          padding: 24px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          box-shadow:
+            0 1px 0 rgba(14,16,20,0.05),
+            0 30px 80px -20px rgba(14,16,20,0.18),
+            inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+        .ed-hero-cover::before {
+          content: "";
+          position: absolute;
+          top: 14px; left: 14px; right: 14px; bottom: 14px;
+          border: 1px solid rgba(14,16,20,0.08);
+          border-radius: 2px;
+          pointer-events: none;
+        }
+        .ed-hero-cover::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle at 25% 20%, rgba(201,164,73,0.18) 0%, transparent 55%),
+            radial-gradient(circle at 75% 80%, rgba(201,164,73,0.10) 0%, transparent 60%);
+          pointer-events: none;
         }
 
-        .hero-graphics {
+        .ed-hero-photo-credit {
           position: relative;
-          height: 100%;
-          min-height: 460px;
+          z-index: 3;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 8px 12px;
+        }
+        .ed-hero-credit-text {
+          font-family: var(--font-sans);
+          font-size: 0.74rem;
+          color: var(--gray);
+          letter-spacing: 0.04em;
+        }
+
+        .ed-hero-shield {
+          position: relative;
+          z-index: 2;
+          flex: 1;
+          width: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 12px;
         }
-        .hero-shield-wrap {
-          position: relative;
-          width: 100%;
-          max-width: 520px;
-          z-index: 2;
-        }
-        .hero-shield-glow {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 480px;
-          height: 480px;
-          background: radial-gradient(circle, rgba(201,164,73,0.20) 0%, transparent 65%);
-          filter: blur(36px);
-          z-index: 1;
+        .ed-hero-shield img {
+          max-width: 88%;
         }
 
-        .hero-stats {
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 1px;
-          margin-top: clamp(48px, 6vw, 80px);
-          background: var(--border);
-          border-radius: 24px;
-          overflow: hidden;
-          border: 1px solid var(--border);
+        /* Chips floating over cover */
+        .ed-hero-chip {
+          position: absolute;
+          z-index: 4;
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          padding: 10px 16px 10px 14px;
+          background: rgba(255,255,255,0.96);
+          backdrop-filter: blur(14px);
+          border: 1px solid rgba(14,16,20,0.08);
+          border-radius: 100px;
+          box-shadow: 0 18px 50px -10px rgba(14,16,20,0.16);
         }
-        .hero-stat-cell {
-          background: var(--white);
-          padding: 28px 18px;
-          text-align: center;
+        .ed-hero-chip-tl {
+          top: 56px;
+          left: 28px;
+        }
+        .ed-hero-chip-br {
+          bottom: 32px;
+          right: 28px;
+          padding: 12px 18px;
+        }
+        .ed-hero-chip-label {
+          font-family: var(--font-sans);
+          font-size: 0.62rem;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--gray);
+        }
+        .ed-hero-chip-value {
+          font-family: var(--font-sans);
+          font-size: 0.92rem;
+          font-weight: 800;
+          color: var(--ink);
+          letter-spacing: -0.01em;
+        }
+        .ed-hero-chip-value em.script {
+          color: var(--gold-dark);
+          font-size: 0.95rem;
+        }
+
+        /* Stats — editorial table style */
+        .ed-hero-stats {
+          margin-top: 8px;
+        }
+        .ed-hero-stats-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 24px;
+          flex-wrap: wrap;
+          gap: 12px;
+        }
+        .ed-hero-stats-foot {
+          font-size: 0.92rem;
+          color: var(--gray);
+        }
+        .ed-hero-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+          gap: 0;
+          border-top: 1px solid var(--border-strong);
+        }
+        .ed-hero-stat-cell {
+          padding: 26px 22px 24px;
+          border-right: 1px solid var(--border);
+          border-bottom: 1px solid var(--border);
+          background: var(--paper-soft);
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 6px;
+          position: relative;
           transition: background 0.3s ease;
         }
-        .hero-stat-cell:hover {
-          background: var(--off-white);
+        .ed-hero-stat-cell:last-child { border-right: none; }
+        .ed-hero-stat-cell:hover { background: var(--white); }
+        .ed-hero-stat-idx {
+          font-family: var(--font-sans);
+          font-size: 0.62rem;
+          font-weight: 800;
+          letter-spacing: 0.2em;
+          color: var(--gold-dark);
+          margin-bottom: 8px;
         }
-        .hero-stat-cell .stat-number {
-          font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+        .ed-hero-stat-num {
+          font-size: clamp(1.5rem, 2.4vw, 2.1rem);
           line-height: 1;
         }
-        .hero-stat-label {
-          font-size: 0.8rem;
+        .ed-hero-stat-lbl {
+          font-size: 0.82rem;
           color: var(--gray);
           font-weight: 600;
-          letter-spacing: 0.02em;
-          line-height: 1.3;
+          letter-spacing: 0.01em;
+          line-height: 1.4;
         }
 
         @media (max-width: 1024px) {
-          .hero-grid {
+          .ed-hero-grid {
             grid-template-columns: 1fr;
-            min-height: 0;
           }
-          .hero-graphics { display: none; }
-          .hero-stats {
+          .ed-hero-right { min-height: 340px; }
+          .ed-hero-stats-grid {
             grid-template-columns: repeat(3, 1fr);
           }
+          .ed-hero-stat-cell:nth-child(3n) { border-right: none; }
         }
         @media (max-width: 640px) {
-          .hero-section {
-            padding: 32px 0 36px;
-          }
-          .hero-title {
-            font-size: clamp(2rem, 9vw, 3rem);
-            line-height: 1.05;
-          }
-          .hero-sub {
-            font-size: 1rem;
-            margin-bottom: 24px;
-          }
-          .hero-cta-row {
+          .ed-hero-cover { padding: 16px; }
+          .ed-hero-cover::before { top: 10px; left: 10px; right: 10px; bottom: 10px; }
+          .ed-hero-chip-tl { top: 28px; left: 18px; }
+          .ed-hero-chip-br { bottom: 18px; right: 18px; }
+          .ed-hero-chip { padding: 8px 12px 8px 10px; gap: 8px; }
+          .ed-hero-chip-value { font-size: 0.82rem; }
+
+          .ed-hero-cta-row { width: 100%; gap: 18px; flex-direction: column; align-items: stretch; }
+          .ed-hero-cta-primary {
             width: 100%;
-            gap: 10px;
+            padding: 1rem 1.4rem !important;
+            justify-content: center;
           }
-          .hero-cta-primary, .hero-cta-secondary {
-            width: 100%;
-            padding: 0.95rem 1.4rem !important;
-          }
-          .hero-mini-trust {
-            font-size: 0.78rem;
-            gap: 10px;
-          }
-          .hero-stats {
+          .ed-link { justify-content: center; align-self: center; }
+
+          .ed-hero-stats-grid {
             grid-template-columns: repeat(2, 1fr);
-            border-radius: 18px;
           }
-          .hero-stat-cell {
-            padding: 20px 12px;
-          }
-          .hero-stat-cell .stat-number {
-            font-size: clamp(1.4rem, 6.5vw, 1.9rem);
-          }
-          .hero-stat-label {
-            font-size: 0.72rem;
+          .ed-hero-stat-cell { padding: 20px 14px; }
+          .ed-hero-stat-cell:nth-child(3n) { border-right: 1px solid var(--border); }
+          .ed-hero-stat-cell:nth-child(2n) { border-right: none; }
+
+          .masthead { font-size: 0.62rem; gap: 12px; padding: 14px 0 10px; }
+          .masthead-center { font-size: 0.78rem; flex-basis: 100%; order: 99; text-align: center; }
+
+          .ed-hero-lede { font-size: 0.98rem; line-height: 1.65; }
+          .drop-cap::first-letter {
+            font-size: 3.4em;
+            padding-right: 8px;
           }
         }
         `,
