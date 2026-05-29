@@ -13,7 +13,14 @@ export default function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return <div className="h-9 w-9" />;
+  if (!mounted) {
+    return (
+      <div
+        style={{ width: 38, height: 38 }}
+        aria-hidden
+      />
+    );
+  }
 
   const isDark = theme === "dark";
 
@@ -22,10 +29,22 @@ export default function ThemeToggle() {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-hover text-text-muted transition-colors hover:text-text-main"
-      aria-label="Toggle theme"
+      aria-label={isDark ? "Açık temaya geç" : "Koyu temaya geç"}
+      style={{
+        width: 38,
+        height: 38,
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "var(--glass-bg)",
+        border: "1px solid var(--glass-border)",
+        color: "var(--text-secondary)",
+        cursor: "pointer",
+        transition: "all 0.25s ease",
+      }}
     >
-      {isDark ? <Sun size={18} /> : <Moon size={18} />}
+      {isDark ? <Sun size={16} strokeWidth={1.9} /> : <Moon size={16} strokeWidth={1.9} />}
     </motion.button>
   );
 }

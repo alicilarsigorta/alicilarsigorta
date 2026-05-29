@@ -1,6 +1,5 @@
 "use client";
 
-import EditorialRibbon from "@/components/EditorialRibbon";
 import Hero from "@/components/Hero";
 import TrustBar from "@/components/TrustBar";
 import PartnerMarquee from "@/components/PartnerMarquee";
@@ -13,17 +12,14 @@ import WhyUs from "@/components/WhyUs";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { easeOutExpo, viewportOnce, fadeUp, stagger } from "@/lib/motion";
 
 export default function Home() {
   return (
     <>
-      {/* Top — editorial ribbon ticker sits inside the header padding zone */}
-      <EditorialRibbon />
-
-      {/* Editorial magazine-cover hero */}
+      {/* Fintech glass-card hero */}
       <Hero />
 
       {/* Regulatory trust signals — right below hero so they anchor first impression */}
@@ -32,9 +28,11 @@ export default function Home() {
       {/* Partner logo marquee — sigorta şirketleri */}
       <PartnerMarquee />
 
-      {/* Products — editorial bento grid */}
-      <section className="section" style={{ background: "var(--paper-soft)" }}>
-        <div className="container">
+      {/* Products — dashboard tile bento */}
+      <section className="section" style={{ background: "var(--navy-deep)", position: "relative", overflow: "hidden" }}>
+        <div aria-hidden className="mint-glow-bg" style={{ top: "10%", right: "-10%" }} />
+
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <motion.div
             variants={stagger(0.08, 0)}
             initial="hidden"
@@ -43,7 +41,7 @@ export default function Home() {
             className="products-header"
           >
             <motion.div variants={fadeUp} className="products-header-left">
-              <span className="issue-marker">Portföy &nbsp;·&nbsp; Sekiz Branş</span>
+              <span className="eyebrow">Portföy — Sekiz Branş</span>
               <h2 className="headline-l products-headline">
                 Hayatınızın her detayı için <em>tek çatı.</em>
               </h2>
@@ -54,12 +52,10 @@ export default function Home() {
                 dakikalar içinde size en uygun teminatı bulsun.
               </p>
               <Link href="/urunlerimiz" className="ed-link" style={{ marginTop: 18 }}>
-                Tüm Branşlar <ArrowUpRight size={14} strokeWidth={2.4} />
+                Tüm Branşlar <ArrowRight size={14} strokeWidth={2.4} />
               </Link>
             </motion.div>
           </motion.div>
-
-          <div className="rule-editorial" aria-hidden style={{ marginBottom: 32 }} />
 
           <InsuranceCards />
         </div>
@@ -71,15 +67,14 @@ export default function Home() {
             grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
             gap: clamp(2rem, 6vw, 6rem);
             align-items: flex-end;
-            margin-bottom: 36px;
+            margin-bottom: 56px;
           }
-          .products-header-left .issue-marker { margin-bottom: 24px; }
           .products-headline { margin: 0; max-width: 720px; }
           .products-lede {
             font-size: 1.04rem;
             line-height: 1.7;
-            color: var(--gray);
-            font-weight: 500;
+            color: var(--text-secondary);
+            font-weight: 400;
             max-width: 460px;
           }
           @media (max-width: 1024px) {
@@ -98,38 +93,21 @@ export default function Home() {
       {/* Editorial feature article */}
       <PromoSection />
 
-      {/* Dark live-impact bar — visual rhythm break + corporate scale signal */}
+      {/* Live impact dashboard */}
       <LiveImpact />
 
       {/* Why us — 4 differentiators */}
       <WhyUs />
 
-      {/* Testimonials editorial pull-quote */}
+      {/* Testimonials */}
       <Testimonials />
 
-      {/* CTA banner — magazine back-cover, disciplined editorial */}
-      <section
-        className="section-sm cta-banner"
-        style={{
-          background: "var(--ink)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div aria-hidden className="cta-banner-glow" />
+      {/* CTA banner — fintech glass back-cover */}
+      <section className="section-sm cta-banner">
+        <div aria-hidden className="cta-glow-mint" />
+        <div aria-hidden className="cta-glow-violet" />
 
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          {/* Back-cover masthead */}
-          <div className="cta-masthead">
-            <span style={{ color: "var(--gold-light)" }}>Alıcılar &nbsp;·&nbsp; Sigorta</span>
-            <span className="cta-masthead-center">
-              <em className="script">Issue 01 — Son sayfa</em>
-            </span>
-            <span style={{ color: "var(--gold-light)" }}>{new Date().getFullYear()}</span>
-          </div>
-
-          <div className="cta-rule" aria-hidden />
-
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -137,9 +115,11 @@ export default function Home() {
             transition={{ duration: 0.9, ease: easeOutExpo }}
             className="cta-body"
           >
-            <h2 className="cta-headline headline-xl">
-              Güvenceniz{" "}
-              <em className="cta-headline-em">bir tık uzakta.</em>
+            <span className="eyebrow" style={{ justifyContent: "center" }}>
+              Bir adımınız kaldı
+            </span>
+            <h2 className="cta-headline">
+              Güvenceniz <em>bir tık uzakta.</em>
             </h2>
             <p className="cta-lede">
               Ücretsiz teklif alın, <strong>20+ şirketi</strong> karşılaştırın,
@@ -150,106 +130,104 @@ export default function Home() {
               whileTap={{ scale: 0.97 }}
               style={{ display: "inline-block", marginTop: 32 }}
             >
-              <Link
-                href="/teklif-al"
-                className="btn btn-gold cta-button"
-              >
+              <Link href="/teklif-al" className="btn btn-gold cta-button">
                 Ücretsiz Teklif Al
-                <ArrowUpRight size={20} />
+                <ArrowRight size={18} />
               </Link>
             </motion.div>
-          </motion.div>
 
-          <div className="cta-rule" aria-hidden style={{ marginTop: 56 }} />
-          <div className="cta-foot">
-            <span className="byline" style={{ color: "var(--gold-light)" }}>SEGEM Lisanslı</span>
-            <span className="byline" style={{ color: "rgba(255,255,255,0.45)" }}>·</span>
-            <span className="byline" style={{ color: "var(--gold-light)" }}>T.C. Hazine Denetimi</span>
-            <span className="byline" style={{ color: "rgba(255,255,255,0.45)" }}>·</span>
-            <span className="byline" style={{ color: "var(--gold-light)" }}>KVKK Uyumlu</span>
-          </div>
+            <div className="cta-foot">
+              <span className="byline">SEGEM Lisanslı</span>
+              <span className="cta-foot-sep" />
+              <span className="byline">T.C. Hazine Denetimi</span>
+              <span className="cta-foot-sep" />
+              <span className="byline">KVKK Uyumlu</span>
+            </div>
+          </motion.div>
         </div>
 
         <style dangerouslySetInnerHTML={{
           __html: `
-          .cta-banner-glow {
+          .cta-banner {
+            background: var(--navy-deepest);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--glass-border);
+          }
+          .cta-glow-mint {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            width: 900px;
-            height: 500px;
-            background: radial-gradient(ellipse, rgba(176,112,80,0.18) 0%, transparent 65%);
+            top: -20%;
+            left: 10%;
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, var(--mint-glow) 0%, transparent 65%);
             filter: blur(50px);
             pointer-events: none;
           }
-          .cta-masthead {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            padding: 8px 0 18px;
-            font-family: var(--font-sans);
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            flex-wrap: wrap;
-          }
-          .cta-masthead-center {
-            font-size: 0.86rem;
-            color: rgba(255,255,255,0.6);
-            text-transform: none;
-            letter-spacing: 0.04em;
-          }
-          .cta-rule {
-            height: 1px;
-            background: rgba(255,255,255,0.18);
-            margin: 0 0 56px;
+          .cta-glow-violet {
+            position: absolute;
+            bottom: -20%;
+            right: 10%;
+            width: 500px;
+            height: 400px;
+            background: radial-gradient(ellipse, var(--violet-glow) 0%, transparent 65%);
+            filter: blur(50px);
+            pointer-events: none;
           }
           .cta-body {
             text-align: center;
-            max-width: 820px;
+            max-width: 720px;
             margin: 0 auto;
           }
           .cta-headline {
-            color: #fff;
-            margin: 0 0 26px;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            font-size: clamp(2.4rem, 5vw, 4.2rem);
+            color: var(--text-primary);
+            letter-spacing: -0.035em;
+            line-height: 1.04;
+            margin: 14px 0 18px;
           }
-          .cta-headline-em {
-            font-style: italic;
-            font-weight: 400;
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+          .cta-headline em {
+            font-style: normal;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--mint) 0%, var(--violet) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             display: inline-block;
           }
           .cta-lede {
-            color: rgba(255,255,255,0.7);
-            font-size: 1.12rem;
+            color: var(--text-secondary);
+            font-size: 1.08rem;
             line-height: 1.7;
-            max-width: 580px;
+            max-width: 560px;
             margin: 0 auto;
             font-weight: 400;
           }
-          .cta-lede strong { color: #fff; font-weight: 700; }
+          .cta-lede strong { color: var(--mint); font-weight: 600; }
           .cta-button {
-            font-size: 1.02rem;
-            padding: 1.15rem 2.6rem;
-            box-shadow: 0 24px 60px rgba(176, 112, 80, 0.45);
+            font-size: 1rem !important;
+            padding: 1.1rem 2.4rem !important;
+            font-weight: 700 !important;
           }
           .cta-foot {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 18px;
+            gap: 14px;
             flex-wrap: wrap;
-            padding-top: 4px;
+            margin-top: 40px;
+            padding-top: 28px;
+            border-top: 1px solid var(--glass-border);
+          }
+          .cta-foot-sep {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--glass-border-strong);
           }
           @media (max-width: 640px) {
-            .cta-masthead { font-size: 0.62rem; gap: 12px; }
-            .cta-masthead-center { font-size: 0.72rem; flex-basis: 100%; order: 99; text-align: center; }
             .cta-button { width: 100%; justify-content: center; }
             .cta-foot { gap: 10px; }
           }

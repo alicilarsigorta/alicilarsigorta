@@ -106,12 +106,12 @@ export default function LiveImpact() {
         __html: `
         .impact-section {
           position: relative;
-          background: var(--ink);
+          background: var(--navy-deepest);
           padding: clamp(80px, 10vw, 140px) 0;
           overflow: hidden;
-          color: #fff;
-          border-top: 1px solid rgba(255,255,255,0.06);
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          color: var(--text-primary);
+          border-top: 1px solid var(--glass-border);
+          border-bottom: 1px solid var(--glass-border);
         }
         .impact-glow {
           position: absolute;
@@ -184,7 +184,7 @@ export default function LiveImpact() {
           overflow: hidden;
         }
         .impact-cell {
-          background: var(--ink);
+          background: var(--navy);
           padding: 36px 28px;
           display: flex;
           flex-direction: column;

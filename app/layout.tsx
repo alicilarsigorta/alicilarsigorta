@@ -1,33 +1,32 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Fraunces } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "sonner";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import LoadingScreen from "@/components/LoadingScreen";
 
-const outfit = Outfit({
+// Inter Variable — the modern fintech default. Sharp at every weight.
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-outfit",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-inter",
   display: "swap",
 });
 
-// Serif display font for editorial/financial gravitas.
-// Fraunces is variable across wght (100-900), opsz (9-144), SOFT (0-100).
-// We omit `weight` so the font ships as truly variable — any font-weight value works in CSS.
-const fraunces = Fraunces({
+// JetBrains Mono — for data labels, stats, "live" tags.
+// Gives the dashboard/fintech feel where numbers and short labels read as data.
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-mono-display",
   display: "swap",
-  axes: ["opsz", "SOFT"],
 });
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#0b1428" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1428" },
   ],
 };
 
@@ -56,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="tr" suppressHydrationWarning className={`${outfit.variable} ${fraunces.variable}`}>
+    <html lang="tr" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
@@ -65,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-title" content="AS Admin" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
-      <body className={outfit.className}>
+      <body className={inter.className}>
         <Providers>
           <ConditionalLayout>
             {children}

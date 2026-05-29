@@ -2,29 +2,31 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, MessageCircle } from "lucide-react";
+import { Menu, X, Phone, MessageCircle, ArrowRight, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
-const navLeft = [
+const nav = [
   { name: "Ürünler", href: "/urunlerimiz" },
   { name: "Hakkımızda", href: "/hakkimizda" },
-];
-
-const navRight = [
   { name: "Blog", href: "/blog" },
   { name: "SSS", href: "/sss" },
   { name: "İletişim", href: "/iletisim" },
 ];
 
+/**
+ * Header — fintech glass single-layer.
+ * Logo left, center nav, right user + mint CTA. Backdrop-blur, dark navy.
+ * Mobile: glass full-screen menu sheet.
+ */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20);
+    const fn = () => setScrolled(window.scrollY > 12);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
@@ -43,107 +45,215 @@ export default function Header() {
   return (
     <>
       <header className={`header ${scrolled ? "scrolled" : ""}`}>
-        <div className="container" style={{ display: "flex", alignItems: "center", height: "100%", position: "relative" }}>
+        <div className="container header-inner">
+          {/* LEFT — Logo wordmark */}
+          <Link href="/" className="header-brand">
+            <span className="header-brand-mark" aria-hidden>
+              <span className="header-brand-dot" />
+            </span>
+            <span className="header-brand-name">
+              alıcılar<span className="header-brand-name-accent">.</span>sigorta
+            </span>
+          </Link>
 
-          {/* LEFT NAV (Desktop) */}
-          <nav className="desktop-nav" style={{ flex: 1, display: "none" }} id="nav-left">
-            {navLeft.map(link => (
-              <Link key={link.href} href={link.href} className={`nav-link ${isActive(link.href) ? "active" : ""}`}>
+          {/* CENTER — Nav */}
+          <nav className="desktop-nav header-nav">
+            {nav.map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`nav-link ${isActive(link.href) ? "active" : ""}`}
+              >
                 {link.name}
               </Link>
             ))}
           </nav>
 
-          {/* CENTER LOGO */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "flex-start", alignItems: "center", zIndex: 100 }} className="logo-container">
-            <Link href="/" style={{ display: "flex", flexDirection: "row", alignItems: "center", textDecoration: "none", gap: 8 }} className="logo-link">
-              <motion.img
-                src="/logo-dark.png"
-                alt="Alıcılar Sigorta"
-                className="header-logo-img"
-                style={{ width: 96, height: 96, objectFit: "contain" }}
-                whileHover={{ rotate: 10, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              />
+          {/* RIGHT — Theme + CTA */}
+          <div className="header-actions">
+            <ThemeToggle />
+
+            <Link href="/admin/login" className="header-user" aria-label="Giriş">
+              <User size={17} strokeWidth={1.8} />
+            </Link>
+
+            <Link href="/teklif-al" className="btn btn-gold header-cta">
+              Teklif Al
+              <ArrowRight size={15} strokeWidth={2.3} />
             </Link>
           </div>
 
-          {/* RIGHT NAV (Desktop) */}
-          <nav className="desktop-nav" style={{ flex: 1, justifyContent: "flex-end", display: "none" }} id="nav-right">
-            {navRight.map(link => (
-              <Link key={link.href} href={link.href} className={`nav-link ${isActive(link.href) ? "active" : ""}`}>
-                {link.name}
-              </Link>
-            ))}
-            <div style={{ marginLeft: "1.5rem" }}>
-              <ThemeToggle />
-            </div>
-            <Link href="/teklif-al" className="btn btn-gold" style={{ padding: "0.7rem 1.8rem", fontSize: "0.95rem", borderRadius: "100px", marginLeft: "1.5rem" }}>
-              Teklif Al
-            </Link>
-          </nav>
-
           {/* MOBILE TOGGLE */}
-          <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "0.5rem", zIndex: 100 }} className="mobile-toggle">
+          <div className="mobile-toggle">
             <ThemeToggle />
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Menüyü kapat" : "Menüyü aç"}
               aria-expanded={menuOpen}
-              style={{ background: menuOpen ? "var(--cream)" : "transparent", border: "1px solid var(--border)", borderRadius: "50%", width: 44, height: 44, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s", flexShrink: 0 }}
+              className="header-mobile-btn"
             >
-              {menuOpen ? <X size={22} color="var(--gold-dark)" /> : <Menu size={22} color="var(--dark)" />}
+              {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
-
-          <style dangerouslySetInnerHTML={{__html: `
-            @media(min-width: 1024px) {
-              #nav-left, #nav-right { display: flex !important; }
-              .logo-container { flex: 0 0 auto !important; position: absolute; left: 50%; transform: translateX(-50%); }
-              .logo-link { margin: 0 !important; flex-direction: column !important; gap: 0 !important; }
-              .header-logo-img { width: 120px !important; height: 120px !important; }
-              .mobile-toggle { display: none !important; }
-            }
-            @media (max-width: 480px) {
-              .header-logo-img { width: 80px !important; height: 80px !important; }
-            }
-          `}} />
-
         </div>
+
+        <style dangerouslySetInnerHTML={{ __html: `
+          .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            gap: 24px;
+          }
+          .header-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            transition: opacity 0.2s ease;
+          }
+          .header-brand:hover { opacity: 0.85; }
+          .header-brand-mark {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            background: linear-gradient(135deg, var(--mint) 0%, var(--violet) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px var(--mint-glow);
+          }
+          .header-brand-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--navy-deep);
+          }
+          .header-brand-name {
+            font-family: var(--font-sans);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+          }
+          .header-brand-name-accent { color: var(--mint); }
+
+          .header-nav {
+            flex: 1;
+            justify-content: center;
+            gap: 2rem;
+          }
+
+          .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+          }
+          .header-user {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.25s ease;
+          }
+          .header-user:hover {
+            color: var(--mint);
+            border-color: var(--mint);
+            background: var(--mint-soft);
+          }
+          .header-cta {
+            padding: 0.65rem 1.3rem !important;
+            font-size: 0.88rem !important;
+            min-height: 38px;
+            font-weight: 600 !important;
+          }
+
+          .header-mobile-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+          }
+
+          @media (max-width: 1024px) {
+            .header-actions { display: none; }
+            .header-nav { display: none !important; }
+          }
+          @media (max-width: 480px) {
+            .header-brand-name { font-size: 0.95rem; }
+            .header-brand-mark { width: 26px; height: 26px; border-radius: 7px; }
+            .header-brand-dot { width: 6px; height: 6px; }
+          }
+        ` }} />
       </header>
 
-      {/* STUNNING MOBILE FULLSCREEN MENU */}
+      {/* MOBILE GLASS MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)", transition: { duration: 0.3 } }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-              background: "rgba(255,255,255,0.97)", zIndex: 99,
-              display: "flex", flexDirection: "column",
+              position: "fixed",
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: "rgba(6, 11, 28, 0.85)",
+              backdropFilter: "blur(28px) saturate(160%)",
+              WebkitBackdropFilter: "blur(28px) saturate(160%)",
+              zIndex: 99,
+              display: "flex",
+              flexDirection: "column",
               padding: "calc(var(--header-h) + 1rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 1.5rem) 1.5rem",
               overflowY: "auto",
-              WebkitOverflowScrolling: "touch"
+              WebkitOverflowScrolling: "touch",
             }}
           >
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "4px", marginTop: "0.5rem" }}>
-              {[...navLeft, ...navRight].map((link, i) => (
+            <div style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              gap: "4px",
+              marginTop: "0.5rem",
+            }}>
+              {nav.map((link, i) => (
                 <motion.div
                   key={link.href}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-                  transition={{ delay: i * 0.06, duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
+                  transition={{ delay: i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <Link href={link.href} style={{
-                    display: "block", fontSize: "clamp(1.8rem, 7vw, 2.5rem)", fontWeight: 900,
-                    color: isActive(link.href) ? "var(--gold)" : "var(--black)",
-                    padding: "12px 0", textDecoration: "none",
-                    letterSpacing: "-0.03em", lineHeight: 1.1
-                  }}>
+                  <Link
+                    href={link.href}
+                    style={{
+                      display: "block",
+                      fontSize: "clamp(1.8rem, 7vw, 2.6rem)",
+                      fontWeight: 600,
+                      color: isActive(link.href) ? "var(--mint)" : "var(--text-primary)",
+                      padding: "10px 0",
+                      textDecoration: "none",
+                      letterSpacing: "-0.03em",
+                      lineHeight: 1.1,
+                    }}
+                  >
                     {link.name}
                   </Link>
                 </motion.div>
@@ -151,23 +261,75 @@ export default function Header() {
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: 0.3, duration: 0.45 }}
+              transition={{ delay: 0.25, duration: 0.4 }}
               style={{ paddingBottom: "1rem", marginTop: "1.5rem" }}
             >
-              <Link href="/teklif-al" className="btn btn-gold" style={{ width: "100%", justifyContent: "center", fontSize: "1.05rem", padding: "1rem", borderRadius: "16px", boxShadow: "0 20px 40px var(--gold-glow)" }}>
+              <Link
+                href="/teklif-al"
+                className="btn btn-gold"
+                style={{
+                  width: "100%",
+                  justifyContent: "center",
+                  fontSize: "1rem",
+                  padding: "1rem",
+                  borderRadius: "14px",
+                }}
+              >
                 Hemen Ücretsiz Teklif Al
+                <ArrowRight size={18} strokeWidth={2.3} />
               </Link>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginTop: "0.75rem" }}>
-                <a href="tel:+908501234567" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "var(--cream)", padding: "0.9rem", borderRadius: "14px", textDecoration: "none", color: "var(--dark)", fontWeight: 700, fontSize: "0.95rem", minHeight: 48 }}>
-                  <Phone size={18} color="var(--gold-dark)" />
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0.75rem",
+                marginTop: "0.75rem",
+              }}>
+                <a
+                  href="tel:+908501234567"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    background: "var(--glass-bg-strong)",
+                    border: "1px solid var(--glass-border)",
+                    padding: "0.9rem",
+                    borderRadius: "12px",
+                    textDecoration: "none",
+                    color: "var(--text-primary)",
+                    fontWeight: 600,
+                    fontSize: "0.92rem",
+                    minHeight: 46,
+                  }}
+                >
+                  <Phone size={16} color="var(--mint)" />
                   Ara
                 </a>
-                <a href="https://wa.me/908501234567" target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#e8f7ea", padding: "0.9rem", borderRadius: "14px", textDecoration: "none", color: "#10b981", fontWeight: 700, fontSize: "0.95rem", minHeight: 48 }}>
-                  <MessageCircle size={18} color="#10b981" />
+                <a
+                  href="https://wa.me/908501234567"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "8px",
+                    background: "rgba(0, 212, 168, 0.10)",
+                    border: "1px solid var(--mint)",
+                    padding: "0.9rem",
+                    borderRadius: "12px",
+                    textDecoration: "none",
+                    color: "var(--mint)",
+                    fontWeight: 600,
+                    fontSize: "0.92rem",
+                    minHeight: 46,
+                  }}
+                >
+                  <MessageCircle size={16} color="var(--mint)" />
                   WhatsApp
                 </a>
               </div>
