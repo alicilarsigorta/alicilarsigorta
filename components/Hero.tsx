@@ -162,7 +162,10 @@ export default function Hero() {
                     width: "100%",
                     height: "auto",
                     objectFit: "contain",
-                    filter: "drop-shadow(0 40px 80px rgba(201, 164, 73, 0.30))",
+                    /* Push gold shield toward terracotta/oxblood palette:
+                       hue-rotate shifts gold → copper, saturate dials warmth. */
+                    filter:
+                      "drop-shadow(0 40px 80px rgba(92, 42, 42, 0.35)) hue-rotate(-25deg) saturate(0.78) brightness(0.92) contrast(1.05)",
                   }}
                 />
               </motion.div>
@@ -287,7 +290,7 @@ export default function Hero() {
           padding: 1.1rem 2.2rem !important;
           font-size: 0.98rem;
           border-radius: 100px;
-          box-shadow: 0 20px 44px rgba(201, 164, 73, 0.32);
+          box-shadow: 0 20px 44px rgba(176, 112, 80, 0.32);
           letter-spacing: 0.01em;
         }
 
@@ -328,8 +331,8 @@ export default function Hero() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(circle at 25% 20%, rgba(201,164,73,0.18) 0%, transparent 55%),
-            radial-gradient(circle at 75% 80%, rgba(201,164,73,0.10) 0%, transparent 60%);
+            radial-gradient(circle at 25% 20%, rgba(176,112,80,0.18) 0%, transparent 55%),
+            radial-gradient(circle at 75% 80%, rgba(176,112,80,0.10) 0%, transparent 60%);
           pointer-events: none;
         }
 

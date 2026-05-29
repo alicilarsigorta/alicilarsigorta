@@ -27,7 +27,7 @@ export default function UrunlerimizPage() {
             height: "700px",
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(201, 164, 73,0.1) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(176, 112, 80,0.1) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -40,7 +40,7 @@ export default function UrunlerimizPage() {
             height: "500px",
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(201, 164, 73,0.06) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(176, 112, 80,0.06) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -141,7 +141,7 @@ export default function UrunlerimizPage() {
             height: "400px",
             borderRadius: "50%",
             background:
-              "radial-gradient(ellipse, rgba(201, 164, 73,0.08) 0%, transparent 70%)",
+              "radial-gradient(ellipse, rgba(176, 112, 80,0.08) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -165,8 +165,8 @@ export default function UrunlerimizPage() {
                 width: "72px",
                 height: "72px",
                 borderRadius: "20px",
-                background: "linear-gradient(135deg, rgba(201, 164, 73,0.15), rgba(230, 192, 105,0.08))",
-                border: "1px solid rgba(201, 164, 73,0.3)",
+                background: "linear-gradient(135deg, rgba(176, 112, 80,0.15), rgba(201, 135, 107,0.08))",
+                border: "1px solid rgba(176, 112, 80,0.3)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -212,7 +212,7 @@ export default function UrunlerimizPage() {
               <Link href="/teklif-al" className="btn btn-gold">
                 Ücretsiz Teklif Al <ArrowRight size={18} />
               </Link>
-              <Link href="/iletisim" className="btn btn-outline" style={{ color: "#fff", borderColor: "rgba(201, 164, 73,0.4)" }}>
+              <Link href="/iletisim" className="btn btn-outline" style={{ color: "#fff", borderColor: "rgba(176, 112, 80,0.4)" }}>
                 İletişime Geç
               </Link>
             </div>

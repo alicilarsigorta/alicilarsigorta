@@ -141,7 +141,7 @@ export default function PartnerMarquee() {
           .partner-card:hover {
             border-color: var(--border-gold);
             transform: translateY(-4px);
-            box-shadow: 0 15px 40px rgba(201,164,73,0.12);
+            box-shadow: 0 15px 40px rgba(176,112,80,0.12);
           }
           .partner-card:hover .partner-card__img {
             filter: grayscale(0%) contrast(1);

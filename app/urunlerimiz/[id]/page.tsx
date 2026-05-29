@@ -54,7 +54,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             width: "600px",
             height: "600px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(201, 164, 73,0.1) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(176, 112, 80,0.1) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -66,7 +66,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             width: "400px",
             height: "400px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(201, 164, 73,0.06) 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(176, 112, 80,0.06) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -165,7 +165,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   position: "absolute",
                   inset: "-16px",
                   borderRadius: "48px",
-                  background: "radial-gradient(ellipse at center, rgba(201, 164, 73,0.12) 0%, transparent 70%)",
+                  background: "radial-gradient(ellipse at center, rgba(176, 112, 80,0.12) 0%, transparent 70%)",
                   filter: "blur(20px)",
                   zIndex: 0,
                   pointerEvents: "none",
@@ -192,7 +192,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                     width: "120px",
                     height: "120px",
                     borderRadius: "50%",
-                    background: "linear-gradient(135deg, rgba(201, 164, 73,0.08), rgba(201, 164, 73,0.02))",
+                    background: "linear-gradient(135deg, rgba(176, 112, 80,0.08), rgba(176, 112, 80,0.02))",
                     pointerEvents: "none",
                   }}
                 />
@@ -363,7 +363,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   border: "1px solid var(--border)",
                   overflow: "hidden",
                   transition: "all 0.3s ease",
-                  boxShadow: openFaq === i ? "0 10px 40px rgba(201, 164, 73,0.1)" : "none",
+                  boxShadow: openFaq === i ? "0 10px 40px rgba(176, 112, 80,0.1)" : "none",
                   borderColor: openFaq === i ? "var(--gold)" : "var(--border)",
                 }}
               >
@@ -464,7 +464,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             width: "600px",
             height: "300px",
             borderRadius: "50%",
-            background: "radial-gradient(ellipse, rgba(201, 164, 73,0.08) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse, rgba(176, 112, 80,0.08) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -504,7 +504,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <a
               href={`tel:${content.contact.phone}`}
               className="btn btn-outline"
-              style={{ color: "#fff", borderColor: "rgba(201, 164, 73,0.4)" }}
+              style={{ color: "#fff", borderColor: "rgba(176, 112, 80,0.4)" }}
             >
               <Phone size={18} /> Hemen Ara
             </a>

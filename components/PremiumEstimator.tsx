@@ -453,7 +453,7 @@ export default function PremiumEstimator() {
           background: linear-gradient(135deg, var(--gold-dark), var(--gold));
           cursor: pointer;
           border: 3px solid #fff;
-          box-shadow: 0 4px 10px rgba(201,164,73,0.35);
+          box-shadow: 0 4px 10px rgba(176,112,80,0.35);
           transition: transform 0.2s ease;
         }
         .estimator-field input[type="range"]::-webkit-slider-thumb:hover {
@@ -466,7 +466,7 @@ export default function PremiumEstimator() {
           background: linear-gradient(135deg, var(--gold-dark), var(--gold));
           cursor: pointer;
           border: 3px solid #fff;
-          box-shadow: 0 4px 10px rgba(201,164,73,0.35);
+          box-shadow: 0 4px 10px rgba(176,112,80,0.35);
         }
 
         .estimator-result {

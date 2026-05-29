@@ -120,7 +120,7 @@ export default function LiveImpact() {
           transform: translateX(-50%);
           width: 1100px;
           height: 700px;
-          background: radial-gradient(ellipse, rgba(201,164,73,0.16) 0%, transparent 60%);
+          background: radial-gradient(ellipse, rgba(176,112,80,0.16) 0%, transparent 60%);
           filter: blur(40px);
           pointer-events: none;
         }
@@ -198,8 +198,8 @@ export default function LiveImpact() {
           width: 44px;
           height: 44px;
           border-radius: 12px;
-          background: rgba(201, 164, 73, 0.12);
-          border: 1px solid rgba(201, 164, 73, 0.25);
+          background: rgba(176, 112, 80, 0.12);
+          border: 1px solid rgba(176, 112, 80, 0.25);
           display: flex;
           align-items: center;
           justify-content: center;

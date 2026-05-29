@@ -179,7 +179,7 @@ export default function Home() {
             transform: translate(-50%,-50%);
             width: 900px;
             height: 500px;
-            background: radial-gradient(ellipse, rgba(201,164,73,0.18) 0%, transparent 65%);
+            background: radial-gradient(ellipse, rgba(176,112,80,0.18) 0%, transparent 65%);
             filter: blur(50px);
             pointer-events: none;
           }
@@ -237,7 +237,7 @@ export default function Home() {
           .cta-button {
             font-size: 1.02rem;
             padding: 1.15rem 2.6rem;
-            box-shadow: 0 24px 60px rgba(201, 164, 73, 0.45);
+            box-shadow: 0 24px 60px rgba(176, 112, 80, 0.45);
           }
           .cta-foot {
             display: flex;

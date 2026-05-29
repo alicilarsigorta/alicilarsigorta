@@ -74,7 +74,7 @@ export default function LoadingScreen() {
                 objectFit: "contain",
                 position: "relative",
                 zIndex: 10,
-                filter: "drop-shadow(0 8px 24px rgba(201, 164, 73, 0.35))",
+                filter: "drop-shadow(0 8px 24px rgba(176, 112, 80, 0.35))",
               }}
             />
           </div>

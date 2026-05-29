@@ -236,8 +236,8 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                   width: "52px",
                   height: "52px",
                   borderRadius: "16px",
-                  background: "linear-gradient(135deg, rgba(201, 164, 73,0.12), rgba(230, 192, 105,0.06))",
-                  border: "1px solid rgba(201, 164, 73,0.25)",
+                  background: "linear-gradient(135deg, rgba(176, 112, 80,0.12), rgba(201, 135, 107,0.06))",
+                  border: "1px solid rgba(176, 112, 80,0.25)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -301,7 +301,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ slug: strin
                     }}
                     whileHover={{
                       y: -8,
-                      boxShadow: "0 20px 50px rgba(201, 164, 73,0.15)",
+                      boxShadow: "0 20px 50px rgba(176, 112, 80,0.15)",
                     }}
                   >
                     <div style={{ position: "relative", height: "180px", overflow: "hidden" }}>

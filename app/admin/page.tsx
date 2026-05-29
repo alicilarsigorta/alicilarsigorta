@@ -61,7 +61,7 @@ export default function AdminDashboard() {
       {/* Stats Grid */}
       <div className="admin-stats-grid">
         <div className="admin-stat-card">
-          <div className="admin-stat-icon" style={{ background: "rgba(201, 164, 73,0.1)", color: "var(--admin-gold)" }}>
+          <div className="admin-stat-icon" style={{ background: "rgba(176, 112, 80,0.1)", color: "var(--admin-gold)" }}>
             <FileText size={24} />
           </div>
           <div className="admin-stat-info">

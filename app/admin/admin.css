@@ -14,7 +14,7 @@
   --admin-text-dim: #4a4f63;
   --admin-gold: #d4a017;
   --admin-gold-light: #f0c040;
-  --admin-gold-glow: rgba(201, 164, 73,0.15);
+  --admin-gold-glow: rgba(176, 112, 80,0.15);
   --admin-green: #10b981;
   --admin-blue: #3b82f6;
   --admin-red: #ef4444;
@@ -769,7 +769,7 @@
   position: absolute;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(201, 164, 73,0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(176, 112, 80,0.08) 0%, transparent 70%);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

@@ -69,7 +69,7 @@ export default function BlogPage() {
             height: "600px",
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(201, 164, 73,0.08) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(176, 112, 80,0.08) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -82,7 +82,7 @@ export default function BlogPage() {
             height: "400px",
             borderRadius: "50%",
             background:
-              "radial-gradient(circle, rgba(201, 164, 73,0.05) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(176, 112, 80,0.05) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -206,7 +206,7 @@ export default function BlogPage() {
                         : "var(--gray)",
                     boxShadow:
                       activeCategory === cat
-                        ? "0 8px 25px rgba(201, 164, 73,0.3)"
+                        ? "0 8px 25px rgba(176, 112, 80,0.3)"
                         : "none",
                   }}
                 >
@@ -275,7 +275,7 @@ export default function BlogPage() {
                     }}
                     whileHover={{
                       boxShadow:
-                        "0 30px 80px rgba(201, 164, 73,0.15), 0 0 0 1px rgba(201, 164, 73,0.3)",
+                        "0 30px 80px rgba(176, 112, 80,0.15), 0 0 0 1px rgba(176, 112, 80,0.3)",
                       y: -4,
                     }}
                     transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
@@ -457,7 +457,7 @@ export default function BlogPage() {
                         whileHover={{
                           y: -10,
                           boxShadow:
-                            "0 25px 60px rgba(201, 164, 73,0.18), 0 0 0 1px rgba(201, 164, 73,0.3)",
+                            "0 25px 60px rgba(176, 112, 80,0.18), 0 0 0 1px rgba(176, 112, 80,0.3)",
                         }}
                         transition={{
                           type: "spring",
