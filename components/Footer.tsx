@@ -20,9 +20,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-col-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <div style={{ width: 52, height: 52, borderRadius: 14, background: "rgba(179, 133, 42, 0.12)", border: "1px solid rgba(179, 133, 42, 0.32)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <img src="/logo.png" alt="" style={{ width: 38, objectFit: "contain" }} />
-              </div>
+              <img src="/logo-emblem.png" alt="" style={{ height: 56, width: "auto", objectFit: "contain", filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.3))" }} />
               <div>
                 <div style={{ color: "#fff", fontWeight: 800, fontSize: "1.22rem", letterSpacing: "0.04em" }}>ALICILAR</div>
                 <div style={{ color: "var(--brand-gold-light)", fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.24em" }}>SİGORTA</div>

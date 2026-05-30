@@ -60,20 +60,20 @@ export default function LoadingScreen() {
               }}
             />
 
-            {/* Brand Logo */}
+            {/* Brand Logo — full lockup */}
             <motion.img
-              src="/logo-dark.png"
+              src="/logo-lockup.png"
               alt="Alıcılar Sigorta"
               initial={{ opacity: 0, scale: 0.85 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                width: 130,
-                height: 130,
+                width: 150,
+                height: "auto",
                 objectFit: "contain",
                 position: "relative",
                 zIndex: 10,
-                filter: "drop-shadow(0 8px 24px rgba(0, 137, 236, 0.18))",
+                filter: "drop-shadow(0 10px 26px rgba(120, 80, 0, 0.16))",
               }}
             />
           </div>

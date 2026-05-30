@@ -44,9 +44,9 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? "scrolled" : ""}`}>
         <div className="container header-inner">
-          {/* LEFT — Logo (real gold shield + wordmark) */}
+          {/* LEFT — Logo (real ALC emblem + wordmark) */}
           <Link href="/" className="header-brand">
-            <img src="/logo.png" alt="Alıcılar Sigorta" className="header-brand-logo" />
+            <img src="/logo-emblem.png" alt="Alıcılar Sigorta" className="header-brand-logo" />
             <span className="header-brand-name">
               ALICILAR<span className="header-brand-name-accent">SİGORTA</span>
             </span>
@@ -114,14 +114,11 @@ export default function Header() {
           }
           .header-brand:hover { opacity: 0.82; }
           .header-brand-logo {
-            height: 46px;
-            width: 46px;
+            height: 48px;
+            width: auto;
             object-fit: contain;
-            padding: 5px;
-            background: linear-gradient(140deg, #20232b 0%, #0f1116 100%);
-            border-radius: 12px;
-            box-shadow: 0 6px 16px rgba(15, 17, 22, 0.22), inset 0 1px 0 rgba(255,255,255,0.06);
             flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(120, 80, 0, 0.16));
           }
           .header-brand-name {
             font-family: var(--font-sans);
