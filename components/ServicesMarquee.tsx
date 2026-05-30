@@ -1,42 +1,38 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-import {
-  Car, Navigation, HeartPulse, Home, ShieldCheck,
-  Briefcase, Plane, Stethoscope, ArrowUpRight,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { viewportOnce, easeOutExpo } from "@/lib/motion";
 
 type Tone = "blue" | "orange";
 
 interface Service {
   id: string;
-  icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
   title: string;
   desc: string;
+  img: string;
   tone: Tone;
 }
 
 const SERVICES: Service[] = [
-  { id: "kasko", icon: Car, title: "Kasko", desc: "Aracınıza tam kapsamlı koruma", tone: "orange" },
-  { id: "trafik-sigortasi", icon: Navigation, title: "Trafik Sigortası", desc: "Zorunlu trafik, en iyi fiyata", tone: "blue" },
-  { id: "saglik-sigortasi-fiyatlari", icon: HeartPulse, title: "Tamamlayıcı Sağlık", desc: "Özel hastanede fark ödemeden", tone: "orange" },
-  { id: "konut-sigortasi", icon: Home, title: "Konut Sigortası", desc: "Eviniz her riske karşı güvende", tone: "blue" },
-  { id: "dask-sorgulama", icon: ShieldCheck, title: "DASK", desc: "Zorunlu deprem sigortası", tone: "orange" },
-  { id: "is-yeri-sigortasi", icon: Briefcase, title: "İş Yeri Sigortası", desc: "İşletmenizi tüm risklere karşı", tone: "blue" },
-  { id: "seyahat-sigortasi", icon: Plane, title: "Seyahat Sağlık", desc: "Yurt içi & yurt dışı güvence", tone: "orange" },
-  { id: "saglik-sigortasi-fiyatlari", icon: Stethoscope, title: "Özel Sağlık", desc: "Kapsamlı özel sağlık planı", tone: "blue" },
+  { id: "kasko", title: "Kasko", desc: "Aracınıza tam kapsamlı koruma", img: "/slider_car.png", tone: "orange" },
+  { id: "saglik-sigortasi-fiyatlari", title: "Tamamlayıcı Sağlık", desc: "Özel hastanede fark ödemeden", img: "/slider_health.png", tone: "blue" },
+  { id: "konut-sigortasi", title: "Konut Sigortası", desc: "Eviniz her riske karşı güvende", img: "/slider_house.png", tone: "orange" },
+  { id: "trafik-sigortasi", title: "Trafik Sigortası", desc: "Zorunlu trafik, en iyi fiyata", img: "/slider_car.png", tone: "blue" },
+  { id: "ozel-saglik", title: "Özel Sağlık", desc: "Kapsamlı özel sağlık planı", img: "/slider_health.png", tone: "orange" },
+  { id: "dask-sorgulama", title: "DASK", desc: "Zorunlu deprem sigortası", img: "/slider_house.png", tone: "blue" },
+  { id: "is-yeri-sigortasi", title: "İş Yeri Sigortası", desc: "İşletmenizi tüm risklere karşı", img: "/slider_house.png", tone: "orange" },
+  { id: "seyahat-sigortasi", title: "Seyahat Sağlık", desc: "Yurt içi & yurt dışı güvence", img: "/slider_health.png", tone: "blue" },
 ];
 
 /**
- * ServicesMarquee — continuous "kayan" row of service cards.
- * Modeled on the alicilarbeton.com services row: tall cards with the
- * title overlaid at the bottom, scrolling horizontally and looping.
- * Shows the insurance branches (hizmetler) instead of campaigns.
+ * ServicesMarquee — continuous "kayan" row of service cards (image-based).
+ * alicilarbeton.com services style: tall image cards with the title
+ * overlaid at the bottom, scrolling horizontally and looping.
  */
 export default function ServicesMarquee() {
-  // Repeat so one half of the track exceeds any viewport → seamless loop.
   const reel = [...SERVICES, ...SERVICES];
 
   return (
@@ -56,26 +52,29 @@ export default function ServicesMarquee() {
 
       <div className="sm-marquee">
         <div className="sm-track">
-          {reel.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <Link
-                href={`/urunlerimiz/${s.id}`}
-                key={`${s.id}-${i}`}
-                className={`sm-card sm-card--${s.tone}`}
-                aria-label={s.title}
-              >
-                <div className="sm-card-iconwrap">
-                  <span className="sm-card-icon"><Icon size={40} strokeWidth={1.5} /></span>
-                </div>
-                <div className="sm-card-overlay">
-                  <h3 className="sm-card-title">{s.title}</h3>
-                  <p className="sm-card-desc">{s.desc}</p>
-                  <span className="sm-card-cta">Detaylar <ArrowUpRight size={15} strokeWidth={2.4} /></span>
-                </div>
-              </Link>
-            );
-          })}
+          {reel.map((s, i) => (
+            <Link
+              href={`/urunlerimiz/${s.id}`}
+              key={`${s.id}-${i}`}
+              className={`sm-card sm-card--${s.tone}`}
+              aria-label={s.title}
+            >
+              <div className="sm-card-img">
+                <Image
+                  src={s.img}
+                  alt={s.title}
+                  fill
+                  sizes="320px"
+                  style={{ objectFit: "contain", objectPosition: "center 45%" }}
+                />
+              </div>
+              <div className="sm-card-overlay">
+                <h3 className="sm-card-title">{s.title}</h3>
+                <p className="sm-card-desc">{s.desc}</p>
+                <span className="sm-card-cta">Detaylar <ArrowUpRight size={15} strokeWidth={2.4} /></span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
 
@@ -122,20 +121,12 @@ export default function ServicesMarquee() {
         .sm-card--orange { background: linear-gradient(160deg, #fff1e6 0%, #fffaf5 60%); }
         .sm-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
 
-        .sm-card-iconwrap {
+        .sm-card-img {
           position: absolute;
-          inset: 0 0 40% 0;
-          display: flex; align-items: center; justify-content: center;
+          inset: 0 0 36% 0;
           transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
         }
-        .sm-card:hover .sm-card-iconwrap { transform: scale(1.08); }
-        .sm-card-icon {
-          width: 96px; height: 96px; border-radius: 26px;
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 18px 36px rgba(0,0,0,0.12);
-        }
-        .sm-card--blue .sm-card-icon { background: var(--blue); color: #fff; box-shadow: 0 18px 36px rgba(0,137,236,0.32); }
-        .sm-card--orange .sm-card-icon { background: var(--orange); color: #fff; box-shadow: 0 18px 36px rgba(255,115,0,0.30); }
+        .sm-card:hover .sm-card-img { transform: scale(1.06); }
 
         .sm-card-overlay {
           position: absolute;
@@ -162,7 +153,6 @@ export default function ServicesMarquee() {
 
         @media (max-width: 540px) {
           .sm-card { width: 250px; height: 350px; }
-          .sm-card-icon { width: 80px; height: 80px; border-radius: 22px; }
         }
       ` }} />
     </section>
