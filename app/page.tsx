@@ -3,7 +3,7 @@
 import Hero from "@/components/Hero";
 import QuickQuote from "@/components/QuickQuote";
 import PartnerMarquee from "@/components/PartnerMarquee";
-import CampaignCarousel from "@/components/CampaignCarousel";
+import ServicesMarquee from "@/components/ServicesMarquee";
 import HospitalSection from "@/components/HospitalSection";
 import FAQ from "@/components/FAQ";
 import Link from "next/link";
@@ -23,8 +23,8 @@ export default function Home() {
       {/* Partner brand logos */}
       <PartnerMarquee />
 
-      {/* Kayan görseller — campaign carousel */}
-      <CampaignCarousel />
+      {/* Kayan hizmetler — services marquee */}
+      <ServicesMarquee />
 
       {/* Hastane / Tamamlayıcı Sağlık */}
       <HospitalSection />
