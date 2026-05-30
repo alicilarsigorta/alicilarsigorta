@@ -111,8 +111,15 @@ export default function LoadingScreen() {
                 />
               ))}
             </div>
-            <p className="text-text-muted text-sm mt-2 font-medium tracking-wide uppercase">
-              Güveniniz İnşa Ediliyor...
+            <p style={{
+              marginTop: 8,
+              fontSize: "0.95rem",
+              fontWeight: 700,
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "var(--brand-gold)",
+            }}>
+              Daima Sizinle
             </p>
           </motion.div>
         </motion.div>
