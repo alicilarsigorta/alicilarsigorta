@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import QuickQuote from "@/components/QuickQuote";
 import PartnerMarquee from "@/components/PartnerMarquee";
 import CampaignCarousel from "@/components/CampaignCarousel";
+import HospitalSection from "@/components/HospitalSection";
 import FAQ from "@/components/FAQ";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -24,6 +25,9 @@ export default function Home() {
 
       {/* Kayan görseller — campaign carousel */}
       <CampaignCarousel />
+
+      {/* Hastane / Tamamlayıcı Sağlık */}
+      <HospitalSection />
 
       {/* SSS */}
       <FAQ />
