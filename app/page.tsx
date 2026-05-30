@@ -1,9 +1,7 @@
 "use client";
 
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
 import PartnerMarquee from "@/components/PartnerMarquee";
-import PremiumEstimator from "@/components/PremiumEstimator";
 import HowItWorks from "@/components/HowItWorks";
 import PromoSection from "@/components/PromoSection";
 import LiveImpact from "@/components/LiveImpact";
@@ -44,9 +42,6 @@ export default function Home() {
     <>
       {/* Product-launcher hero (sigortam.net style) */}
       <Hero />
-
-      {/* Regulatory trust signals */}
-      <TrustBar />
 
       {/* Partner logo marquee */}
       <PartnerMarquee />
@@ -267,9 +262,6 @@ export default function Home() {
           }
         ` }} />
       </section>
-
-      {/* Live price estimator */}
-      <PremiumEstimator />
 
       {/* 4-step process */}
       <HowItWorks />
