@@ -471,7 +471,7 @@ export default function PremiumEstimator() {
 
         .estimator-result {
           padding: 40px;
-          background: linear-gradient(180deg, var(--navy) 0%, var(--navy-elevated) 100%);
+          background: linear-gradient(160deg, var(--blue) 0%, var(--blue-deep) 100%);
           display: flex;
           flex-direction: column;
           gap: 18px;

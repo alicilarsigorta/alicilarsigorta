@@ -2,23 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, MessageCircle, ArrowRight, User } from "lucide-react";
+import { Menu, X, Phone, MessageCircle, ArrowRight, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "./ThemeToggle";
 
 const nav = [
-  { name: "Ürünler", href: "/urunlerimiz" },
+  { name: "Ürünlerimiz", href: "/urunlerimiz" },
+  { name: "Kampanyalar", href: "/blog" },
   { name: "Hakkımızda", href: "/hakkimizda" },
-  { name: "Blog", href: "/blog" },
   { name: "SSS", href: "/sss" },
   { name: "İletişim", href: "/iletisim" },
 ];
 
 /**
- * Header — fintech glass single-layer.
- * Logo left, center nav, right user + mint CTA. Backdrop-blur, dark navy.
- * Mobile: glass full-screen menu sheet.
+ * Header — sigortam.net-style light bar.
+ * Orange logo left, center nav, right: phone + blue "Teklif Al".
+ * White, soft, sticky, blur on scroll.
  */
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,7 +30,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  // Prevent scroll when mobile menu is open
   useEffect(() => {
     if (menuOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "unset";
@@ -46,13 +44,16 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? "scrolled" : ""}`}>
         <div className="container header-inner">
-          {/* LEFT — Logo wordmark */}
+          {/* LEFT — Logo */}
           <Link href="/" className="header-brand">
             <span className="header-brand-mark" aria-hidden>
-              <span className="header-brand-dot" />
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L4 5.5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5.5L12 2Z" fill="#fff"/>
+                <path d="M9.2 11.8L11.2 13.8L15 9.5" stroke="var(--orange)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </span>
             <span className="header-brand-name">
-              alıcılar<span className="header-brand-name-accent">.</span>sigorta
+              alıcılar<span className="header-brand-name-accent">sigorta</span>
             </span>
           </Link>
 
@@ -69,23 +70,27 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* RIGHT — Theme + CTA */}
+          {/* RIGHT — Phone + CTA */}
           <div className="header-actions">
-            <ThemeToggle />
-
-            <Link href="/admin/login" className="header-user" aria-label="Giriş">
-              <User size={17} strokeWidth={1.8} />
-            </Link>
+            <a href="tel:+908501234567" className="header-phone">
+              <span className="header-phone-icon"><Phone size={15} strokeWidth={2.2} /></span>
+              <span className="header-phone-text">
+                <span className="header-phone-label">Yardıma hazırız</span>
+                <span className="header-phone-num">0850 123 45 67</span>
+              </span>
+            </a>
 
             <Link href="/teklif-al" className="btn btn-gold header-cta">
               Teklif Al
-              <ArrowRight size={15} strokeWidth={2.3} />
+              <ArrowRight size={15} strokeWidth={2.4} />
             </Link>
           </div>
 
           {/* MOBILE TOGGLE */}
           <div className="mobile-toggle">
-            <ThemeToggle />
+            <Link href="/teklif-al" className="btn btn-gold header-cta-mobile">
+              Teklif Al
+            </Link>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Menüyü kapat" : "Menüyü aç"}
@@ -108,115 +113,89 @@ export default function Header() {
           .header-brand {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 9px;
             text-decoration: none;
-            font-family: var(--font-sans);
-            font-weight: 600;
-            font-size: 1.05rem;
-            color: var(--text-primary);
-            letter-spacing: -0.02em;
             transition: opacity 0.2s ease;
           }
           .header-brand:hover { opacity: 0.85; }
           .header-brand-mark {
-            position: relative;
-            width: 30px;
-            height: 30px;
-            border-radius: 9px;
-            background: linear-gradient(135deg, var(--mint) 0%, var(--violet) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 20px var(--mint-glow);
-          }
-          .header-brand-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--navy-deep);
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: var(--orange);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 14px var(--orange-glow);
           }
           .header-brand-name {
             font-family: var(--font-sans);
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-weight: 800;
+            font-size: 1.18rem;
+            color: var(--ink);
+            letter-spacing: -0.03em;
           }
-          .header-brand-name-accent { color: var(--mint); }
+          .header-brand-name-accent { color: var(--orange); }
 
-          .header-nav {
-            flex: 1;
-            justify-content: center;
-            gap: 2rem;
-          }
+          .header-nav { flex: 1; justify-content: center; gap: 1.7rem; }
 
-          .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-          }
-          .header-user {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            color: var(--text-secondary);
+          .header-actions { display: flex; align-items: center; gap: 18px; }
+          .header-phone {
+            display: inline-flex; align-items: center; gap: 9px;
             text-decoration: none;
-            transition: all 0.25s ease;
           }
-          .header-user:hover {
-            color: var(--mint);
-            border-color: var(--mint);
-            background: var(--mint-soft);
+          .header-phone-icon {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: var(--blue-tint); color: var(--blue);
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
           }
+          .header-phone-text { display: flex; flex-direction: column; line-height: 1.1; }
+          .header-phone-label { font-size: 0.66rem; color: var(--text-muted); font-weight: 600; }
+          .header-phone-num { font-size: 0.92rem; color: var(--ink); font-weight: 800; letter-spacing: -0.01em; }
           .header-cta {
-            padding: 0.65rem 1.3rem !important;
-            font-size: 0.88rem !important;
-            min-height: 38px;
-            font-weight: 600 !important;
+            padding: 0.62rem 1.4rem !important;
+            font-size: 0.92rem !important;
+            min-height: 42px;
           }
-
+          .header-cta-mobile {
+            padding: 0.5rem 1.05rem !important;
+            font-size: 0.85rem !important;
+            min-height: 38px;
+          }
           .header-mobile-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--glass-bg-strong);
-            border: 1px solid var(--glass-border);
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 40px; height: 40px; border-radius: 11px;
+            background: var(--surface); border: 1px solid var(--border);
+            color: var(--ink); display: flex; align-items: center; justify-content: center;
             cursor: pointer;
           }
+          .mobile-toggle { gap: 10px; }
 
+          @media (max-width: 1180px) {
+            .header-phone-text { display: none; }
+          }
           @media (max-width: 1024px) {
             .header-actions { display: none; }
             .header-nav { display: none !important; }
           }
-          @media (max-width: 480px) {
-            .header-brand-name { font-size: 0.95rem; }
-            .header-brand-mark { width: 26px; height: 26px; border-radius: 7px; }
-            .header-brand-dot { width: 6px; height: 6px; }
+          @media (max-width: 420px) {
+            .header-brand-name { font-size: 1.05rem; }
+            .header-brand-mark { width: 32px; height: 32px; }
           }
         ` }} />
       </header>
 
-      {/* MOBILE GLASS MENU */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.3 } }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, transition: { duration: 0.25 } }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             style={{
               position: "fixed",
               top: 0, left: 0, right: 0, bottom: 0,
-              background: "rgba(6, 11, 28, 0.85)",
-              backdropFilter: "blur(28px) saturate(160%)",
-              WebkitBackdropFilter: "blur(28px) saturate(160%)",
+              background: "rgba(255, 255, 255, 0.98)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
               zIndex: 99,
               display: "flex",
               flexDirection: "column",
@@ -225,112 +204,52 @@ export default function Header() {
               WebkitOverflowScrolling: "touch",
             }}
           >
-            <div style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              gap: "4px",
-              marginTop: "0.5rem",
-            }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "2px", marginTop: "0.5rem" }}>
               {nav.map((link, i) => (
                 <motion.div
                   key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
+                  exit={{ opacity: 0, y: -8, transition: { duration: 0.18 } }}
                   transition={{ delay: i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Link
                     href={link.href}
                     style={{
-                      display: "block",
-                      fontSize: "clamp(1.8rem, 7vw, 2.6rem)",
-                      fontWeight: 600,
-                      color: isActive(link.href) ? "var(--mint)" : "var(--text-primary)",
-                      padding: "10px 0",
+                      display: "flex", alignItems: "center", justifyContent: "space-between",
+                      fontSize: "clamp(1.5rem, 6vw, 2.1rem)",
+                      fontWeight: 700,
+                      color: isActive(link.href) ? "var(--blue)" : "var(--ink)",
+                      padding: "14px 0",
                       textDecoration: "none",
-                      letterSpacing: "-0.03em",
-                      lineHeight: 1.1,
+                      letterSpacing: "-0.025em",
+                      borderBottom: "1px solid var(--border)",
                     }}
                   >
                     {link.name}
+                    <ChevronDown size={20} style={{ transform: "rotate(-90deg)", color: "var(--text-muted)" }} />
                   </Link>
                 </motion.div>
               ))}
             </div>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: 0.25, duration: 0.4 }}
+              transition={{ delay: 0.22, duration: 0.4 }}
               style={{ paddingBottom: "1rem", marginTop: "1.5rem" }}
             >
-              <Link
-                href="/teklif-al"
-                className="btn btn-gold"
-                style={{
-                  width: "100%",
-                  justifyContent: "center",
-                  fontSize: "1rem",
-                  padding: "1rem",
-                  borderRadius: "14px",
-                }}
-              >
+              <Link href="/teklif-al" className="btn btn-gold" style={{ width: "100%", justifyContent: "center", fontSize: "1rem", padding: "1rem", borderRadius: "14px" }}>
                 Hemen Ücretsiz Teklif Al
                 <ArrowRight size={18} strokeWidth={2.3} />
               </Link>
-
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "0.75rem",
-                marginTop: "0.75rem",
-              }}>
-                <a
-                  href="tel:+908501234567"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    background: "var(--glass-bg-strong)",
-                    border: "1px solid var(--glass-border)",
-                    padding: "0.9rem",
-                    borderRadius: "12px",
-                    textDecoration: "none",
-                    color: "var(--text-primary)",
-                    fontWeight: 600,
-                    fontSize: "0.92rem",
-                    minHeight: 46,
-                  }}
-                >
-                  <Phone size={16} color="var(--mint)" />
-                  Ara
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginTop: "0.75rem" }}>
+                <a href="tel:+908501234567" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "var(--blue-tint)", padding: "0.9rem", borderRadius: "12px", textDecoration: "none", color: "var(--blue)", fontWeight: 700, fontSize: "0.92rem", minHeight: 46 }}>
+                  <Phone size={16} /> Ara
                 </a>
-                <a
-                  href="https://wa.me/908501234567"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    background: "rgba(0, 212, 168, 0.10)",
-                    border: "1px solid var(--mint)",
-                    padding: "0.9rem",
-                    borderRadius: "12px",
-                    textDecoration: "none",
-                    color: "var(--mint)",
-                    fontWeight: 600,
-                    fontSize: "0.92rem",
-                    minHeight: 46,
-                  }}
-                >
-                  <MessageCircle size={16} color="var(--mint)" />
-                  WhatsApp
+                <a href="https://wa.me/908501234567" target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#e8f7ea", padding: "0.9rem", borderRadius: "12px", textDecoration: "none", color: "#16a34a", fontWeight: 700, fontSize: "0.92rem", minHeight: 46 }}>
+                  <MessageCircle size={16} /> WhatsApp
                 </a>
               </div>
             </motion.div>

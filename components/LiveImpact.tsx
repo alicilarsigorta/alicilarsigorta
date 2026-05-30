@@ -90,7 +90,7 @@ export default function LiveImpact() {
               className="impact-cell"
             >
               <div className="impact-cell-icon">
-                <it.icon size={22} strokeWidth={1.6} color="var(--gold-light)" />
+                <it.icon size={22} strokeWidth={1.8} color="#fff" />
               </div>
               <div className="stat-number stat-number-inverse impact-cell-num">
                 <CountUp value={it.value} duration={1800 + i * 100} />
@@ -106,12 +106,10 @@ export default function LiveImpact() {
         __html: `
         .impact-section {
           position: relative;
-          background: var(--navy-deepest);
-          padding: clamp(80px, 10vw, 140px) 0;
+          background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+          padding: clamp(72px, 9vw, 120px) 0;
           overflow: hidden;
-          color: var(--text-primary);
-          border-top: 1px solid var(--glass-border);
-          border-bottom: 1px solid var(--glass-border);
+          color: #fff;
         }
         .impact-glow {
           position: absolute;
@@ -120,7 +118,7 @@ export default function LiveImpact() {
           transform: translateX(-50%);
           width: 1100px;
           height: 700px;
-          background: radial-gradient(ellipse, rgba(176,112,80,0.16) 0%, transparent 60%);
+          background: radial-gradient(ellipse, rgba(255,115,0,0.20) 0%, transparent 60%);
           filter: blur(40px);
           pointer-events: none;
         }
@@ -158,12 +156,9 @@ export default function LiveImpact() {
           font-optical-sizing: auto;
         }
         .impact-title-italic {
-          font-style: italic;
-          font-weight: 400;
-          background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          font-style: normal;
+          font-weight: 800;
+          color: #ffd9bd;
         }
         .impact-header-right {
           font-size: 1.02rem;
@@ -184,7 +179,7 @@ export default function LiveImpact() {
           overflow: hidden;
         }
         .impact-cell {
-          background: var(--navy);
+          background: rgba(255,255,255,0.07);
           padding: 36px 28px;
           display: flex;
           flex-direction: column;
@@ -192,14 +187,14 @@ export default function LiveImpact() {
           transition: background 0.3s ease;
         }
         .impact-cell:hover {
-          background: rgba(255,255,255,0.03);
+          background: rgba(255,255,255,0.12);
         }
         .impact-cell-icon {
           width: 44px;
           height: 44px;
           border-radius: 12px;
-          background: rgba(176, 112, 80, 0.12);
-          border: 1px solid rgba(176, 112, 80, 0.25);
+          background: rgba(255,255,255,0.14);
+          border: 1px solid rgba(255,255,255,0.2);
           display: flex;
           align-items: center;
           justify-content: center;
