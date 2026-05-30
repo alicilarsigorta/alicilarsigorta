@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, MessageCircle, ArrowRight, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence, Variants } from "framer-motion";
+import { Menu, X, Phone, MessageCircle, ArrowRight, ArrowUpRight, Instagram, Twitter, Linkedin, MapPin } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,6 +13,22 @@ const nav = [
   { name: "SSS", href: "/sss" },
   { name: "İletişim", href: "/iletisim" },
 ];
+
+// Luxury mobile-menu motion
+const overlayVariants: Variants = {
+  hidden: { clipPath: "circle(0% at 92% 4%)", transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] } },
+  visible: { clipPath: "circle(150% at 92% 4%)", transition: { duration: 0.66, ease: [0.76, 0, 0.24, 1] } },
+};
+const listVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.28 } },
+  exit: { transition: { staggerChildren: 0.03, staggerDirection: -1 } },
+};
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+  exit: { opacity: 0, y: -12, filter: "blur(4px)", transition: { duration: 0.2 } },
+};
 
 /**
  * Header — sigortam.net-style light bar.
@@ -186,77 +202,210 @@ export default function Header() {
         ` }} />
       </header>
 
-      {/* MOBILE MENU */}
+      {/* LUXURY MOBILE MENU */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.25 } }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              position: "fixed",
-              top: 0, left: 0, right: 0, bottom: 0,
-              background: "rgba(255, 255, 255, 0.98)",
-              backdropFilter: "blur(16px)",
-              WebkitBackdropFilter: "blur(16px)",
-              zIndex: 99,
-              display: "flex",
-              flexDirection: "column",
-              padding: "calc(var(--header-h) + 1rem) 1.5rem calc(env(safe-area-inset-bottom, 0px) + 1.5rem) 1.5rem",
-              overflowY: "auto",
-              WebkitOverflowScrolling: "touch",
-            }}
+            key="lux-menu"
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="lux-menu"
           >
-            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "2px", marginTop: "0.5rem" }}>
+            {/* ambient gold glow + faint grid */}
+            <div className="lux-glow" aria-hidden />
+            <div className="lux-grid" aria-hidden />
+
+            {/* Top bar */}
+            <motion.div
+              className="lux-top"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 0.32, duration: 0.4 } }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
+            >
+              <Link href="/" className="lux-brand" onClick={() => setMenuOpen(false)}>
+                <img src="/logo-emblem.png" alt="Alıcılar Sigorta" className="lux-brand-logo" />
+                <span className="lux-brand-name">ALICILAR<span>SİGORTA</span></span>
+              </Link>
+              <motion.button
+                onClick={() => setMenuOpen(false)}
+                aria-label="Menüyü kapat"
+                className="lux-close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1, transition: { delay: 0.36, duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
+                whileHover={{ rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <X size={22} strokeWidth={2} />
+              </motion.button>
+            </motion.div>
+
+            {/* Nav list */}
+            <motion.nav
+              className="lux-nav"
+              variants={listVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
               {nav.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8, transition: { duration: 0.18 } }}
-                  transition={{ delay: i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                >
+                <motion.div key={link.href} variants={itemVariants} className="lux-link-row">
                   <Link
                     href={link.href}
-                    style={{
-                      display: "flex", alignItems: "center", justifyContent: "space-between",
-                      fontSize: "clamp(1.5rem, 6vw, 2.1rem)",
-                      fontWeight: 700,
-                      color: isActive(link.href) ? "var(--blue)" : "var(--ink)",
-                      padding: "14px 0",
-                      textDecoration: "none",
-                      letterSpacing: "-0.025em",
-                      borderBottom: "1px solid var(--border)",
-                    }}
+                    className={`lux-link ${isActive(link.href) ? "active" : ""}`}
+                    onClick={() => setMenuOpen(false)}
                   >
-                    {link.name}
-                    <ChevronDown size={20} style={{ transform: "rotate(-90deg)", color: "var(--text-muted)" }} />
+                    <span className="lux-link-idx">0{i + 1}</span>
+                    <span className="lux-link-name">{link.name}</span>
+                    <span className="lux-link-arrow"><ArrowUpRight size={22} strokeWidth={2} /></span>
                   </Link>
                 </motion.div>
               ))}
-            </div>
+            </motion.nav>
 
+            {/* Footer block */}
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ delay: 0.22, duration: 0.4 }}
-              style={{ paddingBottom: "1rem", marginTop: "1.5rem" }}
+              className="lux-foot"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0, transition: { delay: 0.62, duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
+              exit={{ opacity: 0, transition: { duration: 0.15 } }}
             >
-              <Link href="/teklif-al" className="btn btn-gold" style={{ width: "100%", justifyContent: "center", fontSize: "1rem", padding: "1rem", borderRadius: "14px" }}>
+              <Link href="/teklif-al" className="lux-cta" onClick={() => setMenuOpen(false)}>
                 Hemen Ücretsiz Teklif Al
-                <ArrowRight size={18} strokeWidth={2.3} />
+                <ArrowRight size={18} strokeWidth={2.4} />
               </Link>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem", marginTop: "0.75rem" }}>
-                <a href="tel:+908501234567" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "var(--blue-tint)", padding: "0.9rem", borderRadius: "12px", textDecoration: "none", color: "var(--blue)", fontWeight: 700, fontSize: "0.92rem", minHeight: 46 }}>
-                  <Phone size={16} /> Ara
+
+              <a href="tel:+908501234567" className="lux-phone">
+                <span className="lux-phone-label">Yardıma hazırız · 7/24</span>
+                <span className="lux-phone-num"><Phone size={16} strokeWidth={2.4} /> 0850 123 45 67</span>
+              </a>
+
+              <div className="lux-foot-row">
+                <a href="https://wa.me/908501234567" target="_blank" rel="noreferrer" className="lux-wa">
+                  <MessageCircle size={16} strokeWidth={2.2} /> WhatsApp
                 </a>
-                <a href="https://wa.me/908501234567" target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", background: "#e8f7ea", padding: "0.9rem", borderRadius: "12px", textDecoration: "none", color: "#16a34a", fontWeight: 700, fontSize: "0.92rem", minHeight: 46 }}>
-                  <MessageCircle size={16} /> WhatsApp
-                </a>
+                <div className="lux-social">
+                  <a href="#" aria-label="Instagram"><Instagram size={17} /></a>
+                  <a href="#" aria-label="Twitter"><Twitter size={17} /></a>
+                  <a href="#" aria-label="LinkedIn"><Linkedin size={17} /></a>
+                </div>
               </div>
+
+              <div className="lux-addr"><MapPin size={13} /> Levent, Beşiktaş / İstanbul</div>
             </motion.div>
+
+            <style dangerouslySetInnerHTML={{ __html: `
+              .lux-menu {
+                position: fixed; inset: 0; z-index: 1001;
+                background: radial-gradient(120% 90% at 92% 0%, #14213d 0%, #0b1428 42%, #060b18 100%);
+                display: flex; flex-direction: column;
+                padding: calc(env(safe-area-inset-top, 0px) + 20px) clamp(22px, 6vw, 40px) calc(env(safe-area-inset-bottom, 0px) + 26px);
+                overflow-y: auto; -webkit-overflow-scrolling: touch;
+                will-change: clip-path;
+              }
+              .lux-glow {
+                position: absolute; top: -15%; right: -10%;
+                width: 460px; height: 460px; border-radius: 50%;
+                background: radial-gradient(circle, rgba(179,133,42,0.22) 0%, transparent 62%);
+                filter: blur(40px); pointer-events: none;
+              }
+              .lux-grid {
+                position: absolute; inset: 0; pointer-events: none;
+                background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
+                background-size: 30px 30px;
+                mask-image: radial-gradient(ellipse at 80% 10%, #000 0%, transparent 75%);
+                -webkit-mask-image: radial-gradient(ellipse at 80% 10%, #000 0%, transparent 75%);
+              }
+
+              .lux-top {
+                position: relative; z-index: 2;
+                display: flex; align-items: center; justify-content: space-between;
+              }
+              .lux-brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+              .lux-brand-logo { height: 44px; width: auto; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4)); }
+              .lux-brand-name { font-weight: 800; font-size: 1.05rem; letter-spacing: 0.04em; color: #fff; }
+              .lux-brand-name span { color: var(--brand-gold-light); margin-left: 5px; font-weight: 700; }
+              .lux-close {
+                width: 46px; height: 46px; border-radius: 50%;
+                background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.16);
+                color: #fff; display: flex; align-items: center; justify-content: center;
+                cursor: pointer;
+              }
+              .lux-close:hover { background: rgba(179,133,42,0.2); border-color: var(--brand-gold); }
+
+              .lux-nav {
+                position: relative; z-index: 2;
+                flex: 1; display: flex; flex-direction: column; justify-content: center;
+                gap: 2px; padding: 24px 0;
+              }
+              .lux-link-row { border-bottom: 1px solid rgba(255,255,255,0.08); }
+              .lux-link {
+                display: flex; align-items: center; gap: 16px;
+                padding: clamp(13px, 2.4vh, 20px) 4px;
+                text-decoration: none;
+                transition: padding-left 0.35s cubic-bezier(0.16,1,0.3,1);
+              }
+              .lux-link:hover, .lux-link:active { padding-left: 14px; }
+              .lux-link-idx {
+                font-family: var(--font-mono, monospace);
+                font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em;
+                color: var(--brand-gold-light); width: 26px; flex-shrink: 0;
+              }
+              .lux-link-name {
+                flex: 1;
+                font-family: var(--font-sans);
+                font-size: clamp(1.6rem, 7vw, 2.3rem);
+                font-weight: 700; letter-spacing: -0.03em; line-height: 1.1;
+                color: rgba(255,255,255,0.92);
+                transition: color 0.25s ease;
+              }
+              .lux-link:hover .lux-link-name { color: #fff; }
+              .lux-link.active .lux-link-name { color: var(--brand-gold-light); }
+              .lux-link-arrow {
+                color: var(--brand-gold-light); opacity: 0; transform: translate(-6px, 6px);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+              }
+              .lux-link:hover .lux-link-arrow, .lux-link.active .lux-link-arrow { opacity: 1; transform: translate(0,0); }
+
+              .lux-foot { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 14px; }
+              .lux-cta {
+                display: flex; align-items: center; justify-content: center; gap: 8px;
+                width: 100%; min-height: 54px; border-radius: 14px;
+                background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+                color: #fff; font-weight: 800; font-size: 1rem; text-decoration: none;
+                box-shadow: 0 14px 34px rgba(0,137,236,0.4);
+              }
+              .lux-phone {
+                display: flex; flex-direction: column; align-items: center; gap: 3px;
+                text-decoration: none; padding: 4px 0;
+              }
+              .lux-phone-label { font-size: 0.72rem; color: rgba(255,255,255,0.55); font-weight: 600; letter-spacing: 0.04em; }
+              .lux-phone-num { display: inline-flex; align-items: center; gap: 8px; font-size: 1.2rem; font-weight: 800; color: #fff; letter-spacing: 0.01em; }
+              .lux-phone-num svg { color: var(--brand-gold-light); }
+
+              .lux-foot-row { display: flex; align-items: center; gap: 12px; }
+              .lux-wa {
+                flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+                min-height: 48px; border-radius: 12px;
+                background: rgba(34,197,94,0.14); border: 1px solid rgba(34,197,94,0.4);
+                color: #4ade80; font-weight: 700; font-size: 0.92rem; text-decoration: none;
+              }
+              .lux-social { display: flex; gap: 8px; }
+              .lux-social a {
+                width: 48px; height: 48px; border-radius: 12px;
+                background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+                color: rgba(255,255,255,0.8);
+                display: flex; align-items: center; justify-content: center;
+                transition: all 0.25s ease;
+              }
+              .lux-social a:hover { background: rgba(179,133,42,0.2); border-color: var(--brand-gold); color: var(--brand-gold-light); }
+              .lux-addr {
+                display: inline-flex; align-items: center; gap: 6px; justify-content: center;
+                font-size: 0.76rem; color: rgba(255,255,255,0.45); font-weight: 500; margin-top: 2px;
+              }
+              .lux-addr svg { color: var(--brand-gold-light); }
+            ` }} />
           </motion.div>
         )}
       </AnimatePresence>
