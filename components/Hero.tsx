@@ -1,12 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import {
   Car, ShieldCheck, HeartPulse, Home, Navigation,
-  Plane, Briefcase, Stethoscope, ArrowRight, Star,
+  Plane, Briefcase, Stethoscope, ArrowRight, Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 import { fadeUp, stagger, easeOutExpo } from "@/lib/motion";
+
+// Rotating headline words — original Alıcılar slogan, NOT sigortam.net's.
+const ROTATING_WORDS = ["Doğru", "Uygun", "Hızlı", "Güvenli", "Akıllı"];
 
 /**
  * Hero — sigortam.net-style light product launcher.
@@ -37,6 +41,15 @@ const products: Product[] = [
 ];
 
 export default function Hero() {
+  const [wordIndex, setWordIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setWordIndex((i) => (i + 1) % ROTATING_WORDS.length);
+    }, 2000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
     <section className="hero-section">
       <div className="container">
@@ -48,17 +61,34 @@ export default function Hero() {
           className="hero-head"
         >
           <motion.span variants={fadeUp} className="hero-badge">
-            <Star size={13} strokeWidth={2.4} fill="var(--orange)" color="var(--orange)" />
-            Türkiye'nin güvenilir sigorta adresi
+            <Sparkles size={13} strokeWidth={2.2} color="var(--orange)" />
+            Karşılaştır · Seç · Güvende Kal
           </motion.span>
 
           <motion.h1 variants={fadeUp} className="hero-title">
-            Sigortada <span className="hero-title-blue">güvenin</span> adresi
+            <span className="hero-rotate" aria-hidden="true">
+              {/* invisible sizer reserves width of the longest word */}
+              <span className="hero-rotate-sizer">Güvenli</span>
+              <AnimatePresence initial={false}>
+                <motion.span
+                  key={wordIndex}
+                  initial={{ y: "100%" }}
+                  animate={{ y: "0%" }}
+                  exit={{ y: "-100%" }}
+                  transition={{ duration: 0.5, ease: easeOutExpo }}
+                  className="hero-rotate-word"
+                >
+                  {ROTATING_WORDS[wordIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+            <span className="hero-title-rest">sigorta, tek tıkla.</span>
+            <span className="hero-sr-only">Doğru sigorta, tek tıkla.</span>
           </motion.h1>
 
           <motion.p variants={fadeUp} className="hero-sub">
-            Doğru ürün, iyi fiyat, 7/24 hizmet. 20+ sigorta şirketinin
-            teklifini tek ekranda karşılaştırın — dakikalar içinde poliçeniz hazır.
+            20+ sigorta şirketinin teklifini saniyeler içinde karşılaştırın;
+            size en uygun poliçeyi komisyonsuz ve %100 dijital edinin.
           </motion.p>
         </motion.div>
 
@@ -153,13 +183,50 @@ export default function Hero() {
         .hero-title {
           font-family: var(--font-sans);
           font-weight: 800;
-          font-size: clamp(2.3rem, 6vw, 4.4rem);
-          line-height: 1.05;
-          letter-spacing: -0.035em;
+          font-size: clamp(2.4rem, 6.2vw, 4.7rem);
+          line-height: 1.02;
+          letter-spacing: -0.04em;
           color: var(--ink);
           margin-bottom: 18px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0;
         }
-        .hero-title-blue { color: var(--blue); }
+        .hero-rotate {
+          position: relative;
+          display: inline-block;
+          overflow: hidden;
+          height: 1.3em;
+          line-height: 1.3;
+          vertical-align: top;
+        }
+        .hero-rotate-sizer {
+          visibility: hidden;
+          display: inline-block;
+          line-height: 1.3;
+          color: var(--blue);
+        }
+        .hero-rotate-word {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          line-height: 1.3;
+          text-align: center;
+          color: var(--blue);
+          will-change: transform;
+        }
+        .hero-title-rest { color: var(--ink); }
+        .hero-sr-only {
+          position: absolute;
+          width: 1px; height: 1px;
+          padding: 0; margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
         .hero-sub {
           font-size: clamp(1rem, 1.5vw, 1.18rem);
           line-height: 1.65;

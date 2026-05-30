@@ -39,10 +39,9 @@ export default function LoadingScreen() {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            background: "var(--cream)", // Koyu temadaysa vs düzgün görünsün diye cream verdik. Dark mode için de rgba eklenebilir.
+            background: "#ffffff",
             backdropFilter: "blur(10px)",
           }}
-          className="dark:bg-surface" // Dark mode destekli
         >
           <div style={{ position: "relative", width: 160, height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>
             {/* Pulse Glow Effect */}
@@ -53,10 +52,10 @@ export default function LoadingScreen() {
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "var(--gold)",
+                background: "var(--blue)",
                 borderRadius: "50%",
                 filter: "blur(28px)",
-                opacity: 0.4,
+                opacity: 0.25,
                 zIndex: 0
               }}
             />
@@ -74,7 +73,7 @@ export default function LoadingScreen() {
                 objectFit: "contain",
                 position: "relative",
                 zIndex: 10,
-                filter: "drop-shadow(0 8px 24px rgba(176, 112, 80, 0.35))",
+                filter: "drop-shadow(0 8px 24px rgba(0, 137, 236, 0.18))",
               }}
             />
           </div>

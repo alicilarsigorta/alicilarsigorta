@@ -44,16 +44,11 @@ export default function Header() {
     <>
       <header className={`header ${scrolled ? "scrolled" : ""}`}>
         <div className="container header-inner">
-          {/* LEFT — Logo */}
+          {/* LEFT — Logo (real gold shield + wordmark) */}
           <Link href="/" className="header-brand">
-            <span className="header-brand-mark" aria-hidden>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L4 5.5V11C4 16 7.5 20.5 12 22C16.5 20.5 20 16 20 11V5.5L12 2Z" fill="#fff"/>
-                <path d="M9.2 11.8L11.2 13.8L15 9.5" stroke="var(--orange)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
+            <img src="/logo.png" alt="Alıcılar Sigorta" className="header-brand-logo" />
             <span className="header-brand-name">
-              alıcılar<span className="header-brand-name-accent">sigorta</span>
+              ALICILAR<span className="header-brand-name-accent">SİGORTA</span>
             </span>
           </Link>
 
@@ -113,26 +108,38 @@ export default function Header() {
           .header-brand {
             display: inline-flex;
             align-items: center;
-            gap: 9px;
+            gap: 10px;
             text-decoration: none;
             transition: opacity 0.2s ease;
           }
-          .header-brand:hover { opacity: 0.85; }
-          .header-brand-mark {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            background: var(--orange);
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 14px var(--orange-glow);
+          .header-brand:hover { opacity: 0.82; }
+          .header-brand-logo {
+            height: 46px;
+            width: 46px;
+            object-fit: contain;
+            padding: 5px;
+            background: linear-gradient(140deg, #20232b 0%, #0f1116 100%);
+            border-radius: 12px;
+            box-shadow: 0 6px 16px rgba(15, 17, 22, 0.22), inset 0 1px 0 rgba(255,255,255,0.06);
+            flex-shrink: 0;
           }
           .header-brand-name {
             font-family: var(--font-sans);
             font-weight: 800;
-            font-size: 1.18rem;
+            font-size: 1.16rem;
             color: var(--ink);
-            letter-spacing: -0.03em;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            line-height: 1;
           }
-          .header-brand-name-accent { color: var(--orange); }
+          .header-brand-name-accent {
+            color: var(--brand-gold);
+            font-weight: 700;
+            margin-left: 6px;
+          }
+          @media (max-width: 380px) {
+            .header-brand-name { display: none; }
+          }
 
           .header-nav { flex: 1; justify-content: center; gap: 1.7rem; }
 

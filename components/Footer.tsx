@@ -20,12 +20,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-col-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-              <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(176, 112, 80,0.1)", border: "1px solid rgba(176, 112, 80,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <img src="/logo.png" alt="" style={{ width: 28, objectFit: "contain" }} />
+              <div style={{ width: 52, height: 52, borderRadius: 14, background: "rgba(179, 133, 42, 0.12)", border: "1px solid rgba(179, 133, 42, 0.32)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <img src="/logo.png" alt="" style={{ width: 38, objectFit: "contain" }} />
               </div>
               <div>
-                <div style={{ color: "#fff", fontWeight: 900, fontSize: "1.2rem", letterSpacing: "-0.02em" }}>ALICILAR</div>
-                <div style={{ color: "var(--gold)", fontWeight: 800, fontSize: "0.65rem", letterSpacing: "0.2em" }}>SİGORTA</div>
+                <div style={{ color: "#fff", fontWeight: 800, fontSize: "1.22rem", letterSpacing: "0.04em" }}>ALICILAR</div>
+                <div style={{ color: "var(--brand-gold-light)", fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.24em" }}>SİGORTA</div>
               </div>
             </div>
             <p style={{ fontSize: "0.95rem", lineHeight: 1.8, marginBottom: 24 }}>
@@ -38,10 +38,10 @@ export default function Footer() {
                 { Icon: Linkedin, link: contact.socialLinks.linkedin },
               ].map(({ Icon, link }, i) => (
                 <a key={i} href={link} target="_blank" rel="noreferrer" style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "background 0.2s", textDecoration: "none" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(176, 112, 80,0.2)") }
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(0, 137, 236,0.25)") }
                   onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
                 >
-                  <Icon size={18} color="var(--gold)" />
+                  <Icon size={18} color="var(--orange)" />
                 </a>
               ))}
             </div>
