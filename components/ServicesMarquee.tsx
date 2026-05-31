@@ -14,23 +14,26 @@ interface Service {
   desc: string;
   img: string;
   tone: Tone;
+  /** true = real photo, fills the whole card (cover); false = render/illustration on a tinted gradient (contain) */
+  cover: boolean;
 }
 
 const SERVICES: Service[] = [
-  { id: "kasko", title: "Kasko", desc: "Aracınıza tam kapsamlı koruma", img: "/slider_car.png", tone: "orange" },
-  { id: "saglik-sigortasi-fiyatlari", title: "Tamamlayıcı Sağlık", desc: "Özel hastanede fark ödemeden", img: "/slider_health.png", tone: "blue" },
-  { id: "konut-sigortasi", title: "Konut Sigortası", desc: "Eviniz her riske karşı güvende", img: "/slider_house.png", tone: "orange" },
-  { id: "trafik-sigortasi", title: "Trafik Sigortası", desc: "Zorunlu trafik, en iyi fiyata", img: "/slider_car.png", tone: "blue" },
-  { id: "ozel-saglik", title: "Özel Sağlık", desc: "Kapsamlı özel sağlık planı", img: "/slider_health.png", tone: "orange" },
-  { id: "dask-sorgulama", title: "DASK", desc: "Zorunlu deprem sigortası", img: "/slider_house.png", tone: "blue" },
-  { id: "is-yeri-sigortasi", title: "İş Yeri Sigortası", desc: "İşletmenizi tüm risklere karşı", img: "/slider_house.png", tone: "orange" },
-  { id: "seyahat-sigortasi", title: "Seyahat Sağlık", desc: "Yurt içi & yurt dışı güvence", img: "/slider_health.png", tone: "blue" },
+  { id: "kasko", title: "Kasko", desc: "Aracınıza tam kapsamlı koruma", img: "/slider_car.png", tone: "orange", cover: false },
+  { id: "saglik-sigortasi-fiyatlari", title: "Tamamlayıcı Sağlık", desc: "Özel hastanede fark ödemeden", img: "/saglik-sig.png", tone: "blue", cover: true },
+  { id: "konut-sigortasi", title: "Konut Sigortası", desc: "Eviniz her riske karşı güvende", img: "/konutsig.png", tone: "orange", cover: true },
+  { id: "trafik-sigortasi", title: "Trafik Sigortası", desc: "Zorunlu trafik, en iyi fiyata", img: "/slider_car.png", tone: "blue", cover: false },
+  { id: "saglik-sigortasi-fiyatlari", title: "Özel Sağlık", desc: "Kapsamlı özel sağlık planı", img: "/ozel-saglik.png", tone: "orange", cover: true },
+  { id: "dask-sorgulama", title: "DASK", desc: "Zorunlu deprem sigortası", img: "/slider_house.png", tone: "blue", cover: false },
+  { id: "is-yeri-sigortasi", title: "İş Yeri Sigortası", desc: "İşletmenizi tüm risklere karşı", img: "/slider_house.png", tone: "orange", cover: false },
+  { id: "seyahat-sigortasi", title: "Seyahat Sağlık", desc: "Yurt içi & yurt dışı güvence", img: "/slider_health.png", tone: "blue", cover: false },
 ];
 
 /**
  * ServicesMarquee — continuous "kayan" row of service cards (image-based).
  * alicilarbeton.com services style: tall image cards with the title
- * overlaid at the bottom, scrolling horizontally and looping.
+ * overlaid on a dark scrim at the bottom, scrolling horizontally + looping.
+ * Real photos fill the card (cover); render illustrations sit on a tint (contain).
  */
 export default function ServicesMarquee() {
   const reel = [...SERVICES, ...SERVICES];
@@ -55,8 +58,8 @@ export default function ServicesMarquee() {
           {reel.map((s, i) => (
             <Link
               href={`/urunlerimiz/${s.id}`}
-              key={`${s.id}-${i}`}
-              className={`sm-card sm-card--${s.tone}`}
+              key={`${s.id}-${s.title}-${i}`}
+              className={`sm-card sm-card--${s.tone} ${s.cover ? "is-cover" : "is-render"}`}
               aria-label={s.title}
             >
               <div className="sm-card-img">
@@ -65,7 +68,7 @@ export default function ServicesMarquee() {
                   alt={s.title}
                   fill
                   sizes="320px"
-                  style={{ objectFit: "contain", objectPosition: "center 45%" }}
+                  style={{ objectFit: s.cover ? "cover" : "contain", objectPosition: s.cover ? "center" : "center 45%" }}
                 />
               </div>
               <div className="sm-card-overlay">
@@ -95,7 +98,7 @@ export default function ServicesMarquee() {
           gap: 20px;
           width: max-content;
           padding: 8px 20px;
-          animation: sm-scroll 46s linear infinite;
+          animation: sm-scroll 50s linear infinite;
           will-change: transform;
         }
         .sm-marquee:hover .sm-track { animation-play-state: paused; }
@@ -117,31 +120,34 @@ export default function ServicesMarquee() {
           border: 1px solid var(--border);
           transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s cubic-bezier(0.16,1,0.3,1);
         }
-        .sm-card--blue { background: linear-gradient(160deg, #eaf4fe 0%, #f7fbff 60%); }
-        .sm-card--orange { background: linear-gradient(160deg, #fff1e6 0%, #fffaf5 60%); }
+        .sm-card.is-render.sm-card--blue { background: linear-gradient(160deg, #eaf4fe 0%, #f7fbff 60%); }
+        .sm-card.is-render.sm-card--orange { background: linear-gradient(160deg, #fff1e6 0%, #fffaf5 60%); }
+        .sm-card.is-cover { background: #0b1428; }
         .sm-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-hover); }
 
         .sm-card-img {
           position: absolute;
-          inset: 0 0 36% 0;
+          inset: 0;
           transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
         }
-        .sm-card:hover .sm-card-img { transform: scale(1.06); }
+        .sm-card.is-render .sm-card-img { inset: 0 0 34% 0; }
+        .sm-card:hover .sm-card-img { transform: scale(1.05); }
 
         .sm-card-overlay {
           position: absolute;
           left: 0; right: 0; bottom: 0;
           padding: 26px 22px 22px;
-          background: linear-gradient(to top, rgba(11,20,40,0.94) 0%, rgba(11,20,40,0.82) 55%, rgba(11,20,40,0) 100%);
+          background: linear-gradient(to top, rgba(11,20,40,0.96) 0%, rgba(11,20,40,0.82) 48%, rgba(11,20,40,0.35) 78%, rgba(11,20,40,0) 100%);
           display: flex; flex-direction: column; align-items: flex-start; gap: 5px;
         }
+        .sm-card.is-cover .sm-card-overlay { padding-top: 56px; }
         .sm-card-title {
           font-family: var(--font-sans); font-weight: 800;
           font-size: 1.24rem; line-height: 1.15; letter-spacing: -0.02em;
           color: #fff; margin: 0;
         }
         .sm-card-desc {
-          font-size: 0.86rem; line-height: 1.4; color: rgba(255,255,255,0.78);
+          font-size: 0.86rem; line-height: 1.4; color: rgba(255,255,255,0.82);
           font-weight: 500; margin: 0;
         }
         .sm-card-cta {
