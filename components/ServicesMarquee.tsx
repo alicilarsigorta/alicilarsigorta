@@ -19,14 +19,13 @@ interface Service {
 }
 
 const SERVICES: Service[] = [
-  { id: "kasko", title: "Kasko", desc: "Aracınıza tam kapsamlı koruma", img: "/slider_car.png", tone: "orange", cover: false },
-  { id: "saglik-sigortasi-fiyatlari", title: "Tamamlayıcı Sağlık", desc: "Özel hastanede fark ödemeden", img: "/saglik-sig.png", tone: "blue", cover: true },
-  { id: "konut-sigortasi", title: "Konut Sigortası", desc: "Eviniz her riske karşı güvende", img: "/konutsig.png", tone: "orange", cover: true },
-  { id: "trafik-sigortasi", title: "Trafik Sigortası", desc: "Zorunlu trafik, en iyi fiyata", img: "/slider_car.png", tone: "blue", cover: false },
-  { id: "saglik-sigortasi-fiyatlari", title: "Özel Sağlık", desc: "Kapsamlı özel sağlık planı", img: "/ozel-saglik.png", tone: "orange", cover: true },
-  { id: "dask-sorgulama", title: "DASK", desc: "Zorunlu deprem sigortası", img: "/slider_house.png", tone: "blue", cover: false },
-  { id: "is-yeri-sigortasi", title: "İş Yeri Sigortası", desc: "İşletmenizi tüm risklere karşı", img: "/slider_house.png", tone: "orange", cover: false },
-  { id: "seyahat-sigortasi", title: "Seyahat Sağlık", desc: "Yurt içi & yurt dışı güvence", img: "/slider_health.png", tone: "blue", cover: false },
+  { id: "kasko", title: "Kasko", desc: "Aracınıza tam kapsamlı koruma", img: "/kasko.jpg", tone: "orange", cover: true },
+  { id: "saglik-sigortasi-fiyatlari", title: "Tamamlayıcı Sağlık", desc: "Özel hastanede fark ödemeden", img: "/sagliksig.jpg", tone: "blue", cover: true },
+  { id: "konut-sigortasi", title: "Konut Sigortası", desc: "Eviniz her riske karşı güvende", img: "/konutsigortasi.jpg", tone: "orange", cover: true },
+  { id: "trafik-sigortasi", title: "Trafik Sigortası", desc: "Zorunlu trafik, en iyi fiyata", img: "/trafic.jpg", tone: "blue", cover: true },
+  { id: "saglik-sigortasi-fiyatlari", title: "Özel Sağlık", desc: "Kapsamlı özel sağlık planı", img: "/ozelsaglik.jpg", tone: "orange", cover: true },
+  { id: "dask-sorgulama", title: "DASK", desc: "Zorunlu deprem sigortası", img: "/dask.jpg", tone: "blue", cover: true },
+  { id: "seyahat-sigortasi", title: "Seyahat Sağlık", desc: "Yurt içi & yurt dışı güvence", img: "/seyehat.jpg", tone: "orange", cover: true },
 ];
 
 /**
