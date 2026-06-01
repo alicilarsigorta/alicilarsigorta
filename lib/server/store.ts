@@ -1,15 +1,18 @@
 import "server-only";
-import { kv } from "@vercel/kv";
+import { Redis } from "@upstash/redis";
 
 /**
- * KV-backed data store (Vercel KV / Upstash Redis).
- * Single-key JSON collections — simple and plenty for an agency's volume.
- * Degrades gracefully when KV env is not yet configured.
+ * Redis-backed data store (Vercel KV / Upstash).
+ * Accepts either env naming — Vercel KV (KV_REST_API_*) or the Upstash
+ * marketplace integration (UPSTASH_REDIS_REST_*).
+ * Degrades gracefully when no Redis env is configured yet.
  */
+const REDIS_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
-export const kvConfigured = Boolean(
-  process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN
-);
+export const kvConfigured = Boolean(REDIS_URL && REDIS_TOKEN);
+
+const redis = kvConfigured ? new Redis({ url: REDIS_URL!, token: REDIS_TOKEN! }) : null;
 
 const OFFERS_KEY = "offers";
 const CONTENT_KEY = "site:content";
@@ -33,14 +36,14 @@ export interface Offer {
 
 /* ── Offers ── */
 export async function getOffers(): Promise<Offer[]> {
-  if (!kvConfigured) return [];
-  return (await kv.get<Offer[]>(OFFERS_KEY)) ?? [];
+  if (!redis) return [];
+  return (await redis.get<Offer[]>(OFFERS_KEY)) ?? [];
 }
 
 export async function addOffer(
   data: Omit<Offer, "id" | "status" | "createdAt">
 ): Promise<Offer> {
-  if (!kvConfigured) throw new Error("KV_NOT_CONFIGURED");
+  if (!redis) throw new Error("KV_NOT_CONFIGURED");
   const offer: Offer = {
     ...data,
     id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`,
@@ -49,7 +52,7 @@ export async function addOffer(
   };
   const list = await getOffers();
   list.unshift(offer);
-  await kv.set(OFFERS_KEY, list.slice(0, 5000));
+  await redis.set(OFFERS_KEY, list.slice(0, 5000));
   return offer;
 }
 
@@ -57,7 +60,7 @@ export async function updateOffer(
   id: string,
   patch: Partial<Pick<Offer, "status" | "notes">>
 ): Promise<Offer | null> {
-  if (!kvConfigured) return null;
+  if (!redis) return null;
   const list = await getOffers();
   let updated: Offer | null = null;
   const next = list.map((o) => {
@@ -67,27 +70,27 @@ export async function updateOffer(
     }
     return o;
   });
-  if (updated) await kv.set(OFFERS_KEY, next);
+  if (updated) await redis.set(OFFERS_KEY, next);
   return updated;
 }
 
 export async function deleteOffer(id: string): Promise<boolean> {
-  if (!kvConfigured) return false;
+  if (!redis) return false;
   const list = await getOffers();
   const next = list.filter((o) => o.id !== id);
-  await kv.set(OFFERS_KEY, next);
+  await redis.set(OFFERS_KEY, next);
   return next.length !== list.length;
 }
 
 /* ── Content ── */
 export async function getStoredContent<T = unknown>(): Promise<T | null> {
-  if (!kvConfigured) return null;
-  return (await kv.get<T>(CONTENT_KEY)) ?? null;
+  if (!redis) return null;
+  return (await redis.get<T>(CONTENT_KEY)) ?? null;
 }
 
 export async function setStoredContent(content: unknown): Promise<void> {
-  if (!kvConfigured) throw new Error("KV_NOT_CONFIGURED");
-  await kv.set(CONTENT_KEY, content);
+  if (!redis) throw new Error("KV_NOT_CONFIGURED");
+  await redis.set(CONTENT_KEY, content);
 }
 
 /* ── Push subscriptions ── */
@@ -97,22 +100,22 @@ export interface PushSub {
 }
 
 export async function getSubs(): Promise<PushSub[]> {
-  if (!kvConfigured) return [];
-  return (await kv.get<PushSub[]>(SUBS_KEY)) ?? [];
+  if (!redis) return [];
+  return (await redis.get<PushSub[]>(SUBS_KEY)) ?? [];
 }
 
 export async function addSub(sub: PushSub): Promise<void> {
-  if (!kvConfigured) throw new Error("KV_NOT_CONFIGURED");
+  if (!redis) throw new Error("KV_NOT_CONFIGURED");
   const subs = await getSubs();
   if (subs.some((s) => s.endpoint === sub.endpoint)) return;
   subs.push(sub);
-  await kv.set(SUBS_KEY, subs);
+  await redis.set(SUBS_KEY, subs);
 }
 
 export async function removeSub(endpoint: string): Promise<void> {
-  if (!kvConfigured) return;
+  if (!redis) return;
   const subs = await getSubs();
-  await kv.set(
+  await redis.set(
     SUBS_KEY,
     subs.filter((s) => s.endpoint !== endpoint)
   );
