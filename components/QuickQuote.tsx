@@ -36,7 +36,7 @@ export default function QuickQuote() {
     return `${d.slice(0, 4)} ${d.slice(4, 7)} ${d.slice(7, 9)} ${d.slice(9)}`;
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const digits = phone.replace(/\D/g, "");
     if (!branch) return toast.error("Lütfen bir branş seçin.");
@@ -44,14 +44,23 @@ export default function QuickQuote() {
     if (digits.length < 10) return toast.error("Lütfen geçerli bir telefon numarası girin.");
 
     setSubmitting(true);
-    // Simulate quick request — a real callback request, friendly confirmation.
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/offers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), phone, insuranceType: branch, source: "anasayfa-hizli" }),
+      });
+      // 503 = backend not configured yet; don't alarm the visitor.
+      if (!res.ok && res.status !== 503) throw new Error();
       toast.success("Talebiniz alındı! Uzman danışmanımız en kısa sürede sizi arayacak.");
       setBranch("");
       setName("");
       setPhone("");
+    } catch {
+      toast.error("Bir sorun oluştu. Lütfen tekrar deneyin veya bizi arayın.");
+    } finally {
       setSubmitting(false);
-    }, 600);
+    }
   };
 
   return (
