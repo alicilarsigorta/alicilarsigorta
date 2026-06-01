@@ -6,7 +6,7 @@ import Sidebar from "@/components/admin/Sidebar";
 import AdminHeader from "@/components/admin/AdminHeader";
 import { InstallPrompt } from "@/components/admin/NotificationCenter";
 import { Toaster } from "sonner";
-import { usePWA, useNotifications } from "@/lib/use-notifications";
+import { usePWA } from "@/lib/use-notifications";
 import "./admin.css";
 
 const pageTitles: Record<string, string> = {
@@ -24,31 +24,33 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const router = useRouter();
 
-  // PWA & Notifications
+  // PWA — register the service worker (needed for Web Push)
   usePWA();
-  const { requestPermission } = useNotifications();
 
-  // Request notification permission on admin auth
-  useEffect(() => {
-    if (isAuthed) {
-      requestPermission();
-    }
-  }, [isAuthed, requestPermission]);
-
-  // Auth check
+  // Auth check — verify the httpOnly admin cookie server-side
   useEffect(() => {
     if (pathname === "/admin/login") {
       setChecking(false);
       setIsAuthed(false);
       return;
     }
-    const auth = sessionStorage.getItem("admin_auth");
-    if (auth !== "true") {
-      router.push("/admin/login");
-    } else {
-      setIsAuthed(true);
-    }
-    setChecking(false);
+    let cancelled = false;
+    fetch("/api/admin/login", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => {
+        if (cancelled) return;
+        if (d.admin) setIsAuthed(true);
+        else router.push("/admin/login");
+        setChecking(false);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        router.push("/admin/login");
+        setChecking(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [pathname, router]);
 
   // Login page gets a minimal layout

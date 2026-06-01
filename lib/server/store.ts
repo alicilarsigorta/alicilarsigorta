@@ -25,7 +25,7 @@ export interface Offer {
   birthDate?: string;
   insuranceType: string;
   city?: string;
-  note?: string;
+  notes?: string;
   source?: string;
   status: OfferStatus;
   createdAt: string;
@@ -55,7 +55,7 @@ export async function addOffer(
 
 export async function updateOffer(
   id: string,
-  patch: Partial<Pick<Offer, "status" | "note">>
+  patch: Partial<Pick<Offer, "status" | "notes">>
 ): Promise<Offer | null> {
   if (!kvConfigured) return null;
   const list = await getOffers();

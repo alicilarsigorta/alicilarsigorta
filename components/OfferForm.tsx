@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useOffers } from "@/lib/offers-context";
 import { toast } from "sonner";
 
 const steps = [
@@ -48,7 +47,7 @@ const InputField = ({ label, icon: Icon, error, ...rest }: any) => (
 export default function OfferForm() {
   const [step, setStep] = useState(1);
   const [offerId, setOfferId] = useState("");
-  const { addOffer } = useOffers();
+  const [submitting, setSubmitting] = useState(false);
 
   const { control, handleSubmit, trigger, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -71,22 +70,41 @@ export default function OfferForm() {
 
     if (isValid) {
       if (step === 2) {
-        onSubmit(control._formValues as FormData);
+        await onSubmit(control._formValues as FormData);
       } else {
         setStep(s => s + 1);
       }
     }
   };
 
-  const onSubmit = (data: FormData) => {
-    const id = addOffer({
-      tcNo: data.tcNo,
-      birthDate: data.birthDate,
-      phone: data.phone,
-      insuranceType: data.insuranceType,
-    });
+  const onSubmit = async (data: FormData) => {
+    if (submitting) return;
+    setSubmitting(true);
+    let id = "";
+    try {
+      const res = await fetch("/api/offers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          tcNo: data.tcNo,
+          birthDate: data.birthDate,
+          phone: data.phone,
+          insuranceType: data.insuranceType,
+          source: "teklif-al",
+        }),
+      });
+      const out = await res.json().catch(() => ({}));
+      // 503 = backend not configured yet; don't block the visitor.
+      if (!res.ok && res.status !== 503) throw new Error();
+      id = (out.id as string) || `AS${Date.now().toString(36).slice(-6)}`;
+    } catch {
+      toast.error("Bir sorun oluştu. Lütfen tekrar deneyin veya bizi arayın.");
+      setSubmitting(false);
+      return;
+    }
     setOfferId(id);
     setStep(3);
+    setSubmitting(false);
     toast.success("Teklif talebiniz başarıyla alındı! 🎉", {
       description: `Başvuru No: #${id.slice(0, 8)}`,
       duration: 5000,

@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     birthDate: (body.birthDate || "").toString().trim() || undefined,
     insuranceType,
     city: (body.city || "").toString().trim() || undefined,
-    note: (body.note || "").toString().trim() || undefined,
+    notes: (body.notes || "").toString().trim() || undefined,
     source: (body.source || "web").toString().trim(),
   });
 

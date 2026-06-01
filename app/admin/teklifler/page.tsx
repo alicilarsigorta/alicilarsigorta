@@ -56,7 +56,7 @@ export default function TekliflerPage() {
       const s = search.toLowerCase();
       data = data.filter(o =>
         o.phone.toLowerCase().includes(s) ||
-        o.tcNo.includes(s) ||
+        (o.tcNo || "").includes(s) ||
         o.insuranceType.toLowerCase().includes(s) ||
         o.id.includes(s)
       );
@@ -74,7 +74,7 @@ export default function TekliflerPage() {
     }),
     columnHelper.accessor("tcNo", {
       header: "TC Kimlik",
-      cell: info => <span>{info.getValue().slice(0, 3)}****{info.getValue().slice(-3)}</span>,
+      cell: info => { const v = info.getValue() || ""; return <span>{v ? `${v.slice(0, 3)}****${v.slice(-3)}` : "-"}</span>; },
       size: 130,
     }),
     columnHelper.accessor("phone", {
@@ -193,8 +193,8 @@ export default function TekliflerPage() {
         startY: 45,
         head: [['Bilgi', 'Detay']],
         body: [
-          ['TC Kimlik', offer.tcNo],
-          ['Dogum Tarihi', offer.birthDate],
+          ['TC Kimlik', offer.tcNo || '-'],
+          ['Dogum Tarihi', offer.birthDate || '-'],
           ['Telefon', offer.phone],
           ['Sigorta Turu', offer.insuranceType],
           ['Durum', statusLabels[offer.status]],

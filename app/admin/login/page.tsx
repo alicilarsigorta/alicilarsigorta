@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { Shield, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
-const ADMIN_PASSWORD = "alicilar2024";
-
 export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -16,16 +14,21 @@ export default function AdminLoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    // Simulate a small delay for UX
-    await new Promise(r => setTimeout(r, 500));
-
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem("admin_auth", "true");
-      toast.success("Giriş başarılı! Yönlendiriliyorsunuz...");
-      setTimeout(() => router.push("/admin"), 600);
-    } else {
-      toast.error("Hatalı şifre. Lütfen tekrar deneyin.");
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        toast.success("Giriş başarılı! Yönlendiriliyorsunuz...");
+        setTimeout(() => router.push("/admin"), 500);
+      } else {
+        toast.error("Hatalı şifre. Lütfen tekrar deneyin.");
+        setLoading(false);
+      }
+    } catch {
+      toast.error("Bağlantı hatası. Lütfen tekrar deneyin.");
       setLoading(false);
     }
   };

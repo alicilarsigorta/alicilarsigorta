@@ -93,8 +93,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               <div className="admin-user-role">Yönetici</div>
             </div>
             <button
-              onClick={() => {
-                sessionStorage.removeItem("admin_auth");
+              onClick={async () => {
+                try { await fetch("/api/admin/login", { method: "DELETE" }); } catch {}
                 window.location.href = "/admin/login";
               }}
               style={{ 

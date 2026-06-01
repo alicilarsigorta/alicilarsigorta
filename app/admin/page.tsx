@@ -1,7 +1,8 @@
 "use client";
 
 import { useOffers } from "@/lib/offers-context";
-import { 
+import PushToggle from "@/components/admin/PushToggle";
+import {
   FileText, Clock, CheckCircle, XCircle, Phone,
   TrendingUp, ArrowUpRight, ArrowDownRight, Calendar
 } from "lucide-react";
@@ -58,6 +59,9 @@ export default function AdminDashboard() {
 
   return (
     <div>
+      {/* Web Push enablement */}
+      <PushToggle />
+
       {/* Stats Grid */}
       <div className="admin-stats-grid">
         <div className="admin-stat-card">

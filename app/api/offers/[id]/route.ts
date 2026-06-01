@@ -13,9 +13,9 @@ export async function PATCH(
   }
   const { id } = await params;
   const body = await req.json().catch(() => ({}));
-  const patch: { status?: "pending" | "contacted" | "completed" | "rejected"; note?: string } = {};
+  const patch: { status?: "pending" | "contacted" | "completed" | "rejected"; notes?: string } = {};
   if (body.status) patch.status = body.status;
-  if (typeof body.note === "string") patch.note = body.note;
+  if (typeof body.notes === "string") patch.notes = body.notes;
   const updated = await updateOffer(id, patch);
   if (!updated) return NextResponse.json({ error: "Bulunamadı." }, { status: 404 });
   return NextResponse.json({ ok: true, offer: updated });
