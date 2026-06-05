@@ -14,11 +14,11 @@ import { easeOutExpo, viewportOnce } from "@/lib/motion";
 export default function Home() {
   return (
     <>
-      {/* Product-launcher hero */}
-      <Hero />
-
       {/* Kayan hizmetler — services marquee */}
       <ServicesMarquee />
+
+      {/* Product-launcher hero */}
+      <Hero />
 
       {/* Teklif alma yeri — quick quote */}
       <QuickQuote />
