@@ -14,6 +14,9 @@ import { easeOutExpo, viewportOnce } from "@/lib/motion";
 export default function Home() {
   return (
     <>
+      {/* Kayan hizmetler — services marquee */}
+      <ServicesMarquee />
+
       {/* Product-launcher hero */}
       <Hero />
 
@@ -22,9 +25,6 @@ export default function Home() {
 
       {/* Partner brand logos */}
       <PartnerMarquee />
-
-      {/* Kayan hizmetler — services marquee */}
-      <ServicesMarquee />
 
       {/* Hastane / Tamamlayıcı Sağlık */}
       <HospitalSection />
