@@ -17,11 +17,11 @@ export default function Home() {
       {/* Kayan hizmetler — services marquee */}
       <ServicesMarquee />
 
-      {/* Product-launcher hero */}
-      <Hero />
-
       {/* Teklif alma yeri — quick quote */}
       <QuickQuote />
+
+      {/* Product-launcher hero */}
+      <Hero />
 
       {/* Partner brand logos */}
       <PartnerMarquee />
