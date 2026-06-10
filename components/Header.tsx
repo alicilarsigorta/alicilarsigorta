@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 
 const nav = [
   { name: "Ürünlerimiz", href: "/urunlerimiz" },
-  { name: "Kampanyalar", href: "/blog" },
+  { name: "Haberler", href: "/blog" },
   { name: "Hakkımızda", href: "/hakkimizda" },
   { name: "SSS", href: "/sss" },
   { name: "İletişim", href: "/iletisim" },
@@ -305,7 +305,7 @@ export default function Header() {
             <style dangerouslySetInnerHTML={{ __html: `
               .lux-menu {
                 position: fixed; inset: 0; z-index: 1001;
-                background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+                background: linear-gradient(135deg, var(--blue-dark) 0%, #004a80 100%);
                 display: flex; flex-direction: column;
                 padding: calc(env(safe-area-inset-top, 0px) + 20px) clamp(22px, 6vw, 40px) calc(env(safe-area-inset-bottom, 0px) + 26px);
                 overflow-y: auto; -webkit-overflow-scrolling: touch;
