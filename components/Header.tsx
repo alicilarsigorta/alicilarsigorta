@@ -10,7 +10,6 @@ const nav = [
   { name: "Ürünlerimiz", href: "/urunlerimiz" },
   { name: "Haberler", href: "/blog" },
   { name: "Hakkımızda", href: "/hakkimizda" },
-  { name: "SSS", href: "/sss" },
   { name: "İletişim", href: "/iletisim" },
 ];
 
