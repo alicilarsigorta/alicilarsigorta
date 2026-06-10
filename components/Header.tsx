@@ -146,7 +146,7 @@ export default function Header() {
             line-height: 1;
             display: inline-flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
           }
           .header-brand-name-accent {
             color: var(--brand-gold);
@@ -305,7 +305,7 @@ export default function Header() {
             <style dangerouslySetInnerHTML={{ __html: `
               .lux-menu {
                 position: fixed; inset: 0; z-index: 1001;
-                background: radial-gradient(120% 90% at 92% 0%, #14213d 0%, #0b1428 42%, #060b18 100%);
+                background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
                 display: flex; flex-direction: column;
                 padding: calc(env(safe-area-inset-top, 0px) + 20px) clamp(22px, 6vw, 40px) calc(env(safe-area-inset-bottom, 0px) + 26px);
                 overflow-y: auto; -webkit-overflow-scrolling: touch;
@@ -379,9 +379,9 @@ export default function Header() {
               .lux-cta {
                 display: flex; align-items: center; justify-content: center; gap: 8px;
                 width: 100%; min-height: 54px; border-radius: 14px;
-                background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
-                color: #fff; font-weight: 800; font-size: 1rem; text-decoration: none;
-                box-shadow: 0 14px 34px rgba(0,137,236,0.4);
+                background: #fff;
+                color: var(--blue); font-weight: 800; font-size: 1rem; text-decoration: none;
+                box-shadow: 0 14px 34px rgba(0,0,0,0.22);
               }
               .lux-phone {
                 display: flex; flex-direction: column; align-items: center; gap: 3px;
