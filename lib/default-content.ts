@@ -166,7 +166,7 @@ export const defaultContent: SiteContent = {
   faq: [
     { q: "Kasko ile Trafik Sigortası arasındaki fark nedir?", a: "Trafik sigortası zorunlu olup karşı tarafa verdiğiniz zararları karşılar. Kasko ise isteğe bağlıdır ve kendi aracınızı kaza, çalınma, yanma gibi durumlara karşı güvence altına alır." },
     { q: "Sigorta teklifi almak için hangi bilgilere ihtiyacım var?", a: "TC Kimlik numaranız, doğum tarihiniz ve iletişim bilgilerinizle (telefon/e-posta) birkaç saniye içinde ücretsiz teklif alabilirsiniz." },
-    { q: "Hasar anında ne yapmalıyım?", a: "Önce güvenli bir yere çekilin. Ardından tutanak düzenleyin ve 0850 123 4567 numaralı VIP hasar hattımızı arayın. Uzman ekibimiz 7/24 hizmetinizdedir." },
+    { q: "Hasar anında ne yapmalıyım?", a: "Önce güvenli bir yere çekilin. Ardından tutanak düzenleyin ve 0542 112 78 78 numaralı VIP hasar hattımızı arayın. Uzman ekibimiz 7/24 hizmetinizdedir." },
     { q: "Poliçemi online olarak iptal edebilir miyim?", a: "Evet, her poliçeniz müşteri panelimizden veya danışmanınız aracılığıyla kolayca iptal edilebilir. İptal tarihine göre kalan primler iade edilir." },
     { q: "Taksitli ödeme seçeneği var mı?", a: "Tüm başlıca kredi kartlarına, en fazla 12 aya kadar taksit imkânı sunmaktayız. Kampanya dönemlerinde özel vade seçenekleri de geçerlidir." },
   ],
@@ -190,10 +190,10 @@ export const defaultContent: SiteContent = {
   ],
 
   contact: {
-    phone: "0850 123 4567",
-    email: "info@alicilarsigorta.com.tr",
-    address: "Levent, Beşiktaş / İstanbul",
-    whatsapp: "908501234567",
+    phone: "0542 112 78 78",
+    email: "info@alicilarsigorta.com",
+    address: "Kurtuluş Mah. Atatürk Bulvarı No:73A (Aras Kargo Yanı), Merkez / Karabük",
+    whatsapp: "905421127878",
     socialLinks: {
       instagram: "#",
       facebook: "#",

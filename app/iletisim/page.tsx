@@ -31,7 +31,10 @@ export default function IletisimPage() {
                 <div className="icon-box" style={{ width: 64, height: 64 }}><Phone size={28} /></div>
                 <div>
                   <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Telefon</h3>
-                  <p style={{ color: "var(--gray)", fontSize: "1.1rem" }}>0850 123 45 67</p>
+                  <p style={{ color: "var(--gray)", fontSize: "1.1rem", lineHeight: 1.6 }}>
+                    <a href="tel:+905421127878" style={{ color: "inherit", textDecoration: "none" }}>0542 112 78 78</a><br/>
+                    <a href="tel:+905423098974" style={{ color: "inherit", textDecoration: "none" }}>0542 309 89 74</a> <span style={{ fontSize: "0.85rem" }}>(Ali Alıcı)</span>
+                  </p>
                 </div>
               </div>
               
@@ -39,15 +42,18 @@ export default function IletisimPage() {
                 <div className="icon-box" style={{ width: 64, height: 64 }}><Mail size={28} /></div>
                 <div>
                   <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>E-Posta</h3>
-                  <p style={{ color: "var(--gray)", fontSize: "1.1rem" }}>bilgi@alicilarsigorta.com.tr</p>
+                  <p style={{ color: "var(--gray)", fontSize: "1.05rem", lineHeight: 1.6 }}>
+                    <a href="mailto:info@alicilarsigorta.com" style={{ color: "inherit", textDecoration: "none" }}>info@alicilarsigorta.com</a><br/>
+                    <a href="mailto:alicilarsigorta@gmail.com" style={{ color: "inherit", textDecoration: "none" }}>alicilarsigorta@gmail.com</a>
+                  </p>
                 </div>
               </div>
 
               <div className="card iletisim-card" style={{ display: "flex", gap: "1.25rem", alignItems: "center" }}>
                 <div className="icon-box" style={{ width: 64, height: 64 }}><MapPin size={28} /></div>
                 <div>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Genel Müdürlük</h3>
-                  <p style={{ color: "var(--gray)", fontSize: "1rem" }}>Levent Mah. Büyükdere Cad. No:199<br/>Şişli / İstanbul</p>
+                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.25rem" }}>Adres</h3>
+                  <p style={{ color: "var(--gray)", fontSize: "1rem" }}>Kurtuluş Mah. Atatürk Bulvarı No:73A (Aras Kargo Yanı)<br/>Merkez / Karabük</p>
                 </div>
               </div>
 
