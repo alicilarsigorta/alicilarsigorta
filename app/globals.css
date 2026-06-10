@@ -593,6 +593,9 @@ img { height: auto; }
   .footer-col-title { font-size: 0.76rem; margin-bottom: 14px; }
   .footer-link { font-size: 0.88rem; margin-bottom: 10px; }
 }
+@media (max-width: 768px) {
+  .footer-brand-lockup { justify-content: center; }
+}
 
 /* ─── Subpage hero ─── */
 .page-hero { padding: 72px 20px; background: var(--bg); }

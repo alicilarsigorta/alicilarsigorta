@@ -19,7 +19,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="footer-col-brand">
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+            <div className="footer-brand-lockup" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <img src="/logo-emblem.png" alt="" style={{ height: 56, width: "auto", objectFit: "contain", filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.3))" }} />
               <div>
                 <div style={{ color: "#fff", fontWeight: 800, fontSize: "1.22rem", letterSpacing: "0.04em" }}>ALICILAR</div>
