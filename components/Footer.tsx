@@ -21,7 +21,7 @@ export default function Footer() {
           <div className="footer-col-brand">
             <div className="footer-brand-lockup" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
               <img src="/logo-emblem.png" alt="" style={{ height: 56, width: "auto", objectFit: "contain", filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.3))" }} />
-              <div>
+              <div style={{ textAlign: "center" }}>
                 <div style={{ color: "#fff", fontWeight: 800, fontSize: "1.22rem", letterSpacing: "0.04em" }}>ALICILAR</div>
                 <div style={{ color: "var(--brand-gold-light)", fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.24em" }}>SİGORTA</div>
               </div>
@@ -81,15 +81,15 @@ export default function Footer() {
             <div className="footer-col-title">İletişim</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <Phone size={16} color="var(--gold)" style={{ marginTop: 2, flexShrink: 0 }} />
+                <Phone size={16} color="var(--brand-gold-light)" style={{ marginTop: 2, flexShrink: 0 }} />
                 <span style={{ fontSize: "0.95rem" }}>{contact.phone}</span>
               </div>
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <Mail size={16} color="var(--gold)" style={{ marginTop: 2, flexShrink: 0 }} />
+                <Mail size={16} color="var(--brand-gold-light)" style={{ marginTop: 2, flexShrink: 0 }} />
                 <span style={{ fontSize: "0.9rem" }}>{contact.email}</span>
               </div>
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
-                <MapPin size={16} color="var(--gold)" style={{ marginTop: 2, flexShrink: 0 }} />
+                <MapPin size={16} color="var(--brand-gold-light)" style={{ marginTop: 2, flexShrink: 0 }} />
                 <span style={{ fontSize: "0.9rem" }}>{contact.address}</span>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function Footer() {
         <div className="gold-divider" style={{ margin: "40px 0 30px" }} />
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Alıcılar Sigorta Aracılık Hizmetleri Ltd. Şti. Tüm hakları saklıdır.</span>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--gold)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--brand-gold-light)" }}>
             <Shield size={16} />
             <span style={{ fontWeight: 700 }}>SEGEM Lisanslı & Güvenli</span>
           </div>
