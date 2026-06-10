@@ -144,11 +144,18 @@ export default function Header() {
             letter-spacing: 0.04em;
             white-space: nowrap;
             line-height: 1;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
           }
           .header-brand-name-accent {
             color: var(--brand-gold);
             font-weight: 700;
-            margin-left: 6px;
+            margin-left: 0;
+            margin-top: 3px;
+            font-size: 0.62rem;
+            letter-spacing: 0.22em;
+            line-height: 1;
           }
           @media (max-width: 380px) {
             .header-brand-name { display: none; }
