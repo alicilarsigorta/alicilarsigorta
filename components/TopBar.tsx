@@ -19,13 +19,13 @@ export default function TopBar() {
 
         {/* Left: Contact Info */}
         <div style={{ display: "flex", gap: "20px", alignItems: "center", minWidth: 0, flex: "1 1 auto" }}>
-          <a href="tel:+908501234567" style={{ display: "flex", alignItems: "center", gap: "8px", color: "inherit", textDecoration: "none", transition: "color 0.2s", whiteSpace: "nowrap" }} onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}>
+          <a href="tel:+905421127878" style={{ display: "flex", alignItems: "center", gap: "8px", color: "inherit", textDecoration: "none", transition: "color 0.2s", whiteSpace: "nowrap" }} onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}>
             <Phone size={15} color="var(--gold)" />
-            <span style={{ fontWeight: 600 }}>0850 123 45 67</span>
+            <span style={{ fontWeight: 600 }}>0542 112 78 78</span>
           </a>
-          <a href="mailto:bilgi@alicilarsigorta.com.tr" style={{ display: "flex", alignItems: "center", gap: "8px", color: "inherit", textDecoration: "none", transition: "color 0.2s", minWidth: 0 }} className="hide-mobile" onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}>
+          <a href="mailto:info@alicilarsigorta.com" style={{ display: "flex", alignItems: "center", gap: "8px", color: "inherit", textDecoration: "none", transition: "color 0.2s", minWidth: 0 }} className="hide-mobile" onMouseEnter={e => e.currentTarget.style.color = "var(--gold)"} onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.8)"}>
             <Mail size={15} color="var(--gold)" />
-            <span style={{ fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>bilgi@alicilarsigorta.com.tr</span>
+            <span style={{ fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>info@alicilarsigorta.com</span>
           </a>
         </div>
 

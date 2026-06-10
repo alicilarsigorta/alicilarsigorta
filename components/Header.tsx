@@ -83,11 +83,11 @@ export default function Header() {
 
           {/* RIGHT — Phone + CTA */}
           <div className="header-actions">
-            <a href="tel:+908501234567" className="header-phone">
+            <a href="tel:+905421127878" className="header-phone">
               <span className="header-phone-icon"><Phone size={15} strokeWidth={2.2} /></span>
               <span className="header-phone-text">
                 <span className="header-phone-label">Yardıma hazırız</span>
-                <span className="header-phone-num">0850 123 45 67</span>
+                <span className="header-phone-num">0542 112 78 78</span>
               </span>
             </a>
 
@@ -276,13 +276,13 @@ export default function Header() {
                 <ArrowRight size={18} strokeWidth={2.4} />
               </Link>
 
-              <a href="tel:+908501234567" className="lux-phone">
+              <a href="tel:+905421127878" className="lux-phone">
                 <span className="lux-phone-label">Yardıma hazırız · 7/24</span>
-                <span className="lux-phone-num"><Phone size={16} strokeWidth={2.4} /> 0850 123 45 67</span>
+                <span className="lux-phone-num"><Phone size={16} strokeWidth={2.4} /> 0542 112 78 78</span>
               </a>
 
               <div className="lux-foot-row">
-                <a href="https://wa.me/908501234567" target="_blank" rel="noreferrer" className="lux-wa">
+                <a href="https://wa.me/905421127878" target="_blank" rel="noreferrer" className="lux-wa">
                   <MessageCircle size={16} strokeWidth={2.2} /> WhatsApp
                 </a>
                 <div className="lux-social">
@@ -292,7 +292,7 @@ export default function Header() {
                 </div>
               </div>
 
-              <div className="lux-addr"><MapPin size={13} /> Levent, Beşiktaş / İstanbul</div>
+              <div className="lux-addr"><MapPin size={13} /> Kurtuluş Mah. Atatürk Blv. No:73A, Merkez / Karabük</div>
             </motion.div>
 
             <style dangerouslySetInnerHTML={{ __html: `

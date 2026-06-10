@@ -3,31 +3,31 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://alicilarsigorta.com.tr',
+      url: 'https://www.alicilarsigorta.com',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 1,
     },
     {
-      url: 'https://alicilarsigorta.com.tr/hakkimizda',
+      url: 'https://www.alicilarsigorta.com/hakkimizda',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://alicilarsigorta.com.tr/iletisim',
+      url: 'https://www.alicilarsigorta.com/iletisim',
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.8,
     },
     {
-      url: 'https://alicilarsigorta.com.tr/teklif-al',
+      url: 'https://www.alicilarsigorta.com/teklif-al',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://alicilarsigorta.com.tr/urunlerimiz',
+      url: 'https://www.alicilarsigorta.com/urunlerimiz',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
