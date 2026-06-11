@@ -55,6 +55,7 @@ export default function TekliflerPage() {
     if (search) {
       const s = search.toLowerCase();
       data = data.filter(o =>
+        (o.name || "").toLowerCase().includes(s) ||
         o.phone.toLowerCase().includes(s) ||
         (o.tcNo || "").includes(s) ||
         o.insuranceType.toLowerCase().includes(s) ||
@@ -71,6 +72,11 @@ export default function TekliflerPage() {
         <span style={{ fontWeight: 700, color: "#fff" }}>#{info.getValue().slice(0, 8)}</span>
       ),
       size: 120,
+    }),
+    columnHelper.accessor("name", {
+      header: "Ad Soyad",
+      cell: info => <span style={{ fontWeight: 600, color: "#fff" }}>{info.getValue() || "-"}</span>,
+      size: 160,
     }),
     columnHelper.accessor("tcNo", {
       header: "TC Kimlik",
@@ -193,6 +199,7 @@ export default function TekliflerPage() {
         startY: 45,
         head: [['Bilgi', 'Detay']],
         body: [
+          ['Ad Soyad', offer.name || '-'],
           ['TC Kimlik', offer.tcNo || '-'],
           ['Dogum Tarihi', offer.birthDate || '-'],
           ['Telefon', offer.phone],
@@ -241,7 +248,7 @@ export default function TekliflerPage() {
             <Search size={16} style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: "var(--admin-text-dim)" }} />
             <input
               type="text"
-              placeholder="TC, Telefon veya Sigorta türü ara..."
+              placeholder="Ad, TC, Telefon veya Sigorta türü ara..."
               value={search}
               onChange={e => setSearch(e.target.value)}
               className="admin-input"
@@ -383,9 +390,13 @@ export default function TekliflerPage() {
             </div>
             <div className="admin-modal-body">
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 24 }}>
+                <div style={{ gridColumn: "1 / -1" }}>
+                  <div className="admin-label">Ad Soyad</div>
+                  <div style={{ fontWeight: 700, color: "#fff", fontSize: "1.05rem" }}>{selectedOffer.name || "-"}</div>
+                </div>
                 <div>
                   <div className="admin-label">TC Kimlik</div>
-                  <div style={{ fontWeight: 700, color: "#fff" }}>{selectedOffer.tcNo}</div>
+                  <div style={{ fontWeight: 700, color: "#fff" }}>{selectedOffer.tcNo || "-"}</div>
                 </div>
                 <div>
                   <div className="admin-label">Doğum Tarihi</div>

@@ -1,12 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Bell, X, FileText, Smartphone, Download } from "lucide-react";
 import { useOffers } from "@/lib/offers-context";
 import { useRouter } from "next/navigation";
-
-const OFFERS_KEY = "alicilar_offers";
-const LAST_COUNT_KEY = "alicilar_notif_last_count";
 
 interface InAppNotif {
   id: string;
@@ -24,86 +21,70 @@ export default function NotificationCenter() {
   const { offers, stats } = useOffers();
   const router = useRouter();
 
-  // Monitor for new offers
+  // Monitor for new offers from the live feed (OffersProvider polls /api/offers).
+  const seenNewestRef = useRef<string | null>(null);
+  const initedRef = useRef(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (!offers.length) return;
 
-    const checkNewOffers = () => {
+    const newestId = offers[0]?.id ?? null;
+
+    // First load: set the baseline, don't notify for existing offers.
+    if (!initedRef.current) {
+      seenNewestRef.current = newestId;
+      initedRef.current = true;
+      return;
+    }
+
+    if (!newestId || newestId === seenNewestRef.current) return;
+
+    // How many offers are newer than the last one we saw.
+    const seenIdx = offers.findIndex(o => o.id === seenNewestRef.current);
+    const newOnes = seenIdx === -1 ? offers.slice(0, 1) : offers.slice(0, seenIdx);
+    const diff = Math.max(newOnes.length, 1);
+    const latest = offers[0];
+    seenNewestRef.current = newestId;
+
+    const notif: InAppNotif = {
+      id: latest.id || Date.now().toString(),
+      title: `🔔 ${diff} Yeni Teklif!`,
+      body: `${latest.name ? latest.name + " — " : ""}${latest.insuranceType} — ${latest.phone}`,
+      time: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }),
+      read: false,
+    };
+
+    setNotifications(prev => [notif, ...prev].slice(0, 20));
+    setLatestNotif(notif);
+    setShowBanner(true);
+    const hideTimer = setTimeout(() => setShowBanner(false), 6000);
+
+    // OS/browser notification (fires while the panel is open in this tab).
+    if ("Notification" in window && Notification.permission === "granted") {
       try {
-        const currentOffers = JSON.parse(localStorage.getItem(OFFERS_KEY) || "[]");
-        const lastCount = parseInt(localStorage.getItem(LAST_COUNT_KEY) || "0", 10);
-
-        if (currentOffers.length > lastCount && lastCount > 0) {
-          const diff = currentOffers.length - lastCount;
-          const latest = currentOffers[0];
-          const notif: InAppNotif = {
-            id: latest.id || Date.now().toString(),
-            title: `🔔 ${diff} Yeni Teklif!`,
-            body: `${latest.insuranceType} — ${latest.phone}`,
-            time: new Date().toLocaleTimeString("tr-TR", { hour: "2-digit", minute: "2-digit" }),
-            read: false,
-          };
-
-          setNotifications(prev => [notif, ...prev].slice(0, 20));
-          setLatestNotif(notif);
-          setShowBanner(true);
-
-          // Auto-hide banner after 5s
-          setTimeout(() => setShowBanner(false), 5000);
-
-          // Browser notification
-          if ("Notification" in window && Notification.permission === "granted") {
-            try {
-              if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.ready.then((reg) => {
-                  reg.showNotification(notif.title, {
-                    body: notif.body,
-                    icon: "/icons/icon-192.svg",
-                    badge: "/icons/icon-72.svg",
-                    vibrate: [200, 100, 200],
-                    tag: "new-offer-" + notif.id,
-                    data: { url: "/admin/teklifler" },
-                    requireInteraction: true,
-                  } as NotificationOptions);
-                });
-              } else {
-                new Notification(notif.title, {
-                  body: notif.body,
-                  icon: "/icons/icon-192.svg",
-                  tag: "new-offer-" + notif.id,
-                });
-              }
-            } catch {
-              // Fallback — only in-app notification
-            }
-          }
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.ready
+            .then((reg) => {
+              reg.showNotification(notif.title, {
+                body: notif.body,
+                icon: "/icons/icon-192.png",
+                badge: "/icons/icon-192.png",
+                tag: "new-offer-" + notif.id,
+                data: { url: "/admin/teklifler" },
+              } as NotificationOptions);
+            })
+            .catch(() => {});
+        } else {
+          new Notification(notif.title, { body: notif.body, icon: "/icons/icon-192.png", tag: "new-offer-" + notif.id });
         }
-
-        localStorage.setItem(LAST_COUNT_KEY, String(currentOffers.length));
       } catch {
-        // Ignore
+        /* in-app notification is still shown */
       }
-    };
+    }
 
-    // Check immediately
-    checkNewOffers();
-
-    // Listen for cross-tab changes
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === OFFERS_KEY) {
-        setTimeout(checkNewOffers, 100);
-      }
-    };
-    window.addEventListener("storage", handleStorage);
-
-    // Polling
-    const interval = setInterval(checkNewOffers, 3000);
-
-    return () => {
-      window.removeEventListener("storage", handleStorage);
-      clearInterval(interval);
-    };
-  }, []);
+    return () => clearTimeout(hideTimer);
+  }, [offers]);
 
   const markAllRead = () => {
     setNotifications(prev => prev.map(n => ({ ...n, read: true })));

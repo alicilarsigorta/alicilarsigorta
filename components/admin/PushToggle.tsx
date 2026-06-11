@@ -15,7 +15,7 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
   return arr;
 }
 
-type State = "loading" | "unsupported" | "off" | "on";
+type State = "loading" | "unsupported" | "config" | "off" | "on";
 
 export default function PushToggle() {
   const [state, setState] = useState<State>("loading");
@@ -23,8 +23,12 @@ export default function PushToggle() {
 
   useEffect(() => {
     (async () => {
-      if (typeof window === "undefined" || !("serviceWorker" in navigator) || !("PushManager" in window) || !VAPID) {
+      if (typeof window === "undefined" || !("serviceWorker" in navigator) || !("PushManager" in window) || !("Notification" in window)) {
         setState("unsupported");
+        return;
+      }
+      if (!VAPID) {
+        setState("config");
         return;
       }
       try {
@@ -113,7 +117,19 @@ export default function PushToggle() {
         <span className="push-banner-ic"><BellOff size={20} /></span>
         <div className="push-banner-text">
           <strong>Bildirimler bu cihazda kullanılamıyor</strong>
-          <span>Telefonda paneli &quot;Ana ekrana ekle&quot; ile uygulama olarak kurup tekrar dene.</span>
+          <span>iPhone&apos;da: Safari → Paylaş → &quot;Ana Ekrana Ekle&quot; ile uygulama olarak kurup, açılan uygulamadan tekrar dene. Android&apos;de Chrome ile aç.</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (state === "config") {
+    return (
+      <div className="push-banner push-banner-muted">
+        <span className="push-banner-ic"><BellOff size={20} /></span>
+        <div className="push-banner-text">
+          <strong>Bildirim altyapısı henüz ayarlı değil</strong>
+          <span>Vercel ortam değişkenlerine VAPID anahtarları eklenmeli: NEXT_PUBLIC_VAPID_PUBLIC_KEY ve VAPID_PRIVATE_KEY. Eklenip yeniden dağıtıldıktan sonra burası &quot;Bildirimleri Aç&quot;a döner.</span>
         </div>
       </div>
     );
