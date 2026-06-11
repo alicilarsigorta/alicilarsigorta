@@ -44,18 +44,33 @@ export default function PushToggle() {
   const enable = async () => {
     setBusy(true);
     try {
+      if (typeof Notification !== "undefined" && Notification.permission === "denied") {
+        toast.error("Bildirim izni daha önce engellenmiş. Tarayıcı/site ayarlarından izni açıp tekrar deneyin.");
+        return;
+      }
       const perm = await Notification.requestPermission();
       if (perm !== "granted") {
         toast.error("Bildirim izni verilmedi. Tarayıcı ayarlarından açabilirsin.");
-        setBusy(false);
         return;
       }
       const reg = await navigator.serviceWorker.ready;
+      const appKey = urlBase64ToUint8Array(VAPID);
       let sub = await reg.pushManager.getSubscription();
+      // Eski abonelik farklı bir anahtarla yapılmışsa (önceki denemeler) temizle.
+      if (sub) {
+        const cur = sub.options?.applicationServerKey
+          ? new Uint8Array(sub.options.applicationServerKey as ArrayBuffer)
+          : new Uint8Array();
+        const sameKey = cur.length === appKey.length && cur.every((b, i) => b === appKey[i]);
+        if (!sameKey) {
+          try { await sub.unsubscribe(); } catch { /* yoksay */ }
+          sub = null;
+        }
+      }
       if (!sub) {
         sub = await reg.pushManager.subscribe({
           userVisibleOnly: true,
-          applicationServerKey: urlBase64ToUint8Array(VAPID) as BufferSource,
+          applicationServerKey: appKey as BufferSource,
         });
       }
       const res = await fetch("/api/push/subscribe", {
@@ -63,11 +78,15 @@ export default function PushToggle() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(sub.toJSON()),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        throw new Error(d.error || `Sunucuya kaydedilemedi (HTTP ${res.status})`);
+      }
       setState("on");
       toast.success("Bildirimler açıldı! Yeni teklifler bu cihaza düşecek.");
-    } catch {
-      toast.error("Bildirimler açılamadı. Lütfen tekrar dene.");
+    } catch (e) {
+      const msg = e instanceof Error ? (e.message || e.name) : "bilinmeyen hata";
+      toast.error(`Bildirimler açılamadı: ${msg}`, { duration: 8000 });
     } finally {
       setBusy(false);
     }

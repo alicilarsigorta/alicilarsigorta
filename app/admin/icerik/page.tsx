@@ -103,7 +103,7 @@ export default function IcerikPage() {
         </div>
         <div>
           <label className="admin-label" style={{ marginBottom: 12 }}>İstatistikler</label>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
             {hero.stats.map((s, i) => (
               <div key={i} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                 <input
