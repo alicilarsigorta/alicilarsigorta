@@ -16,6 +16,7 @@ const steps = [
 
 // Zod Schema for Validation
 const formSchema = z.object({
+  name: z.string().trim().min(3, "Ad ve soyadınızı giriniz."),
   tcNo: z.string()
     .length(11, "TC Kimlik No 11 haneli olmalıdır.")
     .regex(/^[0-9]+$/, "Sadece rakam giriniz."),
@@ -52,6 +53,7 @@ export default function OfferForm() {
   const { control, handleSubmit, trigger, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       tcNo: "",
       birthDate: "",
       phone: "",
@@ -63,7 +65,7 @@ export default function OfferForm() {
   const nextStep = async () => {
     let isValid = false;
     if (step === 1) {
-      isValid = await trigger(["tcNo", "birthDate"]);
+      isValid = await trigger(["name", "tcNo", "birthDate"]);
     } else if (step === 2) {
       isValid = await trigger(["phone", "insuranceType"]);
     }
@@ -86,6 +88,7 @@ export default function OfferForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          name: data.name,
           tcNo: data.tcNo,
           birthDate: data.birthDate,
           phone: data.phone,
@@ -129,6 +132,7 @@ export default function OfferForm() {
         startY: 40,
         head: [['Bilgi', 'Detay']],
         body: [
+          ['Ad Soyad', data.name],
           ['TC Kimlik', data.tcNo],
           ['Dogum Tarihi', data.birthDate],
           ['Telefon', data.phone],
@@ -169,12 +173,20 @@ export default function OfferForm() {
         {step === 1 && (
           <motion.div key="s1" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.3 }} style={{ display: "flex", flexDirection: "column", gap: 20 }}>
             <h2 style={{ fontSize: "1.5rem", fontWeight: 900, color: "var(--black)" }}>Kişisel Bilgileriniz</h2>
-            
+
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <InputField {...field} label="Ad Soyad" icon={User} type="text" placeholder="Örn: Ahmet Yılmaz" error={errors.name?.message} />
+              )}
+            />
+
             <Controller
               name="tcNo"
               control={control}
               render={({ field }) => (
-                <InputField {...field} label="TC Kimlik No" icon={User} type="text" placeholder="12345678901" maxLength={11} error={errors.tcNo?.message} />
+                <InputField {...field} label="TC Kimlik No" icon={FileText} type="text" placeholder="12345678901" maxLength={11} error={errors.tcNo?.message} />
               )}
             />
 

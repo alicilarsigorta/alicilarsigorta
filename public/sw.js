@@ -90,10 +90,11 @@ self.addEventListener('push', (event) => {
   const options = {
     body: data.body || 'Yeni bir teklif başvurusu alındı.',
     icon: '/icons/icon-192.png',
-    badge: '/icons/icon-72.png',
+    badge: '/icons/icon-192.png',
     vibrate: [200, 100, 200],
     tag: 'new-offer',
-    data: { url: '/admin/teklifler' },
+    renotify: true,
+    data: { url: data.url || '/admin/teklifler' },
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });
