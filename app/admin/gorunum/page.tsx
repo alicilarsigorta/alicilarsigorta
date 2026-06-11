@@ -96,7 +96,7 @@ export default function GorunumPage() {
         <p style={{ color: "var(--admin-text-muted)", fontSize: "0.9rem", marginBottom: 16 }}>
           Mevcut slider görselleri <code style={{ background: "var(--admin-bg)", padding: "2px 8px", borderRadius: 6 }}>/public</code> dizininde yer almaktadır.
         </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
           {["/slider_car.png", "/slider_health.png", "/slider_house.png"].map((src, i) => (
             <div key={i} style={{
               borderRadius: 16, overflow: "hidden",

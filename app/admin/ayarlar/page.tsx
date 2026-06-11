@@ -90,7 +90,7 @@ export default function AyarlarPage() {
           Verilerinizi yedeklemeyi unutmayın.
         </p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
           <div style={{
             background: "var(--admin-bg)", borderRadius: 16, padding: 24,
             border: "1px solid var(--admin-border)", textAlign: "center"
