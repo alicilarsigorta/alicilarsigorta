@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/private/',
     },
-    sitemap: 'https://www.alicilarsigorta.com/sitemap.xml',
+    sitemap: 'https://alicilar-sigorta.vercel.app/sitemap.xml',
   }
 }

@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Alıcılar Sigorta | Türkiye'nin En İyi Sigorta Platformu",
     description: "Türkiye'nin lider sigorta karşılaştırma platformu. Kasko, trafik, sağlık, konut ve daha fazlası için anında ücretsiz teklif alın.",
-    url: "https://www.alicilarsigorta.com",
+    url: "https://alicilar-sigorta.vercel.app",
     siteName: "Alıcılar Sigorta",
     images: [
       {
