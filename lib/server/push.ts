@@ -2,9 +2,9 @@ import "server-only";
 import webpush from "web-push";
 import { getSubs, removeSub } from "./store";
 
-const PUBLIC = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
-const PRIVATE = process.env.VAPID_PRIVATE_KEY;
-const SUBJECT = process.env.VAPID_SUBJECT || "mailto:info@alicilarsigorta.com";
+const PUBLIC = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY?.trim();
+const PRIVATE = process.env.VAPID_PRIVATE_KEY?.trim();
+const SUBJECT = (process.env.VAPID_SUBJECT || "mailto:info@alicilarsigorta.com").trim();
 
 export const pushConfigured = Boolean(PUBLIC && PRIVATE);
 
