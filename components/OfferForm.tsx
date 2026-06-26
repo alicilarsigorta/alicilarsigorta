@@ -114,42 +114,6 @@ export default function OfferForm() {
     });
   };
 
-  const handleDownloadPDF = async () => {
-    try {
-      const data = control._formValues as FormData;
-      const { default: jsPDF } = await import("jspdf");
-      await import("jspdf-autotable");
-
-      const doc = new jsPDF();
-      doc.setFontSize(20);
-      doc.text("Alicilar Sigorta - Teklif Basvurusu", 14, 22);
-      
-      doc.setFontSize(11);
-      doc.setTextColor(100);
-      doc.text(`Basvuru No: #${offerId.slice(0, 8)}`, 14, 30);
-
-      (doc as any).autoTable({
-        startY: 40,
-        head: [['Bilgi', 'Detay']],
-        body: [
-          ['Ad Soyad', data.name],
-          ['TC Kimlik', data.tcNo],
-          ['Dogum Tarihi', data.birthDate],
-          ['Telefon', data.phone],
-          ['Sigorta Turu', data.insuranceType],
-          ['Durum', 'Degerlendiriliyor'],
-        ],
-        theme: 'striped',
-        headStyles: { fillColor: [212, 175, 55] },
-      });
-
-      doc.save(`basvuru_${offerId.slice(0, 8)}.pdf`);
-      toast.success("PDF başarıyla indirildi!");
-    } catch (error) {
-      toast.error("PDF oluşturulurken bir hata oluştu.");
-    }
-  };
-
   return (
     <div className="card offer-form-card" style={{ border: "1px solid var(--border)" }}>
 
@@ -254,11 +218,8 @@ export default function OfferForm() {
               Talebiniz alındı. Uzman ekibimiz 20+ şirketin tekliflerini analiz edip en kısa sürede size ulaşacak.
             </p>
             <div className="offer-success-actions" style={{ display: "flex", gap: 12 }}>
-              <button onClick={() => window.location.href = "/"} className="btn btn-outline" style={{ flex: 1 }}>
+              <button onClick={() => window.location.href = "/"} className="btn btn-gold" style={{ flex: 1 }}>
                 Ana Sayfaya Dön
-              </button>
-              <button onClick={handleDownloadPDF} className="btn btn-gold" style={{ flex: 1, gap: 8 }}>
-                <FileText size={18} /> PDF İndir
               </button>
             </div>
           </motion.div>

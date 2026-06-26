@@ -40,8 +40,8 @@ export async function POST(req: NextRequest) {
   // Fire the push notification (don't fail the request if it errors).
   try {
     await sendPushToAll({
-      title: "🔔 Yeni Teklif Başvurusu",
-      body: `${offer.insuranceType} · ${offer.name ? offer.name + " · " : ""}${offer.phone}`,
+      title: offer.name ? `Yeni teklif: ${offer.name}` : "Yeni teklif talebi",
+      body: `${offer.insuranceType}${offer.phone ? " · " + offer.phone : ""}`,
       url: "/admin/teklifler",
     });
   } catch {
