@@ -2,8 +2,11 @@ import "server-only";
 import webpush from "web-push";
 import { getSubs, removeSub } from "./store";
 
-const PUBLIC = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY?.trim();
-const PRIVATE = process.env.VAPID_PRIVATE_KEY?.trim();
+// VAPID anahtarları koda gömülü. Bu dosya "server-only" olduğundan PRIVATE
+// anahtar tarayıcıya ASLA gönderilmez. Env değişkeni yanlış/eksik girilse bile
+// push çalışsın diye env'e bağlı değiliz (public anahtar zaten gizli değildir).
+const PUBLIC = "BLbMOFeXsVXjHdserussSDBCW-Vx4aVOfGE4hBPp0sEBlt8HA6FpMydZA07eyO0mSX2G8axX1Vd54tuI9uSMV5I";
+const PRIVATE = "btQ3EUNj-qjpaqEH_LUCo9yRj9-ZiQ498mHVjlRs4rU";
 const SUBJECT = (process.env.VAPID_SUBJECT || "mailto:info@alicilarsigorta.com").trim();
 
 export const pushConfigured = Boolean(PUBLIC && PRIVATE);

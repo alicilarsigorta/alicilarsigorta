@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { Bell, BellRing, BellOff, Send } from "lucide-react";
 import { toast } from "sonner";
 
-const VAPID = (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || "").trim();
+// VAPID public anahtarı koda gömülü (public anahtar gizli değildir). Env
+// değişkenine bağlı değiliz; böylece yanlış/eksik env push'u bozamaz.
+const VAPID = "BLbMOFeXsVXjHdserussSDBCW-Vx4aVOfGE4hBPp0sEBlt8HA6FpMydZA07eyO0mSX2G8axX1Vd54tuI9uSMV5I";
 
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
   // Kopyala-yapıştır kaynaklı boşluk/satır sonu atob'u bozar — önce temizle.
