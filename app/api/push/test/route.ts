@@ -13,8 +13,8 @@ export async function POST() {
     return NextResponse.json({ error: "Push (VAPID) yapılandırılmadı." }, { status: 503 });
   }
   const result = await sendPushToAll({
-    title: "✅ Test Bildirimi",
-    body: "Bildirimler çalışıyor. Yeni teklifler buraya düşecek.",
+    title: "Alıcılar Sigorta",
+    body: "Bildirimler açık — yeni teklifler buraya gelecek.",
     url: "/admin/teklifler",
   });
   return NextResponse.json({ ok: true, ...result });
