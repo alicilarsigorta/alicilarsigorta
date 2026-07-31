@@ -65,7 +65,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (checking) {
     return (
-      <div style={{ minHeight: "100vh", background: "#0c0e14", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ minHeight: "100dvh", background: "#0c0e14", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <div className="admin-loading-spinner" />
       </div>
     );
@@ -85,7 +85,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {children}
         </div>
       </main>
-      <Toaster position="top-center" richColors theme="dark" />
+      {/* Bildirimler başlığın üstünü kapatmasın: çentik + header yüksekliği
+          kadar aşağıdan başlasın (PWA'da da doğru konumlanır). */}
+      <Toaster
+        position="top-center"
+        richColors
+        theme="dark"
+        offset="calc(env(safe-area-inset-top) + var(--admin-header-h) + 12px)"
+        mobileOffset="calc(env(safe-area-inset-top) + var(--admin-header-h) + 12px)"
+      />
     </div>
   );
 }
