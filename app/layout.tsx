@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Toaster } from "sonner";
 import ConditionalLayout from "@/components/ConditionalLayout";
 import LoadingScreen from "@/components/LoadingScreen";
 
@@ -24,6 +23,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // PWA (ana ekrana ekle) modunda içerik çentik/durum çubuğu alanına kadar
+  // uzanır. Bu olmadan env(safe-area-inset-*) hep 0 döner ve safe-area
+  // hesaplarımız çalışmaz — sayfa durum çubuğunun altında kalır.
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0f1620" },
@@ -70,7 +75,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ConditionalLayout>
             {children}
           </ConditionalLayout>
-          <Toaster position="top-right" richColors />
         </Providers>
         <LoadingScreen />
       </body>
