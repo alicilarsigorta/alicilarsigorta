@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Instagram, Linkedin, Twitter, Phone, Mail, MapPin, Shield } from "lucide-react";
 import { useContent } from "@/lib/content-context";
+import Mascot from "@/components/Mascot";
 
 export default function Footer() {
   const { content } = useContent();
@@ -25,6 +26,7 @@ export default function Footer() {
                 <div style={{ color: "#fff", fontWeight: 800, fontSize: "1.22rem", letterSpacing: "0.04em" }}>ALICILAR</div>
                 <div style={{ color: "var(--brand-gold-light)", fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.24em" }}>SİGORTA</div>
               </div>
+              <Mascot pose="arms" height={64} style={{ marginLeft: 4, filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.3))" }} />
             </div>
             <p style={{ fontSize: "0.95rem", lineHeight: 1.8, marginBottom: 24 }}>
               Türkiye&apos;nin en güvenilir sigorta karşılaştırma platformu. 20+ şirket, anında teklif, gerçek güvence.
@@ -86,7 +88,7 @@ export default function Footer() {
               </div>
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <Mail size={16} color="var(--brand-gold-light)" style={{ marginTop: 2, flexShrink: 0 }} />
-                <span style={{ fontSize: "0.9rem" }}>{contact.email}</span>
+                <span style={{ fontSize: "0.9rem", minWidth: 0, overflowWrap: "anywhere" }}>{contact.email}</span>
               </div>
               <div style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                 <MapPin size={16} color="var(--brand-gold-light)" style={{ marginTop: 2, flexShrink: 0 }} />

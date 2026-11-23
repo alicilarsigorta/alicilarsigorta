@@ -29,8 +29,16 @@ export default function WhatsAppButton() {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       aria-label="WhatsApp ile iletişime geç"
-      className="flex items-center justify-center rounded-full bg-green-500 text-white shadow-lg shadow-green-500/30"
       style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '50%',
+        border: 'none',
+        cursor: 'pointer',
+        background: '#22c55e',
+        color: '#fff',
+        boxShadow: '0 10px 24px rgba(34, 197, 94, 0.38)',
         position: 'fixed',
         bottom: 'calc(env(safe-area-inset-bottom, 0px) + 1.25rem)',
         left: 'calc(env(safe-area-inset-left, 0px) + 1.25rem)',
@@ -52,9 +60,9 @@ export default function WhatsAppButton() {
           repeat: Infinity,
           ease: "easeOut",
         }}
-        className="absolute inset-0 rounded-full"
+        style={{ position: 'absolute', inset: 0, borderRadius: '50%' }}
       />
-      <MessageCircle size={28} className="relative z-10" />
+      <MessageCircle size={28} style={{ position: 'relative', zIndex: 1 }} />
     </motion.button>
   );
 }

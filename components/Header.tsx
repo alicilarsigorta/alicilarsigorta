@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Menu, X, Phone, MessageCircle, ArrowRight, ArrowUpRight, Instagram, Twitter, Linkedin, MapPin } from "lucide-react";
+import Mascot from "@/components/Mascot";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -65,6 +66,7 @@ export default function Header() {
             <span className="header-brand-name">
               ALICILAR<span className="header-brand-name-accent">SİGORTA</span>
             </span>
+            <Mascot pose="arms" height={50} className="header-brand-mascot" priority />
           </Link>
 
           {/* CENTER — Nav */}
@@ -156,6 +158,10 @@ export default function Header() {
             letter-spacing: 0.22em;
             line-height: 1;
           }
+          .header-brand-mascot { margin-left: 2px; flex-shrink: 0; }
+          @media (max-width: 420px) {
+            .header-brand-mascot { height: 42px !important; }
+          }
           @media (max-width: 380px) {
             .header-brand-name { display: none; }
           }
@@ -233,6 +239,7 @@ export default function Header() {
               <Link href="/" className="lux-brand" onClick={() => setMenuOpen(false)}>
                 <img src="/logo-emblem.png" alt="Alıcılar Sigorta" className="lux-brand-logo" />
                 <span className="lux-brand-name">ALICILAR<span>SİGORTA</span></span>
+                <Mascot pose="arms" height={46} />
               </Link>
               <motion.button
                 onClick={() => setMenuOpen(false)}

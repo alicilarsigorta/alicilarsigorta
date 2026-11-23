@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -47,8 +48,11 @@ export default function ServicesMarquee() {
           transition={{ duration: 0.6, ease: easeOutExpo }}
           className="sm-head"
         >
-          <span className="eyebrow">Hizmetlerimiz</span>
-          <h2 className="headline-l">Sunduğumuz <em>sigorta çözümleri.</em></h2>
+          <Mascot pose="welcome" height={92} className="sm-head-mascot" priority />
+          <div>
+            <span className="eyebrow">Hizmetlerimiz</span>
+            <h2 className="headline-l">Sunduğumuz <em>sigorta çözümleri.</em></h2>
+          </div>
         </motion.div>
       </div>
 
@@ -82,7 +86,12 @@ export default function ServicesMarquee() {
 
       <style dangerouslySetInnerHTML={{ __html: `
         .sm-section { background: var(--bg); padding: clamp(48px, 6vw, 84px) 0; overflow: hidden; }
-        .sm-head { margin-bottom: 30px; }
+        .sm-head { margin-bottom: 30px; display: flex; align-items: flex-end; gap: 18px; }
+        .sm-head-mascot { flex-shrink: 0; }
+        @media (max-width: 540px) {
+          .sm-head { gap: 12px; }
+          .sm-head-mascot { height: 64px !important; }
+        }
         .sm-head .headline-l { margin: 0; }
 
         .sm-marquee {

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import Image from "next/image";
 import Link from "next/link";
 import { Check, ArrowRight, ShieldPlus } from "lucide-react";
@@ -72,6 +73,9 @@ export default function HospitalSection() {
             viewport={viewportOnce}
             className="hs-copy"
           >
+            <motion.div variants={fadeUp} style={{ marginBottom: 10 }}>
+              <Mascot pose="shield" height={96} />
+            </motion.div>
             <motion.span variants={fadeUp} className="eyebrow">
               Tamamlayıcı Sağlık Sigortası
             </motion.span>
