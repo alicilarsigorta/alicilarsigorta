@@ -9,6 +9,7 @@ import FAQ from "@/components/FAQ";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import { easeOutExpo, viewportOnce } from "@/lib/motion";
 
 export default function Home() {
@@ -43,6 +44,7 @@ export default function Home() {
             className="cta-card"
           >
             <div className="cta-card-glow" aria-hidden />
+            <Mascot pose="point" height={190} className="cta-mascot" />
             <div className="cta-card-inner">
               <span className="cta-eyebrow">Bir adımınız kaldı</span>
               <h2 className="cta-headline">Güvenceniz bir tık uzakta.</h2>
@@ -76,6 +78,12 @@ export default function Home() {
             background: radial-gradient(circle, rgba(255,115,0,0.30) 0%, transparent 62%);
             pointer-events: none;
           }
+          .cta-mascot {
+            position: absolute; left: clamp(16px, 4vw, 56px); bottom: 0; z-index: 1;
+            filter: drop-shadow(0 12px 20px rgba(0,0,0,0.3));
+            pointer-events: none;
+          }
+          @media (max-width: 960px) { .cta-mascot { display: none; } }
           .cta-card-inner { position: relative; z-index: 1; text-align: center; max-width: 640px; margin: 0 auto; }
           .cta-eyebrow {
             display: inline-block;

@@ -1,3 +1,5 @@
+import Mascot from "@/components/Mascot";
+import ContactForm from "@/components/ContactForm";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
@@ -12,6 +14,9 @@ export default function IletisimPage() {
       {/* Page Header */}
       <div className="page-hero" style={{ background: "var(--cream)", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
         <div className="container">
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+            <Mascot pose="phone" height={120} priority />
+          </div>
           <div className="section-badge">● 7/24 Destek</div>
           <h1 className="section-title">Bize <span className="gold">Ulaşın</span></h1>
           <p className="section-sub" style={{ margin: "16px auto 0", maxWidth: 600 }}>
@@ -69,23 +74,7 @@ export default function IletisimPage() {
             {/* Contact Form */}
             <div className="card iletisim-form-card" style={{ border: "1px solid var(--gold)" }}>
               <h2 style={{ fontSize: "clamp(1.4rem, 4vw, 1.8rem)", fontWeight: 900, marginBottom: "1.5rem" }}>Mesaj Gönderin</h2>
-              <form style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <label style={{ fontWeight: 700, fontSize: "0.9rem" }}>Adınız Soyadınız</label>
-                  <input type="text" placeholder="Örn: Ahmet Yılmaz" style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border)", background: "var(--cream)", outline: "none", fontSize: "1rem" }} />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <label style={{ fontWeight: 700, fontSize: "0.9rem" }}>E-Posta Adresiniz</label>
-                  <input type="email" placeholder="ornek@email.com" style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border)", background: "var(--cream)", outline: "none", fontSize: "1rem" }} />
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <label style={{ fontWeight: 700, fontSize: "0.9rem" }}>Mesajınız</label>
-                  <textarea rows={5} placeholder="Size nasıl yardımcı olabiliriz?" style={{ width: "100%", padding: "1rem", borderRadius: "12px", border: "1px solid var(--border)", background: "var(--cream)", outline: "none", fontSize: "1rem", resize: "vertical" }} />
-                </div>
-                <button type="button" className="btn btn-gold" style={{ width: "100%", padding: "1.2rem", marginTop: "1rem" }}>
-                  Mesajı Gönder
-                </button>
-              </form>
+              <ContactForm />
             </div>
 
           </div>

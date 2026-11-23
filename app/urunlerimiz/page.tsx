@@ -212,7 +212,7 @@ export default function UrunlerimizPage() {
               <Link href="/teklif-al" className="btn btn-gold">
                 Ücretsiz Teklif Al <ArrowRight size={18} />
               </Link>
-              <Link href="/iletisim" className="btn btn-outline" style={{ color: "#fff", borderColor: "rgba(176, 112, 80,0.4)" }}>
+              <Link href="/iletisim" className="btn btn-outline" style={{ color: "#fff", background: "transparent", borderColor: "rgba(255,255,255,0.45)" }}>
                 İletişime Geç
               </Link>
             </div>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import { Plus, Minus } from "lucide-react";
 import { useContent } from "@/lib/content-context";
 import { easeOutExpo } from "@/lib/motion";
@@ -46,6 +47,7 @@ export default function FAQ() {
             </h2>
           </div>
           <div className="faq-header-right">
+            <Mascot pose="idea" height={132} className="faq-mascot" />
             <p className="faq-lede">
               Sigortacılık hakkında en çok sorulan sorular —{" "}
               <em className="script">uzman ekibimizden</em> net açıklamalar.
@@ -112,6 +114,8 @@ export default function FAQ() {
           margin-bottom: 56px;
         }
         .faq-header-left .issue-marker { margin-bottom: 24px; }
+        .faq-header-right { display: flex; align-items: flex-end; gap: 18px; }
+        .faq-mascot { flex-shrink: 0; margin-bottom: -6px; }
         .faq-lede {
           font-size: 1.04rem;
           line-height: 1.7;
@@ -197,6 +201,8 @@ export default function FAQ() {
           .faq-idx { font-size: 1.1rem; }
           .faq-toggle { width: 30px; height: 30px; }
           .faq-answer { padding-left: 58px; font-size: 0.95rem; }
+          .faq-mascot { height: 96px !important; }
+          .faq-header-right { gap: 12px; }
         }
         `,
       }} />

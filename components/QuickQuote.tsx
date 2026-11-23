@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import { ArrowRight, ShieldCheck, Clock, BadgePercent, Check } from "lucide-react";
 import { toast } from "sonner";
 import { viewportOnce, easeOutExpo } from "@/lib/motion";
@@ -85,6 +86,7 @@ export default function QuickQuote() {
               <li><span className="qq-point-ic"><Clock size={15} /></span> Dakikalar içinde dönüş</li>
               <li><span className="qq-point-ic"><ShieldCheck size={15} /></span> Komisyonsuz, baskısız, şeffaf</li>
             </ul>
+            <Mascot pose="thumbs" height={210} className="qq-mascot" priority />
           </div>
 
           {/* RIGHT — form */}
@@ -255,11 +257,19 @@ export default function QuickQuote() {
           font-size: 0.76rem; color: var(--text-muted);
           line-height: 1.4;
         }
+        .qq-points { padding-right: 112px; }
+        .qq-mascot {
+          position: absolute; right: 10px; bottom: -6px; z-index: 1;
+          filter: drop-shadow(0 10px 18px rgba(0,0,0,0.28));
+          pointer-events: none;
+        }
         .qq-kvkk svg { color: #22c55e; flex-shrink: 0; }
 
         @media (max-width: 920px) {
           .qq-card { grid-template-columns: 1fr; }
           .qq-left { padding: 28px; }
+          .qq-mascot { height: 170px !important; right: 6px; }
+          .qq-points { padding-right: 92px; }
         }
         @media (max-width: 540px) {
           .qq-form { grid-template-columns: 1fr; gap: 14px; }

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import { useState, useEffect } from "react";
 import {
   Car, ShieldCheck, HeartPulse, Home, Navigation,
@@ -60,6 +61,10 @@ export default function Hero() {
           animate="visible"
           className="hero-head"
         >
+          <Mascot pose="side" height={300} className="hero-mascot-full" />
+          <motion.div variants={fadeUp} className="hero-mascot-bust">
+            <Mascot pose="welcome" height={104} />
+          </motion.div>
           <motion.span variants={fadeUp} className="hero-badge">
             <Sparkles size={13} strokeWidth={2.2} color="var(--orange)" />
             Karşılaştır · Seç · Güvende Kal
@@ -321,6 +326,17 @@ export default function Hero() {
           margin-top: 40px;
         }
 
+        /* Aliş: geniş ekranda başlığın yanında boydan; dar ekranda üstte büst */
+        .hero-mascot-full {
+          position: absolute; right: -218px; bottom: -14px;
+          filter: drop-shadow(0 16px 22px rgba(15,40,80,0.18));
+          pointer-events: none;
+        }
+        .hero-mascot-bust { display: none; justify-content: center; margin-bottom: 10px; }
+        @media (max-width: 1240px) {
+          .hero-mascot-full { display: none; }
+          .hero-mascot-bust { display: flex; }
+        }
         @media (max-width: 900px) {
           .hero-grid { grid-template-columns: repeat(3, 1fr); }
         }

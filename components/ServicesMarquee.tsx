@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -55,9 +56,11 @@ export default function ServicesMarquee() {
       <div className="sm-marquee">
         <div className="sm-track">
           {reel.map((s, i) => (
+            <div className="sm-item" key={`${s.id}-${s.title}-${i}`}>
+            {/* Aliş kartın yanında durur, kartı tutup sunuyormuş gibi */}
+            <Mascot pose="side" height={236} className="sm-item-mascot" priority={i < 4} />
             <Link
               href={`/urunlerimiz/${s.id}`}
-              key={`${s.id}-${s.title}-${i}`}
               className={`sm-card sm-card--${s.tone} ${s.cover ? "is-cover" : "is-render"}`}
               aria-label={s.title}
             >
@@ -76,6 +79,7 @@ export default function ServicesMarquee() {
                 <span className="sm-card-cta">Detaylar <ArrowUpRight size={15} strokeWidth={2.4} /></span>
               </div>
             </Link>
+            </div>
           ))}
         </div>
       </div>
@@ -107,7 +111,16 @@ export default function ServicesMarquee() {
         }
         @media (prefers-reduced-motion: reduce) { .sm-track { animation: none; } }
 
+        .sm-item { position: relative; flex-shrink: 0; padding-left: 74px; }
+        .sm-item-mascot {
+          position: absolute; left: 0; bottom: -4px; z-index: 2;
+          filter: drop-shadow(0 10px 14px rgba(15,40,80,0.28));
+          pointer-events: none;
+          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .sm-item:hover .sm-item-mascot { transform: translateY(-6px) rotate(-3deg); }
         .sm-card {
+          display: block;
           position: relative;
           flex-shrink: 0;
           width: 320px;
@@ -158,6 +171,8 @@ export default function ServicesMarquee() {
 
         @media (max-width: 540px) {
           .sm-card { width: 250px; height: 350px; }
+          .sm-item { padding-left: 56px; }
+          .sm-item-mascot { height: 184px !important; }
         }
       ` }} />
     </section>

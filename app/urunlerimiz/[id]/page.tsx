@@ -504,7 +504,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <a
               href={`tel:${content.contact.phone}`}
               className="btn btn-outline"
-              style={{ color: "#fff", borderColor: "rgba(176, 112, 80,0.4)" }}
+              style={{ color: "#fff", background: "transparent", borderColor: "rgba(255,255,255,0.45)" }}
             >
               <Phone size={18} /> Hemen Ara
             </a>
