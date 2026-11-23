@@ -48,20 +48,19 @@ export default function ServicesMarquee() {
           transition={{ duration: 0.6, ease: easeOutExpo }}
           className="sm-head"
         >
-          <Mascot pose="welcome" height={92} className="sm-head-mascot" priority />
-          <div>
-            <span className="eyebrow">Hizmetlerimiz</span>
-            <h2 className="headline-l">Sunduğumuz <em>sigorta çözümleri.</em></h2>
-          </div>
+          <span className="eyebrow">Hizmetlerimiz</span>
+          <h2 className="headline-l">Sunduğumuz <em>sigorta çözümleri.</em></h2>
         </motion.div>
       </div>
 
       <div className="sm-marquee">
         <div className="sm-track">
           {reel.map((s, i) => (
+            <div className="sm-item" key={`${s.id}-${s.title}-${i}`}>
+            {/* Aliş kartın yanında durur, kartı tutup sunuyormuş gibi */}
+            <Mascot pose="side" height={236} className="sm-item-mascot" priority={i < 4} />
             <Link
               href={`/urunlerimiz/${s.id}`}
-              key={`${s.id}-${s.title}-${i}`}
               className={`sm-card sm-card--${s.tone} ${s.cover ? "is-cover" : "is-render"}`}
               aria-label={s.title}
             >
@@ -80,18 +79,14 @@ export default function ServicesMarquee() {
                 <span className="sm-card-cta">Detaylar <ArrowUpRight size={15} strokeWidth={2.4} /></span>
               </div>
             </Link>
+            </div>
           ))}
         </div>
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
         .sm-section { background: var(--bg); padding: clamp(48px, 6vw, 84px) 0; overflow: hidden; }
-        .sm-head { margin-bottom: 30px; display: flex; align-items: flex-end; gap: 18px; }
-        .sm-head-mascot { flex-shrink: 0; }
-        @media (max-width: 540px) {
-          .sm-head { gap: 12px; }
-          .sm-head-mascot { height: 64px !important; }
-        }
+        .sm-head { margin-bottom: 30px; }
         .sm-head .headline-l { margin: 0; }
 
         .sm-marquee {
@@ -116,7 +111,16 @@ export default function ServicesMarquee() {
         }
         @media (prefers-reduced-motion: reduce) { .sm-track { animation: none; } }
 
+        .sm-item { position: relative; flex-shrink: 0; padding-left: 74px; }
+        .sm-item-mascot {
+          position: absolute; left: 0; bottom: -4px; z-index: 2;
+          filter: drop-shadow(0 10px 14px rgba(15,40,80,0.28));
+          pointer-events: none;
+          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .sm-item:hover .sm-item-mascot { transform: translateY(-6px) rotate(-3deg); }
         .sm-card {
+          display: block;
           position: relative;
           flex-shrink: 0;
           width: 320px;
@@ -167,6 +171,8 @@ export default function ServicesMarquee() {
 
         @media (max-width: 540px) {
           .sm-card { width: 250px; height: 350px; }
+          .sm-item { padding-left: 56px; }
+          .sm-item-mascot { height: 184px !important; }
         }
       ` }} />
     </section>
