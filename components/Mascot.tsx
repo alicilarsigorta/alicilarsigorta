@@ -48,3 +48,33 @@ export default function Mascot({ pose, height, className, style, priority, alt =
     />
   );
 }
+
+/**
+ * Aliş'in yüzü, yuvarlak rozet içinde. Logonun yanı gibi küçük alanlarda
+ * boydan pozlar okunmadığı için bu kullanılır.
+ */
+export function MascotAvatar({ size, className, onDark }: { size: number; className?: string; onDark?: boolean }) {
+  return (
+    <span
+      className={className}
+      aria-hidden
+      style={{
+        width: size, height: size, flexShrink: 0, display: "inline-block",
+        borderRadius: "50%", overflow: "hidden",
+        background: onDark ? "rgba(255,255,255,0.14)" : "var(--blue-tint)",
+        border: `2px solid ${onDark ? "var(--brand-gold-light)" : "var(--brand-gold)"}`,
+        boxShadow: "0 3px 10px rgba(15,40,80,0.18)",
+      }}
+    >
+      <img
+        src="/mascot/alis-face.webp"
+        alt=""
+        width={size}
+        height={size}
+        decoding="async"
+        draggable={false}
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
+    </span>
+  );
+}

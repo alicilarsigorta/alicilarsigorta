@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Instagram, Linkedin, Twitter, Phone, Mail, MapPin, Shield } from "lucide-react";
 import { useContent } from "@/lib/content-context";
-import Mascot from "@/components/Mascot";
+import { MascotAvatar } from "@/components/Mascot";
 
 export default function Footer() {
   const { content } = useContent();
@@ -26,7 +26,7 @@ export default function Footer() {
                 <div style={{ color: "#fff", fontWeight: 800, fontSize: "1.22rem", letterSpacing: "0.04em" }}>ALICILAR</div>
                 <div style={{ color: "var(--brand-gold-light)", fontWeight: 700, fontSize: "0.7rem", letterSpacing: "0.24em" }}>SİGORTA</div>
               </div>
-              <Mascot pose="arms" height={64} style={{ marginLeft: 4, filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.3))" }} />
+              <MascotAvatar size={52} onDark />
             </div>
             <p style={{ fontSize: "0.95rem", lineHeight: 1.8, marginBottom: 24 }}>
               Türkiye&apos;nin en güvenilir sigorta karşılaştırma platformu. 20+ şirket, anında teklif, gerçek güvence.
