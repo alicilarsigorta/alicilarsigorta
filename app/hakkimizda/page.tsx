@@ -1,3 +1,4 @@
+import Mascot from "@/components/Mascot";
 import { Metadata } from "next";
 import { Award, Shield, Users, Clock } from "lucide-react";
 import Link from "next/link";
@@ -14,6 +15,9 @@ export default function HakkimizdaPage() {
       {/* Page Header */}
       <div className="page-hero" style={{ background: "var(--cream)", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
         <div className="container">
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+            <Mascot pose="arms" height={150} priority />
+          </div>
           <div className="section-badge">● Kurumsal</div>
           <h1 className="section-title">Biz <span className="gold">Kimiz?</span></h1>
           <p className="section-sub" style={{ margin: "16px auto 0", maxWidth: 600 }}>

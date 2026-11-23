@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { User, Phone, CheckCircle, Calendar, ArrowRight, ArrowLeft, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import Mascot from "@/components/Mascot";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -199,9 +200,9 @@ export default function OfferForm() {
         {step === 3 && (
           <motion.div key="s3" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, type: "spring" }} style={{ textAlign: "center", padding: "20px 0" }}>
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", bounce: 0.6, delay: 0.1 }}
-              style={{ width: 90, height: 90, borderRadius: "50%", background: "linear-gradient(135deg, var(--gold), var(--gold-light))", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 28px", boxShadow: "0 20px 50px var(--gold-glow)" }}
+              style={{ display: "flex", justifyContent: "center", margin: "0 auto 20px" }}
             >
-              <CheckCircle size={44} color="#fff" />
+              <Mascot pose="ok" height={150} alt="Aliş onay işareti yapıyor" priority />
             </motion.div>
             <h2 style={{ fontSize: "2rem", fontWeight: 900, color: "var(--black)", marginBottom: 16 }}>Harika! Tebrikler!</h2>
             {offerId && (

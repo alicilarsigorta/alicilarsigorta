@@ -1,3 +1,4 @@
+import Mascot from "@/components/Mascot";
 import { Metadata } from "next";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
@@ -12,6 +13,9 @@ export default function IletisimPage() {
       {/* Page Header */}
       <div className="page-hero" style={{ background: "var(--cream)", textAlign: "center", borderBottom: "1px solid var(--border)" }}>
         <div className="container">
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+            <Mascot pose="phone" height={120} priority />
+          </div>
           <div className="section-badge">● 7/24 Destek</div>
           <h1 className="section-title">Bize <span className="gold">Ulaşın</span></h1>
           <p className="section-sub" style={{ margin: "16px auto 0", maxWidth: 600 }}>
